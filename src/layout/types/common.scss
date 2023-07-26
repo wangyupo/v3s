@@ -1,0 +1,76 @@
+// layout 共用样式
+$headerHeight: 55px;
+$mainBackgroundColor: #eee;
+$menuFoldWidth: 64px;
+$menuExpandWidth: 200px;
+$menuTranstionDuration: 200ms;
+
+.layout {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    height: $headerHeight;
+    line-height: $headerHeight;
+    background-color: var(--el-color-primary);
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: $menuTranstionDuration;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      &.fold {
+        width: $menuFoldWidth;
+      }
+      &.expand {
+        width: $menuExpandWidth;
+      }
+    }
+  }
+
+  &-aside {
+    background-color: var(--el-color-primary);
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: $menuTranstionDuration;
+    &.fold {
+      width: $menuFoldWidth;
+    }
+    &.expand {
+      width: $menuExpandWidth;
+    }
+  }
+
+  &-main {
+    height: calc(100% - $headerHeight);
+    background-color: $mainBackgroundColor;
+    &-content {
+      position: relative;
+      margin: 12px;
+      padding: 0;
+      background-color: #fff;
+      border-radius: 4px;
+      &:deep(> div) {
+        padding: 12px;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+    }
+  }
+}

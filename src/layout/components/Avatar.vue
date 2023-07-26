@@ -1,0 +1,65 @@
+<template>
+  <!-- 个人信息 -->
+  <el-dropdown trigger="click">
+    <div class="avatar flex items-center cursor-pointer flex-shrink-0">
+      <el-avatar :size="30" />
+      <div class="ml-2 text-white">管理员</div>
+    </div>
+    <template #dropdown>
+      <div class="menu">
+        <div class="menu-item">个人信息</div>
+        <div class="menu-item" @click="handleLoginOut">退出登录</div>
+      </div>
+    </template>
+  </el-dropdown>
+</template>
+
+<script setup>
+import { ElMessage, ElMessageBox } from "element-plus";
+import { useRouter } from "vue-router";
+import { removeAllLoginInfo } from "@/utils/common";
+
+const router = useRouter();
+
+const handleLoginOut = params => {
+  ElMessageBox.confirm("确认退出系统吗?", "提示", {
+    type: "warning",
+  }).then(() => {
+    ElMessage({
+      type: "success",
+      message: "登出成功！",
+    });
+    router.replace({
+      path: "/login",
+    });
+    removeAllLoginInfo();
+  });
+};
+</script>
+
+<style lang="scss" scoped>
+@import "@/layout/types/common.scss";
+$itemHeight: 40px;
+
+.avatar {
+  height: $headerHeight - 10px;
+}
+
+.menu {
+  width: 80px;
+  overflow: hidden;
+  &-item {
+    height: $itemHeight;
+    line-height: $itemHeight;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--el-color-primary-light-9);
+    }
+    &:last-child {
+      border-top: 1px solid var(--el-color-primary-light-9);
+    }
+  }
+}
+</style>
