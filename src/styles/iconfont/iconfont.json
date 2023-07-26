@@ -1,0 +1,16 @@
+{
+  "id": "3986351",
+  "name": "v3s",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "29391818",
+      "name": "enter",
+      "font_class": "enter",
+      "unicode": "e95c",
+      "unicode_decimal": 59740
+    }
+  ]
+}

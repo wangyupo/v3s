@@ -1,0 +1,95 @@
+[
+  {
+    "id": "2",
+    "parentId": "0",
+    "url": "/b",
+    "title": "示例查询",
+    "hidden": 0
+  },
+
+  {
+    "id": "1",
+    "parentId": "0",
+    "url": "",
+    "title": "嵌套路由",
+    "hidden": 0
+  },
+  {
+    "id": "0-1",
+    "parentId": "1",
+    "url": "",
+    "title": "路由菜单1",
+    "hidden": 0
+  },
+  {
+    "id": "0-1-1",
+    "parentId": "0-1",
+    "url": "/example/menu1/menu1-1",
+    "title": "路由菜单1-1",
+    "hidden": 0
+  },
+  {
+    "id": "0-3",
+    "parentId": "1",
+    "url": "/example/menu2",
+    "title": "路由菜单2",
+    "hidden": 0
+  },
+
+  {
+    "id": "3",
+    "parentId": "0",
+    "url": "",
+    "title": "组件",
+    "hidden": 0
+  },
+  {
+    "id": "3-1",
+    "parentId": "3",
+    "url": "/example/dialog",
+    "title": "弹窗",
+    "hidden": 0
+  },
+  {
+    "id": "3-2",
+    "parentId": "3",
+    "url": "/example/table",
+    "title": "table",
+    "hidden": 0
+  },
+  {
+    "id": "3-3",
+    "parentId": "3",
+    "url": "/example/numCountUp",
+    "title": "数字滚动",
+    "hidden": 0
+  },
+  {
+    "id": "3-4",
+    "parentId": "3",
+    "url": "/example/page",
+    "title": "多级页面",
+    "hidden": 0
+  },
+  {
+    "id": "3-4-1",
+    "parentId": "3-4",
+    "url": "/example/page/child",
+    "title": "子页面",
+    "hidden": 1
+  },
+  {
+    "id": "3-5",
+    "parentId": "3",
+    "url": "/example/tree",
+    "title": "树形筛选器",
+    "hidden": 0
+  },
+  {
+    "id": "3-6",
+    "parentId": "3",
+    "url": "/example/seamlessScroll",
+    "title": "无缝滚动",
+    "hidden": 0
+  }
+]

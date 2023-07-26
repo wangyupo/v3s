@@ -1,0 +1,37 @@
+// 专门用来管理 ElementPlus 样式的文件，推荐通过 css变量 来从顶层覆盖其原有样式。
+// 可以从这里看到 ElementPlus 对 css变量 的支持：http://element-plus.org/zh-CN/guide/theming.html#通过-css-变量设置
+
+:root {
+  --el-menu-border-color: transparent;
+  --el-menu-bg-color: #515a6e;
+  --el-menu-hover-bg-color: var(--el-color-primary-dark-2);
+  --el-menu-text-color: #ddd;
+  --el-menu-hover-text-color: #fff;
+  --el-menu-active-color: #fff;
+
+  --el-color-primary: #515a6e;
+  --el-color-primary-dark-2: #454c5c;
+  --el-color-primary-light-3: #747b8b;
+  --el-color-primary-light-4: #979ca8;
+  --el-color-primary-light-5: #a8adb7;
+  --el-color-primary-light-7: #cbced4;
+  --el-color-primary-light-9: #eeeff1;
+}
+
+.el-button.is-link:focus,
+.el-button.is-link:hover {
+  color: var(--el-color-primary-light-4);
+}
+
+.el-menu-item.is-active {
+  background-color: var(--el-color-primary-dark-2);
+}
+
+.el-dialog__header {
+  margin-right: 0;
+  border-bottom: 1px solid var(--el-border-color-light);
+}
+
+.el-dialog__footer {
+  border-top: 1px solid var(--el-border-color-light);
+}
