@@ -9,6 +9,7 @@
       :loading="loading"
       @pageChange="fn_getList"
       @pageSizeChange="pageSizeChange"
+      @selection-change="handleSelectionChange"
     >
       <template #dateHeader="{ scope }">{{ scope.column.label }}Diy</template>
       <template #expand="{ scope }">
@@ -76,6 +77,7 @@ const selectable = (row, index) => {
   if (index === 1) return false;
   return true;
 };
+const multipleSelection = ref([]);
 const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
@@ -172,6 +174,11 @@ const fn_getList = (pageNum = 1) => {
 const pageSizeChange = pageSize => {
   tableData.pages.pageSize = pageSize;
   fn_getList(1);
+};
+
+// 多选表格行
+const handleSelectionChange = val => {
+  multipleSelection.value = val;
 };
 </script>
 
