@@ -4,6 +4,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 
 /**
  * 去掉所有的登录信息（菜单、用户信息、cookie等）
+ * 登出业务需要
  */
 export function removeAllLoginInfo() {
   cookies.remove("Authorization");
@@ -59,8 +60,8 @@ export function trimData(data) {
 
 /**
  * 去掉对象中的空字符串、空数组、空对象
- * @param {Object} obj 传入的对象数据
- * @returns {Object}
+ * @param {Object} obj 传入的对象数据 eg: {a:1,b:''}
+ * @returns {Object} egBck: {a:1}
  */
 export function removeEmptyInObj(obj) {
   let newObj = {};
@@ -231,7 +232,7 @@ export function uuid() {
 /**
  * 手机号格式化
  * @param {String} phone
- * @returns format phone
+ * @returns {String} 183 1114 3263
  */
 export const formatPhone = phone => {
   phone = phone.toString();
@@ -241,7 +242,7 @@ export const formatPhone = phone => {
 /**
  * 4位一空格（格式化银行卡）
  * @param {String} val
- * @returns format card_number
+ * @returns {String} 4114 0201 5368 4210 213
  */
 export const formatBank = val => {
   if (val) {
@@ -273,9 +274,9 @@ export const copy = (data, label = "") => {
 
 /**
  * 获取开始日期至结束日期的所有日期
- * @param {*} starDay 开始日期
- * @param {*} endDay 结束日期
- * @returns
+ * @param {*} starDay 开始日期 2023-05-10
+ * @param {*} endDay 结束日期 2023-06-09
+ * @returns {Array} ["2023-05-10", "2023-05-11", "2023-05-12", ... , "2023-06-09"]
  */
 export const getAllDay = (starDay, endDay) => {
   let arr = [];
@@ -310,7 +311,7 @@ export const getAllDay = (starDay, endDay) => {
 
 /**
  * 返回当天日期
- * @returns
+ * @returns {String} 2025-07-01
  */
 export const getTodayDate = () => {
   // 获取当前日期
@@ -335,9 +336,9 @@ export const getTodayDate = () => {
 };
 
 /**
- * 获取接下来7天的日期、周数
- * @param {*} day
- * @returns Array 接下来7天的日期、周数组成的对象数组
+ * 获取当前天起，接下来7天的日期、周数组成的对象数组
+ * @param {*} day 需要获取未来 n 天的数据，默认7天
+ * @returns {Array} [{ week: "周一", date: "07-01", fullDate: "2025-07-01" }, ...]
  */
 export const getNext7Day = (day = 7) => {
   let arr = [];
@@ -360,9 +361,9 @@ export const getNext7Day = (day = 7) => {
 };
 
 /**
- * 获取指定日期当前周一周日期
- * @param {*} date 指定日期
- * @returns [] 当前周，周一至周日组成的数组
+ * 获取指定日期的一整周日期、周数组成的对象数组
+ * @param {*} date 指定日期（随便指定，会自动计算其所属周的周一到周日的全部数据）
+ * @returns {Array} [{ week: "周一", date: "07-01", fullDate: "2025-07-01" }, ...]
  */
 export const getWeekTime = date => {
   let new_Date = new Date(date ? date : getTodayDate());
@@ -388,7 +389,7 @@ export const getWeekTime = date => {
 /**
  * 对象转FormData
  * @param {*} obj
- * @returns formdata
+ * @returns {formdata}
  */
 export const toFormData = obj => {
   const formData = new FormData();
@@ -401,7 +402,7 @@ export const toFormData = obj => {
 /**
  * 空字段串显示--
  * @param {*} obj 字段
- * @returns 字段为空返回 --，否则返回字段本身
+ * @returns {String} 字段为空返回 --，否则返回字段本身
  */
 export const epyReturn = obj => {
   const emptyStr = "--";
@@ -419,7 +420,7 @@ export const epyReturn = obj => {
 /**
  * 数字格式化
  * @param {*} num 金额
- * @returns 千分位逗号格式 20000->20,000
+ * @returns {String} 千分位逗号格式 20000->20,000
  */
 export const numberFormat = num => {
   return num.toString().replace(/\d+/, function (n) {
