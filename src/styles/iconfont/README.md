@@ -1,6 +1,6 @@
 ### 更新方法
 
-将 iconfont 项目下载到本地，把除了 demo_index.html 的文件全部分支到改目录下，覆盖旧文件即可生效。
+将 iconfont 项目下载到本地，把除了 demo_index.html 的文件全部复制到该目录下，并覆盖旧文件，即可在项目中使用新的iconfont。
 
 ### 使用方法
 
