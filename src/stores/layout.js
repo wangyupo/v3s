@@ -1,3 +1,7 @@
+/**
+ * 布局、主题颜色相关
+ * 对应组件目录 /src/layout/components/ThemeColorPicker.vue
+ */
 import { defineStore } from "pinia";
 
 export const useLayoutStore = defineStore("layout", {

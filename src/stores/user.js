@@ -1,3 +1,6 @@
+/**
+ * 用户信息及记录相关
+ */
 import { defineStore } from "pinia";
 import { cloneDeep } from "lodash-es";
 import { tree2arr } from "@/utils/common";
