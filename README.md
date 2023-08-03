@@ -39,6 +39,12 @@ npm install
 npm run dev
 ```
 
+## v3s 的一些常见问题的解决方案
+
+[1、关于如何使用路由及分配页面权限原理](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
+
+[2、我想用 iconfont，应该怎么更新？在哪里更新？](https://github.com/wangyupo/v3s/blob/main/src/style/iconfont/README.md)
+
 ## License
 
 [MIT © Richard McRichface.](https://github.com/wangyupo/v3s/blob/master/LICENSE)
