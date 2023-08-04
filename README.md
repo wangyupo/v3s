@@ -80,7 +80,7 @@ npm run dev
 
 ## 详细文档
 
-这里提供了一些更加详细的文档，即解决方案：
+这里提供了一些更加详细的文档，及解决方案：
 
 [1、如何组织路由？路由如何对应用户权限？二级或更深级页面，如何使顶层菜单高亮？](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
 
