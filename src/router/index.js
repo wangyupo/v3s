@@ -6,6 +6,7 @@ const main = () => import("@/views/main.vue");
 const refreshPage = () => import("@/views/refreshPage.vue");
 const notFound = () => import("@/views/404.vue");
 const largeScreen = () => import("@/views/largeScreen.vue");
+const home = () => import("@/views/home.vue");
 
 // 示例页面路由（拆分示例）
 import routeExample from "./routeExample";
@@ -54,11 +55,10 @@ const router = createRouter({
         },
 
         {
-          path: "/b",
-          name: "test3",
-          component: test3,
+          path: "/home",
+          name: "home",
+          component: home,
         },
-
         ...routeExample,
 
         {
