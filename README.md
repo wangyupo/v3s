@@ -43,7 +43,9 @@ npm run dev
 
 [1、关于如何使用路由及分配页面权限原理](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
 
-[2、我想用 iconfont，应该怎么更新？在哪里更新？](https://github.com/wangyupo/v3s/blob/main/src/style/iconfont/README.md)
+[2、我想用 iconfont，应该怎么更新？在哪里更新？](https://github.com/wangyupo/v3s/blob/main/src/styles/iconfont/README.md)
+
+[3、我如何注册一个全局组件？](https://github.com/wangyupo/v3s/blob/main/src/components/index.js)
 
 ## License
 
