@@ -23,7 +23,46 @@
 
 基于 [Vue3.0](https://cn.vuejs.org/)、[Vite](https://cn.vitejs.dev/)、[ElementPlus](http://element-plus.org/zh-CN/)、[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 的后台解决方案，为项目提供开箱即用的解决方案。包括常用组件（列表/搜索/无缝滚动）、函数、动态菜单、权限校验等功能。项目组件化程度较高，非常适合中高级前端快速搭建企业级的中后台产品。同时，项目有复制粘贴用的 [aExample](https://github.com/wangyupo/v3s/tree/main/src/views/aExample) 目录，常用业务功能即粘即用，也非常适合想入门 Vue3 的朋友作为案例代码学习（没用 TypeScript，对新手友好）。
 
-## 本地运行文档
+## v3s 特性
+
+它有如下的特性：
+
+- 🧸 支持任何中后台开发，开箱即用。
+- 🤏 采用纯 JavaScript 编写，设计简洁美观。
+- 📁 遵循直观的目录结构约定。
+- 🗄️ 内置了现成的业务代码和 API 示例。
+- 🐇 完全采用 setup 和 Composition API 开发。
+
+## 项目目录结构
+
+v3s 采用非常简单直观的项目目录结构
+
+```
+├──src
+    ├──api
+    │  └── api.js       # api文件
+    ├──assets
+    │  └── no-data.png  # 图片、第三方js
+    ├──components
+    │  └── RhTable      # 公共组件
+    ├──layout
+    │  └── index.vue    # 布局文件
+    ├──router
+    │  └── index.js     # 路由文件
+    ├──stores
+    │  └── aExample.js  # pinia文件
+    ├──styles
+    │  ├── iconfont     # iconfont文件
+    │  └── common.scss  # 全局样式文件
+    ├──utils
+    │  ├── request.js   # axios配置
+    │  └── common.js    # 常用功能函数
+    └──views
+       ├── aExample     # 常用功能示例，即粘即用
+       └── login.vue    # 主要业务文件
+```
+
+## 快速启用
 
 ```
 # 拉取代码
@@ -39,7 +78,9 @@ npm install
 npm run dev
 ```
 
-## v3s 的一些常见问题的解决方案
+## 详细文档
+
+这里提供了一些更加详细的文档，即解决方案：
 
 [1、如何组织路由？路由如何对应用户权限？二级或更深级页面，如何使顶层菜单高亮？](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
 
