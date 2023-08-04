@@ -47,6 +47,10 @@
       <el-button type="primary" class="mt-4 w-[300px] h-[48px] text-xl rounded-lg tracking-wider" @click="handleLogin">
         登录
       </el-button>
+      <div class="mt-3">
+        <el-icon class="arrow"><Top /></el-icon>
+      </div>
+      <div class="mt-1 text-gray-500 text-sm">点击登录即可，示例版本没做登录校验</div>
     </div>
   </div>
 </template>
@@ -104,6 +108,27 @@ const handleLogin = params => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+.arrow {
+  animation: arrow 1.6s infinite linear;
+}
+@keyframes arrow {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 </style>
