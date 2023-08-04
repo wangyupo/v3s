@@ -41,7 +41,7 @@ npm run dev
 
 ## v3s 的一些常见问题的解决方案
 
-[1、组织路由、用户权限、面包屑导航、菜单高亮相关](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
+[1、如何组织路由？路由如何对应用户权限？二级或更深级页面，如何使顶层菜单高亮？](https://github.com/wangyupo/v3s/blob/main/src/router/README.md)
 
 [2、我想用 iconfont，应该怎么更新？在哪里更新？](https://github.com/wangyupo/v3s/blob/main/src/styles/iconfont/README.md)
 
