@@ -29,3 +29,17 @@
 /src/layout/components/Breadcrumb.vue
 /src/layout/components/RouterHistoryTabs.vue
 ```
+
+#### 四、我有多层路由，如何组织面包屑？二级或者更深级路由如何使左侧菜单仍然保持高亮？
+
+你可以在 [routeExample.js](https://github.com/wangyupo/v3s/blob/main/src/router/routeExample.js) 中，找到如下代码：
+
+```
+meta: {
+  targetMenuPath: "/example/page",  //这个就是需要要高亮的路由
+},
+```
+
+请注意这里的 `meta`，里面的 `targetMenuPath` 就指定了当前路由对应的上级路由，v3s 会根据 router 文件中 meta 对象中的 targetMenuPath 来自动对应当前的路由层级，以及应该高亮的上级菜单。
+
+所以，你每次需要将某个二级即更深级路由，对应的左侧菜单高亮时，将该菜单的 `targetMenuPath` 指定成需要对应的菜单路径即可。
