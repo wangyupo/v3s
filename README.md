@@ -47,6 +47,10 @@ npm run dev
 
 [3、我如何注册一个全局组件？](https://github.com/wangyupo/v3s/blob/main/src/components/index.js)
 
+4、如后端给我配置的服务是 `https://xxx.com/admin` ，我该如何配置开发或生产环境服务的公共基础路径（打包路径）？
+
+你需要在 [vite.config.js]() 中将 `base` 的内容替换成 admin，然后执行 `npm run build`，重新打包，静态资源基础路径就都指向 https://xxx.com/admin 了。关于 base 的更多解释，可以查阅 [vite 官网文档](https://cn.vitejs.dev/config/shared-options.html#base)
+
 ## License
 
 [MIT © Richard McRichface.](https://github.com/wangyupo/v3s/blob/master/LICENSE)
