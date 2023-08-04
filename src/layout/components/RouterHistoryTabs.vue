@@ -164,7 +164,6 @@ onUnmounted(() => {
 // 监听事件-点击空白隐藏菜单
 const blankClickRemoveMenu = e => {
   if (!rightMenuVisible.value) return;
-  if (!e.target || !e.target.className || !e.target.className.length) return;
   const isClickInMenuItem = e.target.className.split(" ").includes("router-tabs-item") && e.type === "contextmenu";
   if (!rightMenuVisible.value || isClickInMenuItem) return;
   rightMenuVisible.value = false;
