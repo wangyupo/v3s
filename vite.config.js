@@ -8,6 +8,7 @@ const PROXY_TARGET = ""; // 后端服务地址
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/v3s-admin/",
   plugins: [
     vue(),
     visualizer({
