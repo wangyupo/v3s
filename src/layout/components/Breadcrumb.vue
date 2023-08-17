@@ -1,8 +1,8 @@
 <template>
-  <!-- 面包屑导航 -->
+  <!-- 布局专用-面包屑导航 -->
   <el-breadcrumb
     class="breadcrumb"
-    :class="[layoutType === 'LayoutHeadMenu' ? 'mb-2' : 'breadcrumb-in-header']"
+    :class="[layoutType === 'LayoutHeadMenu' ? 'border-b border-b-[--el-border-color]' : 'breadcrumb-in-header']"
     separator="/"
     v-if="!noBreadCrumbPath.includes(route.path) && breadcrumb.length"
   >

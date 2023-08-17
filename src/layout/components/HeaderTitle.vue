@@ -1,5 +1,5 @@
 <template>
-  <!-- 系统标题 -->
+  <!-- 布局专用-系统标题 -->
   <div
     class="layout-header-title select-none"
     :class="[
