@@ -1,5 +1,5 @@
 <template>
-  <!-- 侧边栏折叠器 -->
+  <!-- 布局专用-侧边栏折叠器 -->
   <el-icon class="text-white cursor-pointer" size="20" @click="handleMenuFold">
     <Fold v-show="!menuFold" />
     <Expand v-show="menuFold" />

@@ -11,7 +11,7 @@
     <el-container class="layout-main flex-col">
       <RouterHistoryTabs />
       <el-main class="layout-main-content">
-        <Breadcrumb />
+        <Breadcrumb style="height: auto;" />
         <slot></slot>
       </el-main>
     </el-container>
