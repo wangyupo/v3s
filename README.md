@@ -32,6 +32,7 @@
 - 📁 遵循直观的目录结构约定。
 - 🗄️ 内置了现成的业务代码和 API 示例。
 - 🐇 完全采用 setup 和 Composition API 开发。
+- 💻 配合 VSCode 专属插件 [V3S Snippets](https://github.com/wangyupo/v3s-vscode-snippets)，实现团队指令级开发。
 
 ## 项目目录结构
 
