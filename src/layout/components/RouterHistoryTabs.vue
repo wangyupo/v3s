@@ -12,7 +12,9 @@
     >
       <div class="w-[8px] h-[8px] rounded-full bg-white mr-1.5" v-show="tabActive(routeItem)"></div>
       {{ routeItem.title }}
-      <el-icon class="ml-2" @click.stop="removeRouteHistory(routeItem, idx)"><Close /></el-icon>
+      <el-icon class="ml-2" v-if="routeHistory.length != 1" @click.stop="removeRouteHistory(routeItem, idx)">
+        <Close />
+      </el-icon>
     </div>
 
     <!-- 右键菜单 -->
