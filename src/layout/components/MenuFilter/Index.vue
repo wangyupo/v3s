@@ -1,6 +1,6 @@
 <template>
   <!-- 菜单过滤器 -->
-  <el-tooltip effect="dark" content="搜索" placement="bottom" :show-after="500">
+  <el-tooltip effect="dark" content="搜索" placement="bottom" :show-after="250">
     <el-icon class="cursor-pointer" color="#fff" size="20" @click="showFilterDialog"><Search /></el-icon>
   </el-tooltip>
   <DialogFilter v-model="menuFilterDialogVisible" />
