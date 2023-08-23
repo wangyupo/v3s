@@ -15,7 +15,7 @@
       <el-input
         v-model="searchVal"
         size="large"
-        placeholder="请输入关键词搜索"
+        placeholder="支持菜单全称|关键词|拼音搜索"
         ref="searchInputRef"
         :suffix-icon="Search"
       />
