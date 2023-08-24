@@ -1,6 +1,5 @@
 // layout 共用样式
 $headerHeight: 55px;
-$mainBackgroundColor: #eee;
 $menuFoldWidth: 64px;
 $menuExpandWidth: 200px;
 $menuTranstionDuration: 200ms;
@@ -58,12 +57,12 @@ $menuTranstionDuration: 200ms;
 
   &-main {
     height: calc(100% - $headerHeight);
-    background-color: $mainBackgroundColor;
+    background-color: var(--el-bg-color-page);
     &-content {
       position: relative;
       margin: 12px;
       padding: 0;
-      background-color: #fff;
+      background-color: var(--el-bg-color-overlay);
       border-radius: 4px;
       &:deep(> div) {
         padding: 12px;
