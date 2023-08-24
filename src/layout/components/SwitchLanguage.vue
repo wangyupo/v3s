@@ -6,7 +6,6 @@
     style="--el-switch-on-color: #ee1c25; --el-switch-off-color: #002164"
     active-text="中"
     inactive-text="EN"
-    size="small"
   />
 </template>
 
