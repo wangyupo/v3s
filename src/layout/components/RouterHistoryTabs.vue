@@ -10,7 +10,7 @@
       @click="changeRoute(routeItem, idx)"
       @click.right="showRightMenu($event, routeItem)"
     >
-      <div class="w-[8px] h-[8px] rounded-full bg-white mr-1.5" v-show="tabActive(routeItem)"></div>
+      <div class="w-[8px] h-[8px] rounded-full bg-[--el-bg-color-overlay] mr-1.5" v-show="tabActive(routeItem)"></div>
       {{ routeItem.title }}
       <el-icon class="ml-2" v-if="routeHistory.length != 1" @click.stop="removeRouteHistory(routeItem, idx)">
         <Close />
@@ -256,11 +256,11 @@ const setMenuDisabled = () => {
 
 <style lang="scss" scoped>
 .router-tabs {
-  color: #fff;
+  color: var(--el-bg-color-overlay);
   border-top: 1px solid var(--el-border-color-light);
-  background-color: #fff;
+  background-color: var(--el-bg-color-overlay);
   &-item.active {
-    color: #fff;
+    color: var(--el-bg-color-overlay);
     background-color: var(--el-color-primary);
     border: var(--el-color-primary);
   }
