@@ -5,6 +5,7 @@
     <MenuFilter />
     <!-- 网页全屏 -->
     <FullScreen />
+    <DarkMode class="ml-4" />
     <!-- 多语言切换 -->
     <SwitchLanguage class="ml-4" />
     <!-- 切换主题颜色 -->
@@ -20,6 +21,7 @@ import Avatar from "./Avatar.vue";
 import SwitchLanguage from "./SwitchLanguage.vue";
 import MenuFilter from "./MenuFilter/Index.vue";
 import FullScreen from "./FullScreen.vue";
+import DarkMode from "./DarkMode.vue";
 </script>
 
 <style lang="scss" scoped></style>

@@ -9,6 +9,8 @@ import globalComponents from "@/components/index.js"; // 项目自身封装的�
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import "./styles/element-theme.scss";
+import "element-plus/theme-chalk/dark/css-vars.css";
+import "./styles/dark.scss";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import "./styles/iconfont/iconfont.css"; // 直接替换iconfont文件夹内容即可完成更新
