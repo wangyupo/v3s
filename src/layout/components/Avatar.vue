@@ -1,7 +1,9 @@
 <template>
   <!-- 个人信息 -->
-  <el-dropdown trigger="click">
-    <div class="avatar flex items-center cursor-pointer flex-shrink-0">
+  <el-dropdown trigger="click" class="h-full">
+    <div
+      class="avatar flex items-center cursor-pointer flex-shrink-0 pl-3 pr-5 h-full hover:bg-[--el-color-primary-dark-2]"
+    >
       <el-avatar :size="30" />
       <div class="ml-2 text-white">管理员</div>
     </div>
@@ -42,7 +44,7 @@ const handleLoginOut = params => {
 $itemHeight: 40px;
 
 .avatar {
-  height: $headerHeight - 10px;
+  height: 100%;
 }
 
 .menu {

@@ -1,17 +1,18 @@
 <template>
   <!-- 顶栏右侧工具栏（用户、通知、切换主题色等） -->
-  <div class="flex items-center justify-center mr-4 text-white">
+  <div class="flex items-center justify-center text-white h-full">
     <!-- 菜单搜索 -->
     <MenuFilter />
     <!-- 网页全屏 -->
     <FullScreen />
-    <DarkMode class="ml-4" />
+    <!-- 深色切换 -->
+    <DarkMode />
     <!-- 多语言切换 -->
-    <SwitchLanguage class="ml-4" />
+    <SwitchLanguage />
     <!-- 切换主题颜色 -->
-    <ThemeColorPicker class="ml-4" />
+    <ThemeColorPicker />
     <!-- 用户模块 -->
-    <Avatar class="ml-4" />
+    <Avatar />
   </div>
 </template>
 

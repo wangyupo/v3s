@@ -1,12 +1,12 @@
 <template>
   <!-- 布局-竖向菜单 -->
   <el-container class="layout">
-    <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand']">
+    <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand', isDark ? 'dark' : '']">
       <HeaderTitle />
       <Menu />
     </el-aside>
     <el-container>
-      <el-header class="layout-header">
+      <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
         <div class="flex items-center">
           <SidebarFolder class="ml-3" />
           <Breadcrumb class="ml-3" />
@@ -32,7 +32,7 @@ import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "./layout.js";
 
-const { menuFold } = useLayout();
+const { menuFold, isDark } = useLayout();
 </script>
 
 <style lang="scss" scoped>
