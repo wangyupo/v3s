@@ -1,8 +1,10 @@
 <template>
   <!-- 主题颜色选择器 -->
-  <div>
-    <el-color-picker popper-class="mt-3" size="small" v-model="colorPrimaryBg" @change="changeThemeColor" />
-  </div>
+  <el-tooltip effect="dark" :content="`切换主题色`" placement="bottom" :show-after="250">
+    <div class="px-3 flex items-center h-full hover:bg-[--el-color-primary-dark-2]">
+      <el-color-picker popper-class="mt-3" v-model="colorPrimaryBg" @change="changeThemeColor" />
+    </div>
+  </el-tooltip>
 </template>
 
 <script setup>
@@ -57,8 +59,6 @@ const changeThemeColor = color => {
 // 设置 css 变量
 const setElementUIThemeColor = () => {
   const el = document.documentElement;
-
-  el.style.setProperty("--el-menu-bg-color", colorPrimaryBg.value); // el-menu 背景色
 
   el.style.setProperty("--el-color-primary", colorPrimaryBg.value); // el-button primary 背景色
   el.style.setProperty("--el-color-primary-light-3", colorPrimaryLight2.value); // el-button primary hover 背景色

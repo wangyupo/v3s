@@ -1,9 +1,11 @@
 <template>
   <!-- 页面全屏组件 -->
   <el-tooltip effect="dark" :content="isFullscreen ? '取消全屏' : '全屏'" placement="bottom" :show-after="250">
-    <el-icon :size="20" class="ml-3 cursor-pointer" @click="toggle">
-      <FullScreen />
-    </el-icon>
+    <div class="flex items-center px-3 h-full cursor-pointer hover:bg-[--el-color-primary-dark-2]" @click="toggle">
+      <el-icon :size="20">
+        <FullScreen />
+      </el-icon>
+    </div>
   </el-tooltip>
 </template>
 

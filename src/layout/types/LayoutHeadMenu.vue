@@ -1,7 +1,7 @@
 <template>
   <!-- 布局-顶栏菜单 -->
   <el-container class="layout">
-    <el-header class="layout-header" :style="{ backgroundColor: colorPrimaryBg }">
+    <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
       <div class="flex items-center">
         <HeaderTitle />
         <Menu />
@@ -11,7 +11,7 @@
     <el-container class="layout-main flex-col">
       <RouterHistoryTabs />
       <el-main class="layout-main-content">
-        <Breadcrumb style="height: auto;" />
+        <Breadcrumb style="height: auto" />
         <slot></slot>
       </el-main>
     </el-container>
@@ -26,7 +26,7 @@ import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "./layout.js";
 
-const { colorPrimaryBg } = useLayout();
+const { colorPrimaryBg, isDark } = useLayout();
 </script>
 
 <style lang="scss" scoped>

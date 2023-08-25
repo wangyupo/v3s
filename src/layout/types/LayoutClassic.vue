@@ -1,7 +1,7 @@
 <template>
   <!-- 布局-经典菜单 -->
   <el-container class="layout">
-    <el-header class="layout-header">
+    <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
       <div class="flex items-center">
         <HeaderTitle />
         <SidebarFolder class="ml-3" />
@@ -10,7 +10,7 @@
       <HeaderRightTools />
     </el-header>
     <el-container class="layout-main">
-      <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand']">
+      <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand', isDark ? 'dark' : '']">
         <Menu />
       </el-aside>
       <el-container class="flex-col">
@@ -32,7 +32,7 @@ import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "./layout.js";
 
-const { menuFold } = useLayout();
+const { menuFold, isDark } = useLayout();
 </script>
 
 <style lang="scss" scoped>

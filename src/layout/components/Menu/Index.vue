@@ -2,6 +2,7 @@
   <!-- 菜单 -->
   <el-menu
     class="menu"
+    :class="[isDark ? 'dark' : '']"
     router
     unique-opened
     :mode="mode"
@@ -20,6 +21,9 @@ import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { ref, computed, reactive } from "vue";
 import { arr2tree } from "@/utils/common.js";
+import { useDark } from "@vueuse/core";
+
+const isDark = useDark();
 
 const layoutStore = useLayoutStore();
 const { menuFold, layoutType } = storeToRefs(layoutStore);
@@ -38,7 +42,9 @@ const mode = computed(() => {
 @import "@/layout/types/common.scss";
 .menu {
   height: $headerHeight;
-  background-color: var(--el-color-primary);
+  &.dark {
+    background-color: var(--el-bg-color-overlay);
+  }
   :deep(.el-sub-menu .el-sub-menu__title:hover) {
     background-color: var(--el-color-primary-dark-2);
   }
