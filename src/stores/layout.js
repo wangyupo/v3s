@@ -8,7 +8,6 @@ export const useLayoutStore = defineStore("layout", {
   state: () => ({
     layoutType: "LayoutClassic", // 在 src/views/layout/typs 中新增布局，通过组件名称切换
     menuFold: false, // 菜单折叠状态。true-折叠，false-展开
-    isDark: false, // 是否中文
     isZh: true, // 是否中文
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
     colorPrimaryBg: "", // parimary 背景色
@@ -40,7 +39,6 @@ export const useLayoutStore = defineStore("layout", {
     paths: [
       "layoutType",
       "menuFold",
-      "isDark",
       "isZh",
       "colorPrimaryBg",
       "colorPrimaryLight2",
