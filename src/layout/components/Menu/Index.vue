@@ -21,10 +21,9 @@ import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { ref, computed, reactive } from "vue";
 import { arr2tree } from "@/utils/common.js";
-import { useDark } from "@vueuse/core";
+import { useLayout } from "@/hooks/useLayout.js";
 
-const isDark = useDark();
-
+const { isDark } = useLayout();
 const layoutStore = useLayoutStore();
 const { menuFold, layoutType } = storeToRefs(layoutStore);
 

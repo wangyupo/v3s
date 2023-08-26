@@ -30,7 +30,7 @@ import Menu from "@/layout/components/Menu/Index.vue";
 import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
-import { useLayout } from "./layout.js";
+import { useLayout } from "@/hooks/useLayout.js";
 
 const { menuFold, isDark } = useLayout();
 </script>

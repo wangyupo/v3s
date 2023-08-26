@@ -24,7 +24,7 @@ import HeaderTitle from "@/layout/components/HeaderTitle.vue";
 import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
-import { useLayout } from "./layout.js";
+import { useLayout } from "@/hooks/useLayout.js";
 
 const { colorPrimaryBg, isDark } = useLayout();
 </script>
