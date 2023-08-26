@@ -19,11 +19,9 @@ import { ref, computed, onMounted } from "vue";
 
 // 遮罩
 const isReloadMask = ref(true);
-NProgress.start();
 onMounted(() => {
   setTimeout(() => {
     isReloadMask.value = false;
-    NProgress.done();
   }, 1000);
 });
 

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/common";
+import NProgress from "@/utils/nProgress.js";
 
 const login = () => import("@/views/login.vue");
 const main = () => import("@/views/main.vue");
@@ -73,6 +74,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   const hasToken = getLocalStorage("user");
   if (hasToken) {
     const menuList = tree2arr(JSON.parse(getLocalStorage("user")).menu);
@@ -92,6 +94,10 @@ router.beforeEach((to, from, next) => {
     }
     next();
   }
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;
