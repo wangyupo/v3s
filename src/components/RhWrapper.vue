@@ -2,7 +2,7 @@
   <!-- 通用业务包裹 -->
   <div
     :class="[
-      'rh-wrapper flex flex-col bg-white',
+      'rh-wrapper flex flex-col',
       noRound ? 'noRound' : '',
       noBorder ? 'noBorder' : '',
       noXBorder ? 'noXBorder' : '',
