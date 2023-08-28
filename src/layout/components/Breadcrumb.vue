@@ -60,7 +60,12 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@import "../types/common.scss";
+
 .breadcrumb {
+  display: flex;
+  align-items: center;
+  height: $breadHeight !important;
   :deep(.el-breadcrumb__inner.is-link:hover) {
     cursor: pointer;
   }

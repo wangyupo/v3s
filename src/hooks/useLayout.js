@@ -5,9 +5,9 @@ import { useDark } from "@vueuse/core";
 
 export function useLayout() {
   const layoutStore = useLayoutStore();
-  const { menuFold, colorPrimaryBg } = storeToRefs(layoutStore);
+  const { layoutType, menuFold, colorPrimaryBg } = storeToRefs(layoutStore);
 
   const isDark = useDark({ disableTransition: false });
 
-  return { menuFold, colorPrimaryBg, isDark };
+  return { layoutType, menuFold, colorPrimaryBg, isDark };
 }

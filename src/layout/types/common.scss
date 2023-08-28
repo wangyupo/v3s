@@ -1,8 +1,9 @@
 // layout 共用样式
-$headerHeight: 50px;
-$menuFoldWidth: 64px;
-$menuExpandWidth: 200px;
-$menuTranstionDuration: 200ms;
+$headerHeight: 50px; // Header高度
+$breadHeight: 40px; // 面包屑高度
+$menuFoldWidth: 64px; // 菜单宽度-折叠后
+$menuExpandWidth: 200px; // 菜单宽度-展开后
+$menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
 
 .layout {
   width: 100%;
@@ -70,6 +71,11 @@ $menuTranstionDuration: 200ms;
       padding: 0;
       background-color: var(--el-bg-color-overlay);
       border-radius: 4px;
+      &.breadInContent {
+        &:deep(> div) {
+          height: calc(100% - 40px);
+        }
+      }
       &:deep(> div) {
         padding: 12px;
         height: 100%;

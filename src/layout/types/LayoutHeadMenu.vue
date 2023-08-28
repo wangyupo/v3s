@@ -10,8 +10,8 @@
     </el-header>
     <el-container class="layout-main flex-col">
       <RouterHistoryTabs />
-      <el-main class="layout-main-content">
-        <Breadcrumb style="height: auto" />
+      <el-main class="layout-main-content" :class="layoutType === 'LayoutHeadMenu' ? 'breadInContent' : ''">
+        <Breadcrumb />
         <slot></slot>
       </el-main>
     </el-container>
@@ -26,7 +26,7 @@ import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { colorPrimaryBg, isDark } = useLayout();
+const { layoutType, colorPrimaryBg, isDark } = useLayout();
 </script>
 
 <style lang="scss" scoped>
