@@ -2,15 +2,15 @@
   <!-- 路由访问历史&标签右键菜单（注意事项：实际开发请依据定义的字段替换 url、label 这两个字段） -->
   <div class="router-tabs flex flex-shrink-0 items-center px-3 py-1 overflow-x-auto" ref="tabsWrapperRef">
     <div
-      class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm text-gray-600 border border-gray-300 rounded"
-      :class="[tabActive(routeItem) ? 'active' : '']"
+      class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm rounded"
+      :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-white' : 'text-gray-600']"
       v-for="(routeItem, idx) in routeHistory"
       :key="routeItem.url"
       ref="tabRef"
       @click="changeRoute(routeItem, idx)"
       @click.right="showRightMenu($event, routeItem)"
     >
-      <div class="w-[8px] h-[8px] rounded-full bg-[--el-bg-color-overlay] mr-1.5" v-show="tabActive(routeItem)"></div>
+      <div class="w-[8px] h-[8px] rounded-full bg-white mr-1.5" v-show="tabActive(routeItem)"></div>
       {{ routeItem.title }}
       <el-icon class="ml-2" v-if="routeHistory.length != 1" @click.stop="removeRouteHistory(routeItem, idx)">
         <Close />
@@ -19,13 +19,14 @@
 
     <!-- 右键菜单 -->
     <div
-      class="rightClickMenu flex flex-col bg-white fixed rounded shadow-md z-50"
+      class="rightClickMenu flex flex-col fixed rounded z-50 border border-[--el-border-color]"
+      :class="[isDark ? 'dark' : 'bg-white']"
       :style="{ left: menuPositin.x + 'px', top: menuPositin.y + 'px' }"
       v-show="rightMenuVisible"
     >
       <div
         class="rightClickMenu-item py-2 px-4 text-sm cursor-pointer select-none"
-        :class="[item.disabled ? 'disabled' : '']"
+        :class="[item.disabled ? 'disabled cursor-not-allowed' : '', isDark ? '' : '']"
         v-for="item in rightClickMenus"
         :key="item.value"
         @click="handleRouterHistoryMenu(item.value)"
@@ -41,7 +42,10 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
 import { on, off } from "@/utils/dom";
+import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
+
+const { isDark } = useLayout();
 
 const userStore = useUserStore();
 const { routeHistory } = storeToRefs(userStore);
@@ -256,24 +260,29 @@ const setMenuDisabled = () => {
 
 <style lang="scss" scoped>
 .router-tabs {
-  color: var(--el-bg-color-overlay);
   border-top: 1px solid var(--el-border-color-light);
   background-color: var(--el-bg-color-overlay);
+  &-item {
+    border: 1px solid var(--el-border-color);
+  }
   &-item.active {
-    color: var(--el-bg-color-overlay);
+    color: #fff;
     background-color: var(--el-color-primary);
     border: var(--el-color-primary);
   }
 }
 
 .rightClickMenu {
-  color: var(--el-color-primary);
+  color: var(--el-text-color-primary);
+  &.dark {
+    background-color: var(--el-bg-color-overlay);
+  }
   &-item {
     &:hover {
       background-color: var(--el-color-primary-light-9);
     }
     &.disabled {
-      color: var(--el-text-color-placeholder);
+      color: var(--el-disabled-text-color);
       &:hover {
         background: none;
       }
