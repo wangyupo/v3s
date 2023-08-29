@@ -25,6 +25,7 @@
           :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : 'bg-gray-200']"
           v-for="(item, idx) in filterMenuList"
           :key="item.id"
+          @click="nav2Menu(item.url)"
         >
           <div class="flex items-center">
             <el-icon class="mr-2"><Document /></el-icon>
@@ -152,12 +153,17 @@ const selectMenuByKeyboard = e => {
   } else if (key === "Enter") {
     // 回车
     const selectedMenu = filterMenuList.value[parseInt(listSelectIdx.value)];
-    router.push({
-      path: selectedMenu.url,
-    });
-    resetData();
-    closed();
+    nav2Menu(selectedMenu.url);
   }
+};
+
+// To menu && close menu
+const nav2Menu = path => {
+  router.push({
+    path,
+  });
+  resetData();
+  closed();
 };
 
 // 重置数据
