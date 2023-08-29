@@ -9,7 +9,7 @@
     </div>
     <template #dropdown>
       <div class="menu">
-        <div class="menu-item">个人信息</div>
+        <div class="menu-item" @click="handleV3s">项目地址</div>
         <div class="menu-item" @click="handleLoginOut">退出登录</div>
       </div>
     </template>
@@ -23,6 +23,12 @@ import { removeAllLoginInfo } from "@/utils/common";
 
 const router = useRouter();
 
+// 跳转v3s
+const handleV3s = () => {
+  window.open("https://github.com/wangyupo/v3s");
+};
+
+// 退出登录
 const handleLoginOut = params => {
   ElMessageBox.confirm("确认退出系统吗?", "提示", {
     type: "warning",
