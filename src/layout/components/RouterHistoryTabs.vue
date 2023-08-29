@@ -3,7 +3,7 @@
   <div class="router-tabs flex flex-shrink-0 items-center px-3 py-1 overflow-x-auto" ref="tabsWrapperRef">
     <div
       class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm rounded"
-      :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-white' : 'text-gray-600']"
+      :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-[--el-text-color-primary]' : 'text-gray-600']"
       v-for="(routeItem, idx) in routeHistory"
       :key="routeItem.url"
       ref="tabRef"
