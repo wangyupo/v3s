@@ -230,7 +230,6 @@ const setMenuDisabled = () => {
   if (route.path !== currentMenu.value.url && route.meta.targetMenuPath !== currentMenu.value.url) {
     const RefreshIdx = rightClickMenus.value.findIndex(item => item.value === "Refresh");
     rightClickMenus.value[RefreshIdx].disabled = true;
-    return;
   }
   // 只剩单个标签，全部置灰（刷新除外）
   if (routeHistory.value.length === 1) {
@@ -240,19 +239,16 @@ const setMenuDisabled = () => {
       }
       return item;
     });
-    return;
   }
   // 关闭右侧标签页置灰
   if (currentMenuInHistoryIdx === routeHistory.value.length - 1) {
     const RIdx = rightClickMenus.value.findIndex(item => item.value === "R");
     rightClickMenus.value[RIdx].disabled = true;
-    return;
   }
   // 关闭左侧标签页置灰
   if (currentMenuInHistoryIdx === 0) {
     const LIdx = rightClickMenus.value.findIndex(item => item.value === "L");
     rightClickMenus.value[LIdx].disabled = true;
-    return;
   }
 };
 /** menu right click END **/
@@ -276,9 +272,16 @@ const setMenuDisabled = () => {
   color: var(--el-text-color-primary);
   &.dark {
     background-color: var(--el-bg-color-overlay);
+    .rightClickMenu-item:hover {
+      background-color: var(--el-bg-color);
+    }
+    .rightClickMenu-item.disabled:hover {
+      background: none;
+    }
   }
   &-item {
     &:hover {
+      color: var(--el-color-primary);
       background-color: var(--el-color-primary-light-9);
     }
     &.disabled {
