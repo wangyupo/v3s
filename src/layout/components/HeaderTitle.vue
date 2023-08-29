@@ -23,8 +23,8 @@ import { useRouter } from "vue-router";
 const layoutStore = useLayoutStore();
 const { layoutType, menuFold } = storeToRefs(layoutStore);
 
-const title = import.meta.env.VITE_APP_TITLE;
-const titleSimple = import.meta.env.VITE_APP_TITLE_SIMPLE;
+const title = import.meta.env.VITE_SYSTEM_TITLE;
+const titleSimple = import.meta.env.VITE_SYSTEM_TITLE_SIMPLE;
 
 const router = useRouter();
 const toHomePage = () => {

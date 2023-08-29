@@ -6,7 +6,7 @@
  */
 import request from "@/utils/request";
 import qs from "qs";
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+const baseUrl = import.meta.env.VITE_SYSTEM_BASE_URL;
 
 // get传参，参数在url
 export const getBankPersons = params => {
