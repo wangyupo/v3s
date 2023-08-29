@@ -16,16 +16,22 @@
 
 <script setup>
 import MenuItem from "./MenuItem.vue";
-import { useLayoutStore } from "@/stores/layout.js";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, watch, watchEffect } from "vue";
 import { arr2tree } from "@/utils/common.js";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { isDark } = useLayout();
-const layoutStore = useLayoutStore();
-const { menuFold, layoutType } = storeToRefs(layoutStore);
+const { isDark, menuFold, layoutType } = useLayout();
+const el = document.documentElement;
+
+watchEffect(() => {
+  if (layoutType.value == "LayoutHeadMenu" && !isDark.value) {
+    el.style.setProperty("--el-menu-bg-color", "var(--el-color-primary)");
+  } else {
+    el.style.setProperty("--el-menu-bg-color", "transparent");
+  }
+});
 
 const userStore = useUserStore();
 const { menu } = storeToRefs(userStore);
