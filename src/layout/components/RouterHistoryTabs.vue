@@ -25,8 +25,8 @@
       v-show="rightMenuVisible"
     >
       <div
-        class="rightClickMenu-item py-2 px-4 text-sm cursor-pointer select-none"
-        :class="[item.disabled ? 'disabled cursor-not-allowed' : '']"
+        class="rightClickMenu-item py-2 px-4 text-sm select-none"
+        :class="[item.disabled ? 'disabled cursor-not-allowed' : 'cursor-pointer']"
         v-for="item in rightClickMenus"
         :key="item.value"
         @click="handleRouterHistoryMenu(item.value)"
