@@ -5,7 +5,9 @@
 
   <!-- 刷新页面遮罩 -->
   <teleport to="#topSlot">
-    <div class="fixed top-0 bottom-0 w-full h-full bg-white z-10" v-if="isReloadMask"></div>
+    <div class="fixed top-0 bottom-0 w-full h-full bg-white z-10" v-if="isReloadMask">
+      <div id="top-loader"></div>
+    </div>
   </teleport>
 </template>
 
