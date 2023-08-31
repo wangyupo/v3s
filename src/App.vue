@@ -18,6 +18,7 @@ import en from "element-plus/dist/locale/en.mjs";
 import { storeToRefs } from "pinia";
 import { useLayoutStore } from "@/stores/layout.js";
 import { ref, computed, onMounted } from "vue";
+import { addClass, removeClass } from "@/utils/dom.js";
 
 // 遮罩
 const isReloadMask = ref(true);
@@ -27,10 +28,21 @@ onMounted(() => {
   }, 1000);
 });
 
-// 国际化
 const layoutStore = useLayoutStore();
-const { isZh } = storeToRefs(layoutStore);
+const { isZh, isGray } = storeToRefs(layoutStore);
+
+// 国际化
 const locale = computed(() => (isZh.value ? zhCn : en));
+
+// 全站置灰
+onMounted(() => {
+  const el = document.documentElement;
+  if (isGray.value) {
+    addClass(el, "gray");
+  } else {
+    removeClass(el, "gray");
+  }
+});
 </script>
 
 <style lang="scss">

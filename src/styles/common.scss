@@ -4,3 +4,7 @@
 #nprogress .bar {
   background-color: var(--el-color-primary-light-3);
 }
+
+html.gray {
+  filter: grayscale(100%);
+}
