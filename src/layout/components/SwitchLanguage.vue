@@ -16,11 +16,9 @@
 
 <script setup>
 import { ref } from "vue";
-import { storeToRefs } from "pinia";
-import { useLayoutStore } from "@/stores/layout.js";
+import { useLayout } from "@/hooks/useLayout.js";
 
-const layoutStore = useLayoutStore();
-const { isZh } = storeToRefs(layoutStore);
+const { isZh } = useLayout();
 </script>
 
 <style lang="scss" scoped></style>
