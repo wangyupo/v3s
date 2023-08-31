@@ -16,9 +16,9 @@ import NProgress from "@/utils/nProgress.js";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 import { storeToRefs } from "pinia";
-import { useLayoutStore } from "@/stores/layout.js";
 import { ref, computed, onMounted } from "vue";
 import { addClass, removeClass } from "@/utils/dom.js";
+import { useLayout } from "@/hooks/useLayout.js";
 
 // 遮罩
 const isReloadMask = ref(true);
@@ -28,8 +28,7 @@ onMounted(() => {
   }, 1000);
 });
 
-const layoutStore = useLayoutStore();
-const { isZh, isGray } = storeToRefs(layoutStore);
+const { isZh, isGray } = useLayout();
 
 // 国际化
 const locale = computed(() => (isZh.value ? zhCn : en));

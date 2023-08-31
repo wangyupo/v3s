@@ -16,12 +16,10 @@
 </template>
 
 <script setup>
-import { useLayoutStore } from "@/stores/layout.js";
-import { storeToRefs } from "pinia";
+import { useLayout } from "@/hooks/useLayout.js";
 import { useRouter } from "vue-router";
 
-const layoutStore = useLayoutStore();
-const { layoutType, menuFold } = storeToRefs(layoutStore);
+const { layoutType, menuFold } = useLayout();
 
 const title = import.meta.env.VITE_SYSTEM_TITLE;
 const titleSimple = import.meta.env.VITE_SYSTEM_TITLE_SIMPLE;

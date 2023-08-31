@@ -7,11 +7,9 @@
 import LayoutClassic from "./types/LayoutClassic.vue";
 import LayoutSideMenu from "./types/LayoutSideMenu.vue";
 import LayoutHeadMenu from "./types/LayoutHeadMenu.vue";
-import { useLayoutStore } from "@/stores/layout.js";
-import { storeToRefs } from "pinia";
+import { useLayout } from "@/hooks/useLayout.js";
 
-const layoutStore = useLayoutStore();
-const { layoutType } = storeToRefs(layoutStore);
+const { layoutType } = useLayout();
 
 /**
  * 布局类型

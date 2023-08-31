@@ -41,7 +41,6 @@ export const useLayoutStore = defineStore("layout", {
       "layoutType",
       "menuFold",
       "isZh",
-      "isGray",
       "colorPrimaryBg",
       "colorPrimaryLight2",
       "colorPrimaryDark2",
