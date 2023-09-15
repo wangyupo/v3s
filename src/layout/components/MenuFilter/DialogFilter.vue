@@ -115,7 +115,7 @@ const listSelectIdx = ref(0);
 const filterMenuList = ref([]);
 
 const chinese2Pinyin = chinese => {
-  const _PY = pinyin(chinese, { style: "normal", heteronym: true, compact: true }).map(i => i.flat().join(""));
+  const _PY = pinyin(chinese, { style: "first_letter", heteronym: true, compact: true }).map(i => i.flat().join(""));
   return _PY;
 };
 watch(searchVal, val => {
