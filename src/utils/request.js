@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import { debounce } from "lodash-es";
-import { removeEmptyInObj } from "@/utils/common";
+import { removeEmptyInObj } from "@/utils/index";
 
 const debounceErr = debounce(msg => {
   ElMessage.error(msg);

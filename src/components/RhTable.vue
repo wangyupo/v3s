@@ -104,7 +104,7 @@
 </template>
 
 <script setup>
-import { formatPhone, copy, epyReturn } from "@/utils/common";
+import { formatPhone, copy, epyReturn } from "@/utils/index";
 import { onMounted, onUpdated, reactive, ref, useAttrs, watch } from "vue";
 import { debounce, cloneDeep } from "lodash-es";
 

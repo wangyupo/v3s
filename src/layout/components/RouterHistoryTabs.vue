@@ -41,7 +41,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
-import { on, off } from "@/utils/dom";
+import { on, off } from "@/utils/index";
 import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
 

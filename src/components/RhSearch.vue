@@ -92,8 +92,8 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
-import { removeEmptyInObj, typeOf } from "@/utils/common";
-import { on, off } from "@/utils/dom";
+import { removeEmptyInObj, typeOf } from "@/utils/index";
+import { on, off } from "@/utils/index";
 import { cloneDeep, debounce } from "lodash-es";
 import { storeToRefs } from "pinia";
 import { useLayoutStore } from "@/stores/layout.js";

@@ -19,7 +19,7 @@
 <script setup>
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
-import { removeAllLoginInfo } from "@/utils/common";
+import { removeAllLoginInfo } from "@/utils/index";
 
 const router = useRouter();
 

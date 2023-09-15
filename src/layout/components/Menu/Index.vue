@@ -19,7 +19,7 @@ import MenuItem from "./MenuItem.vue";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { ref, computed, reactive, watch, watchEffect } from "vue";
-import { arr2tree } from "@/utils/common.js";
+import { arr2tree } from "@/utils/index.js";
 import { useLayout } from "@/hooks/useLayout.js";
 
 const { isDark, menuFold, layoutType } = useLayout();
