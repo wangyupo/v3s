@@ -17,7 +17,7 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 import { storeToRefs } from "pinia";
 import { ref, computed, onMounted } from "vue";
-import { addClass, removeClass } from "@/utils/dom.js";
+import { addClass, removeClass } from "@/utils/index.js";
 import { useLayout } from "@/hooks/useLayout.js";
 
 // 遮罩

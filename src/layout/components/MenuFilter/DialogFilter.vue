@@ -71,7 +71,7 @@ import { useLayoutStore } from "@/stores/layout.js";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { on, off } from "@/utils/dom";
+import { on, off } from "@/utils/index";
 
 /** dialog START **/
 const layoutStore = useLayoutStore();

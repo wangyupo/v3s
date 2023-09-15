@@ -3,7 +3,7 @@
  */
 import { defineStore } from "pinia";
 import { cloneDeep } from "lodash-es";
-import { tree2arr } from "@/utils/common";
+import { tree2arr } from "@/utils/index";
 
 export const useUserStore = defineStore("user", {
   state: () => ({

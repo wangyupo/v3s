@@ -18,7 +18,7 @@ import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
 import { useLayoutStore } from "@/stores/layout.js";
 import { storeToRefs } from "pinia";
-import { tree2arr } from "@/utils/common";
+import { tree2arr } from "@/utils/index";
 import { cloneDeep } from "lodash-es";
 
 const breadcrumb = ref([]);

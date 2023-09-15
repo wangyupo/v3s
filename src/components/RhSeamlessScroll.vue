@@ -20,7 +20,7 @@
 <script setup>
 import { computed, nextTick, onUnmounted, reactive, ref, watch } from "vue";
 import { cloneDeep } from "lodash-es";
-import { typeOf } from "@/utils/common.js";
+import { typeOf } from "@/utils/index.js";
 
 const props = defineProps({
   // 列表数据（用途：监听变化，并初始化数据填充后的列表高度）

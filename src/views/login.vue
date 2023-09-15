@@ -60,7 +60,7 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
-import { arr2tree } from "@/utils/common.js";
+import { arr2tree } from "@/utils/index.js";
 import menuJson from "@/router/menu.json";
 
 const router = useRouter();

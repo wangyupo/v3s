@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
-import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/common";
+import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/index";
 import NProgress from "@/utils/nProgress.js";
 
 const login = () => import("@/views/login.vue");
