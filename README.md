@@ -40,27 +40,26 @@ v3s 采用非常简单直观的项目目录结构
 
 ```
 ├──src
-    ├──api
-    │  └── api.js       # api文件
-    ├──assets
-    │  └── no-data.png  # 图片、第三方js
-    ├──components
-    │  └── RhTable      # 公共组件
-    ├──layout
-    │  └── index.vue    # 布局文件
-    ├──router
-    │  └── index.js     # 路由文件
-    ├──stores
-    │  └── aExample.js  # pinia文件
-    ├──styles
-    │  ├── iconfont     # iconfont文件
-    │  └── common.scss  # 全局样式文件
-    ├──utils
-    │  ├── request.js   # axios配置
-    │  └── common.js    # 常用功能函数
-    └──views
-       ├── aExample     # 常用功能示例，即粘即用
-       └── login.vue    # 主要业务文件
+    ├──api               # api目录
+    │   └── api.js
+    ├──assets            # 资源（图片、第三方js）目录
+    │   └── no-data.png
+    ├──components        # 公共组件目录
+    │   └── RhTable
+    ├──layout            # 布局目录
+    │   └── index.vue
+    ├──router            # 路由目录
+    │   └── index.js
+    ├──stores            # pinia目录
+    │   └── aExample.js
+    ├──styles            # 样式目录
+    │   ├── iconfont        # iconfont文件
+    │   └── common.scss     # 全局样式文件
+    ├──utils             # 函数目录
+    │   ├── index.js        # 函数入口
+    │   └── request.js      # axios配置
+    └──views              # 业务目录
+        └── aExample        # 功能示例，即粘即用
 ```
 
 ## 快速启用
