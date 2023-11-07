@@ -117,7 +117,7 @@ const changeRoute = (currentRoute, index) => {
 const removeRouteHistory = (currentRoute, idx) => {
   if (routeHistory.value.length === 1) return;
   userStore.delRouterHistory(idx);
-  if (currentRoute.url === route.path) {
+  if (route.path == tabRoute.path || route.meta.targetMenuPath == tabRoute.path) {
     router.push({
       path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
     });
