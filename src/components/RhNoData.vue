@@ -4,8 +4,7 @@
     <!-- 这是一个罩子，目的是不让用户选中文字、拖动图片，优化体验 -->
     <div class="absolute top-0 left-0 right-0 bottom-0 z-10"></div>
     <div class="rh-noData-main relative">
-      <img class="rh-noData-img" src="@/assets/no-data.png" alt="" />
-      <div class="rh-noData-txt absolute">{{ description }}</div>
+      <el-empty :description="description" v-if="!$slots.empty" />
     </div>
   </div>
 </template>
