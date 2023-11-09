@@ -114,14 +114,12 @@ const changeRoute = (currentRoute, index) => {
 };
 
 // 点击 x 删除标签及历史记录
-const removeRouteHistory = (currentRoute, idx) => {
+const removeRouteHistory = (tabRoute, idx) => {
   if (routeHistory.value.length === 1) return;
   userStore.delRouterHistory(idx);
-  if (route.path == tabRoute.path || route.meta.targetMenuPath == tabRoute.path) {
-    router.push({
-      path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
-    });
-  }
+  router.push({
+    path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
+  });
 };
 /** menu click End **/
 
