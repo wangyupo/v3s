@@ -15,12 +15,10 @@
 import { ref } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import { debounce } from "lodash-es";
-import { useLayoutStore } from "@/stores/layout.js";
-import { storeToRefs } from "pinia";
+import { useLayout } from "@/hooks/useLayout.js";
 import DialogFilter from "./DialogFilter.vue";
 
-const layoutStore = useLayoutStore();
-const { menuFilterDialogVisible } = storeToRefs(layoutStore);
+const { layoutStore, menuFilterDialogVisible } = useLayout();
 
 const showFilterDialog = debounce(() => {
   layoutStore.$patch(state => {

@@ -67,14 +67,11 @@
 import pinyin from "pinyin";
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { useLayoutStore } from "@/stores/layout.js";
 import { useUserStore } from "@/stores/user.js";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { on, off } from "@/utils/index";
 
 /** dialog START **/
-const layoutStore = useLayoutStore();
 const emits = defineEmits(["update:modelValue"]);
 const dialogVisible = ref(false);
 

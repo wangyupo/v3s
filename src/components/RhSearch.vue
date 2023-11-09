@@ -95,12 +95,9 @@ import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { removeEmptyInObj, typeOf } from "@/utils/index";
 import { on, off } from "@/utils/index";
 import { cloneDeep, debounce } from "lodash-es";
-import { storeToRefs } from "pinia";
-import { useLayoutStore } from "@/stores/layout.js";
+import { useLayout } from "@/hooks/useLayout.js";
 
-const layoutStore = useLayoutStore();
-const { menuFilterDialogVisible } = storeToRefs(layoutStore);
-
+const { menuFilterDialogVisible } = useLayout();
 const emit = defineEmits(["search"]);
 const props = defineProps({
   // 搜索配置
