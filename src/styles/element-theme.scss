@@ -22,7 +22,8 @@
   background-color: var(--el-color-primary);
 }
 
-.el-menu-item.is-active {
+.el-menu-item.is-active,
+.el-sub-menu.is-active:not(.is-opened) {
   background-color: var(--el-color-primary-dark-2);
 }
 
