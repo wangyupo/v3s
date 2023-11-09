@@ -6,7 +6,20 @@ import { debounce } from "lodash-es";
 
 export function useLayout() {
   const layoutStore = useLayoutStore();
-  const { layoutType, menuFold, colorPrimaryBg, isGray, isZh } = storeToRefs(layoutStore);
+  const {
+    layoutType,
+    menuFold,
+    colorPrimaryBg,
+    colorPrimaryLight2,
+    colorPrimaryLight9,
+    colorPrimaryLight7,
+    colorPrimaryLight4,
+    colorPrimaryLight5,
+    colorPrimaryDark2,
+    isGray,
+    isZh,
+    menuFilterDialogVisible,
+  } = storeToRefs(layoutStore);
 
   const isDark = useDark({ disableTransition: false }); // 是否暗黑模式
 
@@ -17,5 +30,21 @@ export function useLayout() {
     });
   }, 150);
 
-  return { isDark, toggleMenuFold, layoutType, menuFold, colorPrimaryBg, isGray, isZh };
+  return {
+    layoutStore,
+    isDark,
+    toggleMenuFold,
+    layoutType,
+    menuFold,
+    colorPrimaryBg,
+    colorPrimaryLight2,
+    colorPrimaryLight9,
+    colorPrimaryLight7,
+    colorPrimaryLight4,
+    colorPrimaryLight5,
+    colorPrimaryDark2,
+    isGray,
+    isZh,
+    menuFilterDialogVisible,
+  };
 }

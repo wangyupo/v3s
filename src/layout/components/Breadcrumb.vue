@@ -16,7 +16,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
-import { useLayoutStore } from "@/stores/layout.js";
+import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
 import { tree2arr } from "@/utils/index";
 import { cloneDeep } from "lodash-es";
@@ -24,9 +24,8 @@ import { cloneDeep } from "lodash-es";
 const breadcrumb = ref([]);
 const route = useRoute();
 const userStore = useUserStore();
-const userLayout = useLayoutStore();
 const { menu } = storeToRefs(userStore);
-const { layoutType } = storeToRefs(userLayout);
+const { layoutType } = useLayout();
 
 const noBreadCrumbPath = ref(["/404"]); //不需要显示面包屑的路由
 

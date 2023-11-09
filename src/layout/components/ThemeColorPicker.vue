@@ -8,13 +8,12 @@
 </template>
 
 <script setup>
-import { useLayoutStore } from "@/stores/layout.js";
-import { storeToRefs } from "pinia";
-import { TinyColor } from "@ctrl/tinycolor";
 import { onMounted } from "vue";
+import { TinyColor } from "@ctrl/tinycolor";
+import { useLayout } from "@/hooks/useLayout.js";
 
-const layoutStore = useLayoutStore();
 const {
+  layoutStore,
   colorPrimaryBg,
   colorPrimaryLight2,
   colorPrimaryLight9,
@@ -22,7 +21,7 @@ const {
   colorPrimaryLight4,
   colorPrimaryLight5,
   colorPrimaryDark2,
-} = storeToRefs(layoutStore);
+} = useLayout();
 
 // 加载主题色
 onMounted(() => {
