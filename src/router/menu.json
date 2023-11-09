@@ -4,6 +4,7 @@
     "parentId": "0",
     "url": "/home",
     "title": "首页",
+    "icon": "icon-shouye",
     "hidden": 0
   },
 
@@ -12,6 +13,7 @@
     "parentId": "0",
     "url": "",
     "title": "嵌套路由",
+    "icon": "icon-caidan",
     "hidden": 0
   },
   {
@@ -41,6 +43,7 @@
     "parentId": "0",
     "url": "",
     "title": "组件",
+    "icon": "icon-kaifazujian",
     "hidden": 0
   },
   {

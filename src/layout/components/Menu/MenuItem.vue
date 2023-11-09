@@ -4,7 +4,7 @@
     <template v-if="menu.children && menu.children.length > 0">
       <el-sub-menu :key="menu.id" :index="menu.id">
         <template #title>
-          <i :class="['iconfont text-2xl mr-2 menuItem-ew-icon', menu.icon]" v-if="menu.icon"></i>
+          <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu.icon]" v-if="menu.icon"></i>
           <span>{{ menu.title }}</span>
         </template>
         <MenuItem :menu="menu.children" />
@@ -12,7 +12,7 @@
     </template>
 
     <el-menu-item v-else-if="menu.url" :index="menu.url" :key="menu.id">
-      <i :class="['iconfont text-2xl mr-2 menuItem-ew-icon', menu.icon]" v-if="menu.icon"></i>
+      <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu.icon]" v-if="menu.icon"></i>
       <template #title>
         <span>{{ menu.title }}</span>
       </template>
