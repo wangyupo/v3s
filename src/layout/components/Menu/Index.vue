@@ -1,11 +1,11 @@
 <template>
   <!-- 菜单 -->
+  {{ isDark }}
   <el-menu
     class="menu"
     :class="[isDark ? 'dark' : '']"
     router
     unique-opened
-    :popper-effect="[isDark ? 'light' : 'dark']"
     :mode="mode"
     :collapse="menuFold"
     :collapse-transition="false"
