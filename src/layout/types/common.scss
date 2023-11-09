@@ -69,7 +69,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       position: relative;
       margin: 12px;
       padding: 0;
-      background-color: var(--el-bg-color-overlay);
+      background-color: #fff;
       border-radius: 4px;
       &.breadInContent {
         &:deep(> div) {
