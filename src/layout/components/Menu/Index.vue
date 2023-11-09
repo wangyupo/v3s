@@ -5,6 +5,7 @@
     :class="[isDark ? 'dark' : '']"
     router
     unique-opened
+    :popper-effect="[isDark ? 'light' : 'dark']"
     :mode="mode"
     :collapse="menuFold"
     :collapse-transition="false"
