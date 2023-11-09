@@ -22,6 +22,12 @@
   background-color: var(--el-color-primary);
 }
 
+html.dark {
+  .el-menu--popup-container {
+    background-color: var(--el-bg-color-overlay);
+  }
+}
+
 .el-menu-item.is-active,
 .el-sub-menu.is-active:not(.is-opened) {
   background-color: var(--el-color-primary-dark-2);
