@@ -1,6 +1,5 @@
 <template>
   <!-- 菜单 -->
-  {{ isDark }}
   <el-menu
     class="menu"
     :class="[isDark ? 'dark' : '']"
