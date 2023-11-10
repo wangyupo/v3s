@@ -13,7 +13,7 @@
     </div>
     <!-- 右侧插槽 -->
     <div>
-      <slot name="right-slot"></slot>
+      <slot name="title-right"></slot>
     </div>
   </div>
 </template>
