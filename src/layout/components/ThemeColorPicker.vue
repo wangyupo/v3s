@@ -1,14 +1,19 @@
 <template>
   <!-- 主题颜色选择器 -->
   <el-tooltip effect="dark" :content="`切换主题色`" placement="bottom" :show-after="250">
-    <div class="px-3 flex items-center h-full hover:bg-[--el-color-primary-dark-2]">
-      <el-color-picker popper-class="mt-3" v-model="colorPrimaryBg" @change="changeThemeColor" />
+    <div class="px-3 flex items-center h-full">
+      <el-color-picker
+        popper-class="mt-3"
+        v-model="colorPrimaryBg"
+        :predefine="predefineColors"
+        @change="changeThemeColor"
+      />
     </div>
   </el-tooltip>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { TinyColor } from "@ctrl/tinycolor";
 import { useLayout } from "@/hooks/useLayout.js";
 
@@ -22,6 +27,7 @@ const {
   colorPrimaryLight5,
   colorPrimaryDark2,
 } = useLayout();
+const predefineColors = ref(["#385DE3", "#6935AD", "#7B1E10", "#925F69", "#558748", "#695770"]);
 
 // 加载主题色
 onMounted(() => {
