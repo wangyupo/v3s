@@ -27,7 +27,7 @@ const {
   colorPrimaryLight5,
   colorPrimaryDark2,
 } = useLayout();
-const predefineColors = ref(["#385DE3", "#6935AD", "#7B1E10", "#925F69", "#558748", "#695770"]);
+const predefineColors = ref(["#385DE3", "#6935AD", "#925F69", "#558748", "#7B1E10", "#695770", "#515a6e"]);
 
 // 加载主题色
 onMounted(() => {
