@@ -11,7 +11,7 @@ export const useLayoutStore = defineStore("layout", {
     isZh: true, // 是否中文
     isGray: false, // 是否全站灰色
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
-    colorPrimaryBg: "", // parimary 背景色
+    colorPrimaryBg: "#515a6e", // parimary 背景色
     colorPrimaryLight2: "", // parimary hover 背景色
     colorPrimaryLight9: "", // default hover 背景色
     colorPrimaryLight7: "", // default hover 边框色
@@ -27,7 +27,7 @@ export const useLayoutStore = defineStore("layout", {
     },
     // 重置主题色
     resetColors() {
-      this.colorPrimaryBg = "";
+      this.colorPrimaryBg = "#515a6e";
       this.colorPrimaryLight2 = "";
       this.colorPrimaryDark2 = "";
       this.colorPrimaryLight9 = "";
