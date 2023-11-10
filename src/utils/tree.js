@@ -34,6 +34,7 @@ export function arr2tree(list, id = "id", pId = "parentId") {
  * @returns {Array} 数组
  */
 export function tree2arr(data, children = "children") {
+  if (!data) return;
   if (!isArray(data)) {
     data = [data];
   }
@@ -51,7 +52,7 @@ export function tree2arr(data, children = "children") {
         obj[key] = cur[key];
       }
     }
-    return pre.concat([obj], tree2arr(cur[children]));
+    return pre.concat([obj], tree2arr(cur[children] ? cur[children] : []));
   }, []);
 }
 
