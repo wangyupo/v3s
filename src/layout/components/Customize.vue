@@ -10,7 +10,7 @@
     <div class="">
       <RhTitle title="切换布局"></RhTitle>
       <div class="flex">
-        <el-radio-group v-model="layoutType" @change="changeLayoutStyle">
+        <el-radio-group v-model="layoutType">
           <el-radio v-for="(item, index) in layouts" :key="index" class="layout-item" :label="item.layout">
             <div class="flex flex-col justify-center items-center ml-[30px] mb-3 first:ml-0">
               <i class="iconfont text-4xl" :class="item.icon"></i>
@@ -30,13 +30,19 @@
         <ThemeColorPicker class="ml-4"></ThemeColorPicker>
       </div>
     </div>
+
+    <div class="absolute bottom-0 left-0 right-0 flex justify-end p-4">
+      <el-button type="danger" @click="handleClearStorage">清空缓存并刷新页面</el-button>
+    </div>
   </el-drawer>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
+import { deleteAllCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const { layoutStore, layoutType, colorPrimaryBg } = useLayout();
 const drawerVisible = ref(false);
@@ -51,11 +57,20 @@ const openDrawer = () => {
   drawerVisible.value = true;
 };
 
-// 切换布局
-const changeLayoutStyle = type => {
-  console.log(123, type);
-  return;
-  layoutStore.changeLayoutType(type);
+// 清空缓存并刷新页面
+const handleClearStorage = () => {
+  ElMessageBox.confirm(`该操作将清空所有缓存，清空后需要重新登录，确认清空缓存?`, "清空缓存", {
+    confirmButtonText: "确认",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      sessionStorage.clear();
+      localStorage.clear();
+      deleteAllCookies();
+      window.location.reload();
+    })
+    .catch(() => {});
 };
 </script>
 
