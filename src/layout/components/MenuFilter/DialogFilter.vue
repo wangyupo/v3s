@@ -22,7 +22,9 @@
       <div class="mt-4" ref="menuListRef" v-if="searchVal && filterMenuList.length">
         <div
           class="flex items-center justify-between mt-2 p-3 h-[60px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
-          :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+          :class="[
+            listSelectIdx === idx ? 'bg-blue-500 text-white' : isDark ? 'text-[#333] bg-gray-200' : 'bg-gray-200',
+          ]"
           v-for="(item, idx) in filterMenuList"
           :key="item.id"
           @click="nav2Menu(item.url)"
@@ -34,7 +36,7 @@
           <i class="iconfont icon-enter text-xl"></i>
         </div>
       </div>
-      <RhNoData v-else />
+      <RhNoData :imageSize="100" v-else />
     </div>
 
     <template #footer>
@@ -68,6 +70,7 @@ import pinyin from "pinyin";
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import { useUserStore } from "@/stores/user.js";
+import { useLayout } from "@/hooks/useLayout.js";
 import { useRouter } from "vue-router";
 import { on, off } from "@/utils/index";
 
@@ -104,6 +107,7 @@ const closed = () => {
 /** dialog END **/
 
 /** menu filter START **/
+const { isDark } = useLayout();
 const userStore = useUserStore();
 const router = useRouter();
 const searchVal = ref("");
@@ -112,8 +116,12 @@ const listSelectIdx = ref(0);
 const filterMenuList = ref([]);
 
 const chinese2Pinyin = chinese => {
-  const _PY = pinyin(chinese, { style: "first_letter", heteronym: true, compact: true }).map(i => i.flat().join(""));
-  return _PY;
+  const _PY_NORMAL = pinyin(chinese, { style: "normal", heteronym: true, compact: true }).map(i => i.flat().join(""));
+  const _PY_FIRST_LETTER = pinyin(chinese, { style: "first_letter", heteronym: true, compact: true }).map(i =>
+    i.flat().join("")
+  );
+  const RES = _PY_NORMAL.concat(_PY_FIRST_LETTER);
+  return RES;
 };
 watch(searchVal, val => {
   const valPinyinArr = chinese2Pinyin(val);
