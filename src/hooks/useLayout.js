@@ -7,8 +7,6 @@ import { debounce } from "lodash-es";
 export function useLayout() {
   const layoutStore = useLayoutStore();
   const {
-    layoutType,
-    menuFold,
     colorPrimaryBg,
     colorPrimaryLight2,
     colorPrimaryLight9,
@@ -16,6 +14,8 @@ export function useLayout() {
     colorPrimaryLight4,
     colorPrimaryLight5,
     colorPrimaryDark2,
+    layoutType,
+    menuFold,
     isGray,
     isZh,
     menuFilterDialogVisible,
@@ -31,11 +31,6 @@ export function useLayout() {
   }, 150);
 
   return {
-    layoutStore,
-    isDark,
-    toggleMenuFold,
-    layoutType,
-    menuFold,
     colorPrimaryBg,
     colorPrimaryLight2,
     colorPrimaryLight9,
@@ -43,6 +38,11 @@ export function useLayout() {
     colorPrimaryLight4,
     colorPrimaryLight5,
     colorPrimaryDark2,
+    layoutStore,
+    isDark,
+    toggleMenuFold,
+    layoutType,
+    menuFold,
     isGray,
     isZh,
     menuFilterDialogVisible,
