@@ -117,9 +117,11 @@ const changeRoute = (currentRoute, index) => {
 const removeRouteHistory = (tabRoute, idx) => {
   if (routeHistory.value.length === 1) return;
   userStore.delRouterHistory(idx);
-  router.push({
-    path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
-  });
+  if (route.path == tabRoute.url || route.meta.targetMenuPath == tabRoute.url) {
+    router.push({
+      path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
+    });
+  }
 };
 /** menu click End **/
 
