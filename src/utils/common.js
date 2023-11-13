@@ -10,6 +10,17 @@ export function removeAllLoginInfo() {
   removeLocalStorage("user");
 }
 
+// 删除所有cookie
+export function deleteAllCookies() {
+  var cookies = document.cookie.split(";");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    var eqPos = cookie.indexOf("=");
+    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+}
+
 /**
  * 存储localStorage
  * @param {String} name 名称
@@ -189,120 +200,6 @@ export const copy = (data, label = "") => {
     message: (label ? `“${label}” ` : "") + `复制成功`,
   });
   oInput.remove();
-};
-
-/**
- * 获取开始日期至结束日期的所有日期
- * @param {*} starDay 开始日期 2023-05-10
- * @param {*} endDay 结束日期 2023-06-09
- * @returns {Array} ["2023-05-10", "2023-05-11", "2023-05-12", ... , "2023-06-09"]
- */
-export const getAllDay = (starDay, endDay) => {
-  let arr = [];
-  let dates = [];
-
-  // 设置两个日期UTC时间
-  let db = new Date(starDay);
-  let de = new Date(endDay);
-
-  // 获取两个日期GTM时间
-  let s = db.getTime() - 24 * 60 * 60 * 1000;
-  let d = de.getTime() - 24 * 60 * 60 * 1000;
-
-  // 获取到两个日期之间的每一天的毫秒数
-  for (let i = s; i <= d; ) {
-    i = i + 24 * 60 * 60 * 1000;
-    arr.push(parseInt(i));
-  }
-
-  // 获取每一天的时间  YY-MM-DD
-  for (let j in arr) {
-    let time = new Date(arr[j]);
-    let year = time.getFullYear(time);
-    let mouth = time.getMonth() + 1 >= 10 ? time.getMonth() + 1 : "0" + (time.getMonth() + 1);
-    let day = time.getDate() >= 10 ? time.getDate() : "0" + time.getDate();
-    let YYMMDD = year + "-" + mouth + "-" + day;
-    dates.push(YYMMDD);
-  }
-
-  return dates;
-};
-
-/**
- * 返回当天日期
- * @returns {String} 2025-07-01
- */
-export const getTodayDate = () => {
-  // 获取当前日期
-  let date = new Date();
-  // 获取当前月份
-  let nowMonth = date.getMonth() + 1;
-  // 获取当前是几号
-  let strDate = date.getDate();
-  // 添加分隔符“-”
-  let seperator = "-";
-  // 对月份进行处理，1-9月在前面添加一个“0”
-  if (nowMonth >= 1 && nowMonth <= 9) {
-    nowMonth = "0" + nowMonth;
-  }
-  // 对日期进行处理，1-9号在前面添加一个“0”
-  if (strDate >= 0 && strDate <= 9) {
-    strDate = "0" + strDate;
-  }
-  // 最后拼接字符串，得到一个格式为(yyyy-MM-dd)的日期
-  let nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
-  return nowDate;
-};
-
-/**
- * 获取当前天起，接下来7天的日期、周数组成的对象数组
- * @param {*} day 需要获取未来 n 天的数据，默认7天
- * @returns {Array} [{ week: "周一", date: "07-01", fullDate: "2025-07-01" }, ...]
- */
-export const getNext7Day = (day = 7) => {
-  let arr = [];
-  for (let i = 0; i < day; i++) {
-    let weekDayArr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-    let myDate = new Date();
-    let milliseconds = myDate.getTime() + 1000 * 60 * 60 * 24 * i;
-    let newMyDate = new Date(milliseconds);
-    let weekDay = newMyDate.getDay();
-    let year = newMyDate.getFullYear();
-    let month = newMyDate.getMonth() + 1;
-    let day = newMyDate.getDate();
-    arr.push({
-      week: weekDayArr[weekDay],
-      date: (month < 10 ? "0" + month : month + "") + "-" + (day < 10 ? "0" + day : day + ""),
-      fullDate: year + "-" + (month < 10 ? "0" + month : month + "") + "-" + (day < 10 ? "0" + day : day + ""),
-    });
-  }
-  return arr;
-};
-
-/**
- * 获取指定日期的一整周日期、周数组成的对象数组
- * @param {*} date 指定日期（随便指定，会自动计算其所属周的周一到周日的全部数据）
- * @returns {Array} [{ week: "周一", date: "07-01", fullDate: "2025-07-01" }, ...]
- */
-export const getWeekTime = date => {
-  let new_Date = new Date(date ? date : getTodayDate());
-  let timesStamp = new_Date.getTime();
-  let currenDay = new_Date.getDay();
-  let arr = [];
-  let weekDayArr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-  for (let i = 0; i < 7; i++) {
-    let newMyDate = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - ((currenDay + 6) % 7)));
-    let weekDay = newMyDate.getDay();
-    let year = newMyDate.getFullYear();
-    let month = newMyDate.getMonth() + 1;
-    let day = newMyDate.getDate();
-    arr.push({
-      week: weekDayArr[weekDay],
-      date: (month < 10 ? "0" + month : month + "") + "-" + (day < 10 ? "0" + day : day + ""),
-      fullDate: year + "-" + (month < 10 ? "0" + month : month + "") + "-" + (day < 10 ? "0" + day : day + ""),
-    });
-  }
-  return arr;
 };
 
 /**
