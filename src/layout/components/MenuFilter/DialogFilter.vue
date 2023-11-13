@@ -75,13 +75,6 @@ import { on, off } from "@/utils/index";
 const emits = defineEmits(["update:modelValue"]);
 const dialogVisible = ref(false);
 
-watch(
-  () => props.modelValue,
-  val => {
-    dialogVisible.value = val;
-  }
-);
-
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -89,6 +82,13 @@ const props = defineProps({
     default: false,
   },
 });
+
+watch(
+  () => props.modelValue,
+  val => {
+    dialogVisible.value = val;
+  }
+);
 
 // 弹窗开启
 const opened = () => {
