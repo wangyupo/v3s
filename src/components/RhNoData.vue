@@ -15,10 +15,7 @@ const props = defineProps({
     type: String,
     default: "暂无数据",
   },
-  imageSize: {
-    type: Number,
-    default: "",
-  },
+  imageSize: Number,
 });
 </script>
 
