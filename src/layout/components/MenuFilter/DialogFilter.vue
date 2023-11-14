@@ -36,7 +36,7 @@
           <i class="iconfont icon-enter text-xl"></i>
         </div>
       </div>
-      <RhNoData :imageSize="100" v-else />
+      <RhNoData v-else />
     </div>
 
     <template #footer>
