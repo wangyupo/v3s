@@ -6,7 +6,7 @@
     separator="/"
     v-if="!noBreadCrumbPath.includes(route.path) && breadcrumb.length"
   >
-    <el-breadcrumb-item v-for="route in breadcrumb" :key="route.id" :to="route.url">
+    <el-breadcrumb-item v-for="route in breadcrumb" :key="route.id" :to="route[menuKey.url]">
       {{ route.title }}
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -20,13 +20,13 @@ import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
 import { tree2arr } from "@/utils/index";
 import { cloneDeep } from "lodash-es";
+import { menuKey } from "@/router/menuConfig.js";
 
 const breadcrumb = ref([]);
 const route = useRoute();
 const userStore = useUserStore();
 const { menu } = storeToRefs(userStore);
 const { layoutType } = useLayout();
-
 const noBreadCrumbPath = ref(["/404"]); //不需要显示面包屑的路由
 
 watch(
@@ -45,11 +45,11 @@ watch(
       }
       result.push(currentRoute);
     }
-    const currentRoute = list.find(item => item.url === route.path);
+    const currentRoute = list.find(item => item[menuKey.url] === route.path);
     if (currentRoute) {
       getParentRoute(currentRoute);
       breadcrumb.value = cloneDeep(result).map((i, idx) => {
-        if (idx === result.length - 1) i.url = "";
+        if (idx === result.length - 1) i[menuKey.url] = "";
         return i;
       });
     }

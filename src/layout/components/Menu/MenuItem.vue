@@ -11,7 +11,7 @@
       </el-sub-menu>
     </template>
 
-    <el-menu-item v-else-if="menu.url" :index="menu.url" :key="menu.id">
+    <el-menu-item v-else-if="menu[menuKey.url]" :index="menu[menuKey.url]" :key="menu.id">
       <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu.icon]" v-if="menu.icon"></i>
       <template #title>
         <span>{{ menu.title }}</span>
@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+import { menuKey } from "@/router/menuConfig.js";
+
 const props = defineProps({
   menu: {
     type: Array,
