@@ -17,27 +17,9 @@ const props = defineProps({
   },
   imageSize: {
     type: Number,
-    default: "200",
+    default: "",
   },
 });
 </script>
 
-<style lang="scss" scoped>
-.rh-noData {
-  &-main {
-    min-width: 300px;
-    height: 200px;
-  }
-  &-img {
-    width: 100%;
-    height: 100%;
-  }
-  &-txt {
-    bottom: 16px;
-    text-align: center;
-    width: 100%;
-    line-height: 20px;
-    color: #909399;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
