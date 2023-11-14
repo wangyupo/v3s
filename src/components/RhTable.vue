@@ -66,7 +66,7 @@
           <!-- 自定义列 -->
           <template #default="scope">
             <div class="inline" @click="handleCopy(scope.$index, scope.row, column)">
-              <slot :name="column.prop" :scope="scope">
+              <slot :name="column.prop" :scope="scope" :table-data="_tableData.data">
                 <!-- 识别并格式化手机号 -->
                 <template v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
                   {{ formatPhone(scope.row[column.prop]) }}
