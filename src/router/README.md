@@ -14,21 +14,7 @@
 
 #### 三、我的后端告诉我，我们的服务定义 path 是路由路径，pId 表示路由的父级路由，我需要修改哪些地方？
 
-1、首先，你需要修改主路由及拆分路由里的字段，搜索关键字 url、parentId，并将其替换为 path、pId，这些文件的路径通常在这里：
-
-```
-/src/router
-```
-
-2、其次，你要在一下这些文件夹搜索关键字 url、parentId，并将其替换为 path、pId
-
-```
-/src/router
-/src/layout/components/Menu
-/src/layout/components/MenuFilter
-/src/layout/components/Breadcrumb.vue
-/src/layout/components/RouterHistoryTabs.vue
-```
+替换 /src/router/menuConfig.js 中的 key 即可。
 
 #### 四、我有多层路由，如何组织面包屑？二级或者更深级路由如何使左侧菜单仍然保持高亮？
 
