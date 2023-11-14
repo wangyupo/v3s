@@ -1,11 +1,11 @@
 <template>
-  <!-- 路由访问历史&标签右键菜单（注意事项：实际开发请依据定义的字段替换 url、label 这两个字段） -->
+  <!-- 路由访问历史&标签右键菜单（注意事项：实际开发请依据定义的字段配置 /src/router/menuConfig.js 中的 key） -->
   <div class="router-tabs flex flex-shrink-0 items-center px-3 py-1 overflow-x-auto" ref="tabsWrapperRef">
     <div
       class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm rounded"
       :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-[--el-text-color-primary]' : 'text-gray-600']"
       v-for="(routeItem, idx) in routeHistory"
-      :key="routeItem.url"
+      :key="routeItem[menuKey.url]"
       ref="tabRef"
       @click="changeRoute(routeItem, idx)"
       @click.right="showRightMenu($event, routeItem)"
@@ -44,20 +44,18 @@ import { useUserStore } from "@/stores/user.js";
 import { on, off } from "@/utils/index";
 import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
+import { menuKey } from "@/router/menuConfig.js";
 
 const { isDark } = useLayout();
-
 const userStore = useUserStore();
 const { routeHistory } = storeToRefs(userStore);
-
 const route = useRoute();
 const router = useRouter();
-
 const tabsWrapperRef = ref();
 const tabRef = ref();
 
 const tabActive = routeItem => {
-  if (route.path === routeItem.url || route.meta.targetMenuPath === routeItem.url) {
+  if (route.path === routeItem[menuKey.url] || route.meta.targetMenuPath === routeItem[menuKey.url]) {
     return true;
   }
   return false;
@@ -74,9 +72,9 @@ const scrollTabs = index => {
 watch(
   route,
   val => {
-    let currentRoute = userStore.menuArrWithoutEmptyUrl.find(i => i.url === val.path);
+    let currentRoute = userStore.menuArrWithoutEmptyUrl.find(i => i[menuKey.url] === val.path);
     nextTick(() => {
-      const routeIdxInHistory = routeHistory.value.findIndex(i => i.url === val.path);
+      const routeIdxInHistory = routeHistory.value.findIndex(i => i[menuKey.url] === val.path);
       scrollTabs(routeIdxInHistory);
     });
     if (!currentRoute) return;
@@ -89,12 +87,11 @@ watch(
       }
       currentRoute = findParentRouteWithoutHidden(currentRoute);
     }
-    const { url, title } = currentRoute;
-    if (routeHistory.value.findIndex(i => i.url === url) !== -1) return;
+    if (routeHistory.value.findIndex(i => i[menuKey.url] === currentRoute[menuKey.url]) !== -1) return;
     userStore.$patch(state => {
       state.routeHistory.push({
-        url,
-        title,
+        [menuKey.url]: currentRoute[menuKey.url],
+        title: currentRoute.title,
       });
     });
     setTimeout(() => {
@@ -107,9 +104,8 @@ watch(
 // 点击标签跳转
 const changeRoute = (currentRoute, index) => {
   scrollTabs(index);
-  const { url } = currentRoute;
   router.push({
-    path: url,
+    path: currentRoute[menuKey.url],
   });
 };
 
@@ -117,9 +113,9 @@ const changeRoute = (currentRoute, index) => {
 const removeRouteHistory = (tabRoute, idx) => {
   if (routeHistory.value.length === 1) return;
   userStore.delRouterHistory(idx);
-  if (route.path == tabRoute.url || route.meta.targetMenuPath == tabRoute.url) {
+  if (route.path == tabRoute[menuKey.url] || route.meta.targetMenuPath == tabRoute[menuKey.url]) {
     router.push({
-      path: routeHistory.value[idx] ? routeHistory.value[idx].url : routeHistory.value[idx - 1].url,
+      path: routeHistory.value[idx] ? routeHistory.value[idx][menuKey.url] : routeHistory.value[idx - 1][menuKey.url],
     });
   }
 };
@@ -189,12 +185,12 @@ const showRightMenu = (e, clickMenu) => {
 
 // 菜单点击事件
 const handleRouterHistoryMenu = menuValue => {
-  const currentMenuInHistoryIdx = routeHistory.value.findIndex(i => i.url === currentMenu.value.url);
+  const currentMenuInHistoryIdx = routeHistory.value.findIndex(i => i[menuKey.url] === currentMenu.value[menuKey.url]);
   if (currentMenuInHistoryIdx === -1) return;
   // 刷新标签页
   if (
     menuValue === "Refresh" &&
-    (route.path === currentMenu.value.url || route.meta.targetMenuPath === currentMenu.value.url)
+    (route.path === currentMenu.value[menuKey.url] || route.meta.targetMenuPath === currentMenu.value[menuKey.url])
   ) {
     router.replace({
       path: "/refresh",
@@ -209,25 +205,29 @@ const handleRouterHistoryMenu = menuValue => {
     currentMenuInHistoryIdx,
     removeMenuDirection: menuValue,
   });
-  const isDelCurrentShowRoute = routeHistory.value.findIndex(i => i.url === route.path); // 是否删除当前浏览的页面路由
+  const isDelCurrentShowRoute = routeHistory.value.findIndex(
+    i => i[menuKey.url] === route.path || i[menuKey.url] === route.meta.targetMenuPath
+  ); // 是否删除当前浏览的页面路由
   if (
     (menuValue === "R" && isDelCurrentShowRoute === -1) ||
     (menuValue === "L" && isDelCurrentShowRoute === -1) ||
-    (menuValue === "O" && route.path !== currentMenu.value.url)
+    (menuValue === "O" && isDelCurrentShowRoute === -1)
   ) {
     router.push({
-      path: currentMenu.value.url,
+      path: currentMenu.value[menuKey.url],
     });
   }
 };
 
 // 设置菜单可点击状态
 const setMenuDisabled = () => {
-  const currentMenuInHistoryIdx = routeHistory.value.findIndex(item => item.url === currentMenu.value.url);
+  const currentMenuInHistoryIdx = routeHistory.value.findIndex(
+    item => item[menuKey.url] === currentMenu.value[menuKey.url]
+  );
   if (currentMenuInHistoryIdx === -1) return;
   rightClickMenus.value.map(item => (item.disabled = false));
   // 刷新标签页置灰状态
-  if (route.path !== currentMenu.value.url && route.meta.targetMenuPath !== currentMenu.value.url) {
+  if (route.path !== currentMenu.value[menuKey.url] && route.meta.targetMenuPath !== currentMenu.value[menuKey.url]) {
     const RefreshIdx = rightClickMenus.value.findIndex(item => item.value === "Refresh");
     rightClickMenus.value[RefreshIdx].disabled = true;
   }

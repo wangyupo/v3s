@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, createWebHashHistory } from "vue-router
 import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/index";
 import NProgress from "@/utils/nProgress.js";
 
+import { menuKey } from "@/router/menuConfig.js";
 const login = () => import("@/views/login.vue");
 const main = () => import("@/views/main.vue");
 const refreshPage = () => import("@/views/refreshPage.vue");
@@ -33,13 +34,14 @@ const router = createRouter({
         if (!getLocalStorage("user")) return "/login";
         // 成功登录且权限完整，默认重定向到用户权限路由的第一个
         const menuList = tree2arr(JSON.parse(getLocalStorage("user")).menu);
-        const defaultPage = menuList.find(i => i.url);
+        const defaultPage = menuList.find(i => i[menuKey.url]);
         if (!defaultPage) {
+          console.error("Please check your menuKey in /src/router/menuConfig.js file.");
           removeAllLoginInfo();
           return "/login";
         }
-        if (to.path === defaultPage.url) return;
-        return defaultPage.url;
+        if (to.path === defaultPage[menuKey.url]) return;
+        return defaultPage[menuKey.url];
       },
       children: [
         {
@@ -81,8 +83,12 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/login") {
       next({ path: from.path });
     } else {
-      // 跳转404（注意：根据实际开发定义的字段，替换下面的 .url 中的 url 字段）
-      if (menuList.findIndex(item => item.url === to.path) === -1 && to.path !== "/404" && to.path !== "/refresh") {
+      // 跳转404（注意：根据实际开发定义路由的字段，替换 /src/router/menuConfig.js 中的 key）
+      if (
+        menuList.findIndex(item => item[menuKey.url] === to.path) === -1 &&
+        to.path !== "/404" &&
+        to.path !== "/refresh"
+      ) {
         next({ path: "/404" });
       } else {
         next();

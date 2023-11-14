@@ -27,7 +27,7 @@
           ]"
           v-for="(item, idx) in filterMenuList"
           :key="item.id"
-          @click="nav2Menu(item.url)"
+          @click="nav2Menu(item[menuKey.url])"
         >
           <div class="flex items-center">
             <el-icon class="mr-2"><Document /></el-icon>
@@ -73,6 +73,7 @@ import { useUserStore } from "@/stores/user.js";
 import { useLayout } from "@/hooks/useLayout.js";
 import { useRouter } from "vue-router";
 import { on, off } from "@/utils/index";
+import { menuKey } from "@/router/menuConfig.js";
 
 /** dialog START **/
 const emits = defineEmits(["update:modelValue"]);
@@ -158,7 +159,7 @@ const selectMenuByKeyboard = e => {
   } else if (key === "Enter") {
     // 回车
     const selectedMenu = filterMenuList.value[parseInt(listSelectIdx.value)];
-    nav2Menu(selectedMenu.url);
+    nav2Menu(selectedMenu[menuKey.url]);
   }
 };
 
