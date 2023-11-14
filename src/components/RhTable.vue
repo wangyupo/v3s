@@ -82,8 +82,7 @@
 
       <!-- 当数据为空时自定义的内容 -->
       <template #empty>
-        <!-- <RhNoData v-if="!$slots.empty" /> -->
-        <el-empty description="暂无数据" v-if="!$slots.empty" />
+        <RhNoData v-if="!$slots.empty" />
         <slot name="empty"></slot>
       </template>
     </el-table>
