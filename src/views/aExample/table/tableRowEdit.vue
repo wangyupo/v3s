@@ -2,6 +2,7 @@
   <!-- 示例-行编辑的表格 -->
   <RhWrapper>
     <template #head-right>
+      <el-button type="primary" @click="handleAddRow()" v-if="!tableData.data.length">新增</el-button>
       <el-button type="primary" :disabled="!tableData.data.length">保存</el-button>
     </template>
     <RhTable border stripe :table-data="tableData">
@@ -16,7 +17,7 @@
       </template>
       <template #operate="{ scope, tableData }">
         <div class="flex items-center">
-          <el-icon size="20" class="cursor-pointer" title="添加行" @click="handleAddRow(tableData, scope.$index)">
+          <el-icon size="20" class="cursor-pointer" title="添加行" @click="handleAddRow(tableData)">
             <Plus />
           </el-icon>
           <el-icon size="20" class="ml-3 cursor-pointer" title="删除行" @click="handleDelRow(tableData, scope.$index)">
@@ -72,8 +73,8 @@ const tableData = reactive({
 });
 
 // 动态添加行
-const handleAddRow = (data, idx) => {
-  tableData.data = data;
+const handleAddRow = data => {
+  if (data) tableData.data = data;
   tableData.data.push({
     date: "",
     name: "",
