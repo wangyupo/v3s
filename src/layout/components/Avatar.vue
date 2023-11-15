@@ -1,16 +1,20 @@
 <template>
   <!-- 个人信息 -->
   <el-dropdown trigger="click" class="h-full">
-    <div
-      class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full hover:bg-[--el-color-primary-dark-2]"
-    >
+    <div class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full hover:bg-[--el-color-primary-dark-2]">
       <el-avatar :size="30" />
       <div class="ml-2 text-white">管理员</div>
     </div>
     <template #dropdown>
       <div class="menu">
-        <div class="menu-item" @click="handleV3s">项目地址</div>
-        <div class="menu-item" @click="handleLoginOut">退出登录</div>
+        <div class="menu-item flex items-center" @click="handleV3s">
+          <el-icon size="16" class="mr-1"><Location /></el-icon>
+          项目地址
+        </div>
+        <div class="menu-item flex items-center" @click="handleLoginOut">
+          <el-icon size="16" class="mr-1"><SwitchButton /></el-icon>
+          退出登录
+        </div>
       </div>
     </template>
   </el-dropdown>
@@ -54,9 +58,9 @@ $itemHeight: 40px;
 }
 
 .menu {
-  width: 80px;
   overflow: hidden;
   &-item {
+    padding: 0 8px;
     height: $itemHeight;
     line-height: $itemHeight;
     text-align: center;
