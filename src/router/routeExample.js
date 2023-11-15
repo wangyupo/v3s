@@ -7,6 +7,7 @@ const exampleNestMenu1Sub = () => import("@/views/aExample/menuNest/nestMenu1Sub
 const exampleNestMenu2 = () => import("@/views/aExample/menuNest/nestMenu2.vue");
 const exampleTreeFilter = () => import("@/views/aExample/treeFilter.vue");
 const exampleSeamlessScroll = () => import("@/views/aExample/seamlessScroll.vue");
+const transparentBackground = () => import("@/views/aExample/transparentBackground.vue");
 
 const route = [
   {
@@ -57,6 +58,14 @@ const route = [
     path: "/example/seamlessScroll",
     name: "exampleSeamlessScroll",
     component: exampleSeamlessScroll,
+  },
+  {
+    path: "/example/transparentBackground",
+    name: "transparentBackground",
+    component: transparentBackground,
+    meta: {
+      transparentBackground: true,
+    },
   },
 ];
 
