@@ -137,6 +137,11 @@ const rightClickMenus = ref([
     disabled: false,
   },
   {
+    label: "关闭当前标签页(C)",
+    value: "Current",
+    disabled: false,
+  },
+  {
     label: "关闭右侧标签页(R)",
     value: "R",
     disabled: false,
@@ -198,6 +203,10 @@ const handleRouterHistoryMenu = menuValue => {
         refreshPath: route.fullPath,
       },
     });
+    return;
+  }
+  if (menuValue === "Current") {
+    removeRouteHistory(currentMenu.value, currentMenuInHistoryIdx);
     return;
   }
   // 批量删除标签页
