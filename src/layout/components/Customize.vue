@@ -7,31 +7,33 @@
   </el-tooltip>
 
   <el-drawer v-model="drawerVisible" title="个性化配置" direction="rtl" append-to-body :size="400">
-    <div class="">
-      <RhTitle title="切换布局"></RhTitle>
-      <div class="flex">
-        <el-radio-group v-model="layoutType">
-          <el-radio v-for="(item, index) in layouts" :key="index" class="layout-item" :label="item.layout">
-            <div class="flex flex-col justify-center items-center ml-[30px] mb-3 first:ml-0">
-              <i class="iconfont text-4xl" :class="item.icon"></i>
-              <span class="mt-2">{{ item.name }}</span>
-            </div>
-          </el-radio>
-        </el-radio-group>
+    <div class="overflow-y-auto h-[calc(100%-65px)]">
+      <div class="">
+        <RhTitle title="切换布局"></RhTitle>
+        <div class="flex">
+          <el-radio-group v-model="layoutType">
+            <el-radio v-for="(item, index) in layouts" :key="index" class="layout-item" :label="item.layout">
+              <div class="flex flex-col justify-center items-center ml-[30px] mb-3 first:ml-0">
+                <i class="iconfont text-4xl" :class="item.icon"></i>
+                <span class="mt-2">{{ item.name }}</span>
+              </div>
+            </el-radio>
+          </el-radio-group>
+        </div>
       </div>
-    </div>
-    <div class="mt-6">
-      <RhTitle title="切换主题色">
-        <template #title-right></template>
-      </RhTitle>
-      <div class="flex items-center">
-        当前主题色：
-        <span :style="{ color: colorPrimaryBg }">{{ colorPrimaryBg }}</span>
-        <ThemeColorPicker class="ml-4"></ThemeColorPicker>
+      <div class="mt-6">
+        <RhTitle title="切换主题色">
+          <template #title-right></template>
+        </RhTitle>
+        <div class="flex items-center">
+          当前主题色：
+          <span :style="{ color: colorPrimaryBg }">{{ colorPrimaryBg }}</span>
+          <ThemeColorPicker class="ml-4"></ThemeColorPicker>
+        </div>
       </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 right-0 flex justify-end p-4">
+    <div class="absolute bottom-0 left-0 right-0 flex justify-end p-4 border-t border-t-[var(--el-border-color-light)]">
       <el-button type="danger" @click="handleClearStorage">清空缓存并刷新页面</el-button>
     </div>
   </el-drawer>
