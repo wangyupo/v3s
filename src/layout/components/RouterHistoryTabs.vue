@@ -205,6 +205,7 @@ const handleRouterHistoryMenu = menuValue => {
     });
     return;
   }
+  // 关闭当前标签页
   if (menuValue === "Current") {
     removeRouteHistory(currentMenu.value, currentMenuInHistoryIdx);
     return;
