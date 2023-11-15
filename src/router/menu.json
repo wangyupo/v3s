@@ -94,5 +94,12 @@
     "url": "/example/seamlessScroll",
     "title": "无缝滚动",
     "hidden": 0
+  },
+  {
+    "id": "3-7",
+    "parentId": "3",
+    "url": "/example/transparentBackground",
+    "title": "透明背景",
+    "hidden": 0
   }
 ]
