@@ -35,6 +35,9 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       overflow: hidden;
       white-space: nowrap;
       cursor: pointer;
+      &.dark {
+        color: var(--el-text-color-primary);
+      }
       &.fold {
         width: $menuFoldWidth;
       }
