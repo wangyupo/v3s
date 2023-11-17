@@ -13,7 +13,7 @@
     <tableWrapper class="mt-3" />
     <RhTitle divider title="行编辑" class="mt-3" />
     <tableRowEdit class="mt-3" />
-    <RhTitle divider title="自定义表格列" class="mt-3" />
+    <RhTitle divider title="列字段配置（排序、显示/隐藏）" class="mt-3" />
     <tableColumnsDIY class="mt-3" />
   </div>
 </template>
