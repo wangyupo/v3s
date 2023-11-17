@@ -9,6 +9,8 @@
     <tableWrapper class="mt-3" />
     <RhTitle divider title="行编辑" class="mt-3" />
     <tableRowEdit class="mt-3" />
+    <RhTitle divider title="自定义表格列" class="mt-3" />
+    <tableColumnsDIY class="mt-3" />
   </div>
 </template>
 
@@ -17,6 +19,7 @@ import tableBasic from "./tableBasic.vue";
 import tableForm from "./tableForm.vue";
 import tableWrapper from "./tableWrapper.vue";
 import tableRowEdit from "./tableRowEdit.vue";
+import tableColumnsDIY from "./tableColumnsDIY.vue";
 </script>
 
 <style lang="scss" scoped></style>
