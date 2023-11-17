@@ -1,7 +1,11 @@
 <template>
   <!-- 示例-table样式 -->
   <div>
-    <RhTitle divider title="基础样式" />
+    <RhTitle divider title="基础样式">
+      <template #title-right>
+        <el-button type="primary">新增</el-button>
+      </template>
+    </RhTitle>
     <tableBasic class="mt-3" />
     <RhTitle divider title="搜索样式" class="mt-3" />
     <tableForm class="mt-3" />
