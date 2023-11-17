@@ -54,7 +54,7 @@
               : _tableData.showOverflowTooltip
           "
           :align="column.align"
-          v-else
+          v-else-if="column.hasOwnProperty('show') ? column.show : true"
         >
           <!-- 自定义表头 -->
           <template #header="scope">
