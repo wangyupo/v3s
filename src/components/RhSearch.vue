@@ -84,8 +84,33 @@
         </el-col>
       </el-row>
     </div>
-    <div class="flex items-center mb-3">
+    <div class="flex items-center">
       <slot name="right-slot"></slot>
+      <el-popover placement="bottom" title="自定义列" trigger="click" v-if="diyColumns">
+        <template #reference>
+          <el-icon size="18" class="mt-1.5 hover:cursor-pointer" title="自定义列"><Setting /></el-icon>
+        </template>
+        <draggable
+          :list="_columns"
+          item-key="name"
+          class="list-group"
+          ghost-class="ghost"
+          tag="div"
+          @start="dragging = true"
+          @end="dragging = false"
+        >
+          <template #item="{ element }">
+            <el-checkbox-group v-model="columnCheckList">
+              <div class="flex items-center">
+                <template v-if="element.label">
+                  <el-icon size="17" class="mr-2 hover:cursor-move"><Rank /></el-icon>
+                  <el-checkbox :label="element.label" />
+                </template>
+              </div>
+            </el-checkbox-group>
+          </template>
+        </draggable>
+      </el-popover>
     </div>
   </div>
 </template>
@@ -94,11 +119,12 @@
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { removeEmptyInObj, typeOf } from "@/utils/index";
 import { on, off } from "@/utils/index";
-import { cloneDeep, debounce } from "lodash-es";
+import { cloneDeep, debounce, isEqual } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
+import draggable from "vuedraggable";
 
 const { menuFilterDialogVisible } = useLayout();
-const emit = defineEmits(["search"]);
+const emit = defineEmits(["search", "updateColumns"]);
 const props = defineProps({
   // 搜索配置
   searchInfo: {
@@ -120,6 +146,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 是否自定义表格列
+  diyColumns: {
+    type: Boolean,
+    default: false,
+  },
+  // 表格列
+  columns: Array,
 });
 // 日期范围快捷操作
 const shortcuts = [
@@ -151,8 +184,8 @@ const shortcuts = [
     },
   },
 ];
-
 const _searchData = reactive(props.searchData || {});
+
 watch(
   _searchData,
   () => {
@@ -229,6 +262,43 @@ const handleReset = debounce(searchConfig => {
   });
   handleSearch();
 }, 200);
+
+/* 自定义列 START */
+const columnCheckList = ref([]);
+const _columns = ref([]);
+
+watch(
+  () => props.columns,
+  columns => {
+    if (!columns) return;
+    const withoutTypeColumns = columns.filter(i => !i.type);
+    if (withoutTypeColumns && withoutTypeColumns.length && !isEqual(withoutTypeColumns, _columns.value)) {
+      _columns.value = cloneDeep(withoutTypeColumns);
+      columnCheckList.value = cloneDeep(withoutTypeColumns)
+        .filter(i => i.show)
+        .map(i => i.label);
+    }
+  },
+  { deep: true, immediate: true }
+);
+watch(
+  _columns,
+  newColumns => {
+    emit("updateColumns", newColumns);
+  },
+  { deep: true }
+);
+watch(columnCheckList, checkedLabelList => {
+  for (let index = 0; index < _columns.value.length; index++) {
+    const element = _columns.value[index];
+    if (checkedLabelList.includes(element.label)) {
+      element["show"] = true;
+    } else {
+      element["show"] = false;
+    }
+  }
+});
+/* 自定义列 END */
 </script>
 
 <style lang="scss" scoped>
