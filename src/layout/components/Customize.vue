@@ -26,9 +26,7 @@
           <template #title-right></template>
         </RhTitle>
         <div class="flex items-center">
-          当前主题色：
-          <span :style="{ color: colorPrimaryBg }">{{ colorPrimaryBg }}</span>
-          <ThemeColorPicker class="ml-4"></ThemeColorPicker>
+          <ThemeColorPicker />
         </div>
       </div>
     </div>
