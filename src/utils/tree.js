@@ -7,7 +7,7 @@ import { isArray } from "lodash-es";
  * @param {String} pId 自定义parentId字段
  * @returns {Array} 树结构数据
  */
-export function arr2tree(list, id = "id", pId = "parentId") {
+export function arr2tree(list, id = "id", pId = "parentId", children = "children") {
   const result = [];
   const map = list.reduce((pre, cur) => {
     pre[cur[id]] = cur;
@@ -20,8 +20,8 @@ export function arr2tree(list, id = "id", pId = "parentId") {
     }
     if (item[pId] in map) {
       const parent = map[item[pId]];
-      parent.children = parent.children || [];
-      if (!parent.children.some(i => i[id] === item[id])) parent.children.push(item);
+      parent[children] = parent[children] || [];
+      if (!parent[children].some(i => i[id] === item[id])) parent[children].push(item);
     }
   }
   return result;

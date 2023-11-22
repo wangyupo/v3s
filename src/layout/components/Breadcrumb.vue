@@ -6,8 +6,8 @@
     separator="/"
     v-if="!noBreadCrumbPath.includes(route.path) && breadcrumb.length"
   >
-    <el-breadcrumb-item v-for="route in breadcrumb" :key="route.id" :to="route[menuKey.url]">
-      {{ route.title }}
+    <el-breadcrumb-item v-for="route in breadcrumb" :key="route[menuKey.id]" :to="route[menuKey.url]">
+      {{ route[menuKey.title] }}
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -36,7 +36,7 @@ watch(
     const result = [];
     const list = userStore.menuArr;
     const map = list.reduce((pre, cur) => {
-      pre[cur.id] = cur;
+      pre[cur[menuKey.id]] = cur;
       return pre;
     }, {});
     function getParentRoute(currentRoute) {

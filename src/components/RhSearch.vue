@@ -1,5 +1,5 @@
 <template>
-  <!-- 搜索 -->
+  <!-- 搜索组件-支持传参配置搜索项、自动换行、插槽 -->
   <div class="rh-search-wrapper mb-3" :class="[noBorder ? 'noBorder' : '']">
     <div class="rh-search-content flex items-center flex-wrap">
       <el-row :gutter="12" class="w-full">
@@ -78,7 +78,7 @@
             v-if="searchItem.type === 'daterange'"
           />
         </el-col>
-        <el-col class="mb-3" :span="4">
+        <el-col class="mb-3" :span="4" v-if="searchInfo.length">
           <el-button type="primary" @click="handleSearch">搜索</el-button>
           <el-button @click="handleReset">重置</el-button>
         </el-col>
@@ -86,14 +86,20 @@
     </div>
     <div class="flex items-center">
       <slot name="right-slot"></slot>
-      <el-popover placement="bottom" title="自定义列" trigger="click" v-if="diyColumns">
+      <el-popover
+        placement="bottom"
+        title="自定义列"
+        popper-style="width: auto;min-width: 150px"
+        trigger="click"
+        v-if="diyColumns"
+      >
         <template #reference>
-          <el-icon size="18" class="mt-1.5 hover:cursor-pointer" title="自定义列"><Setting /></el-icon>
+          <el-button type="default" :icon="Setting" circle title="自定义列" />
         </template>
         <draggable
           :list="_columns"
           item-key="name"
-          class="list-group"
+          class="list-group max-h-[300px] min-w-[150px] overflow-y-auto"
           ghost-class="ghost"
           tag="div"
           @start="dragging = true"
@@ -122,6 +128,7 @@ import { on, off } from "@/utils/index";
 import { cloneDeep, debounce, isEqual } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
 import draggable from "vuedraggable";
+import { Setting } from "@element-plus/icons-vue";
 
 const { menuFilterDialogVisible } = useLayout();
 const emit = defineEmits(["search", "updateColumns"]);
