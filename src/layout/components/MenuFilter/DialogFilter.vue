@@ -1,30 +1,28 @@
 <template>
   <!-- 弹窗-搜索菜单 -->
-  <el-dialog v-model="dialogVisible" width="30%" :show-close="false" @opened="opened" @closed="closed">
-    <template #header="{ close, titleId, titleClass }">
-      <div class="flex items-center justify-between">
-        <h4 :id="titleId" :class="titleClass">搜索菜单</h4>
-        <el-button type="danger" @click="close">
-          <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
-          关闭
-        </el-button>
-      </div>
-    </template>
-
+  <el-dialog
+    class="filter-menu-dialog rounded-2xl"
+    v-model="dialogVisible"
+    width="632px"
+    top="6vh"
+    :show-close="false"
+    @opened="opened"
+    @closed="closed"
+  >
     <div class="main">
       <el-input
         v-model="searchVal"
+        class="filter-menu-dialog-input"
         size="large"
         placeholder="支持菜单全称|关键词|拼音搜索"
         ref="searchInputRef"
-        :suffix-icon="Search"
+        :prefix-icon="Search"
       />
       <div class="mt-4" ref="menuListRef" v-if="searchVal && filterMenuList.length">
         <div
-          class="flex items-center justify-between mt-2 p-3 h-[60px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
-          :class="[
-            listSelectIdx === idx ? 'bg-blue-500 text-white' : isDark ? 'text-[#333] bg-gray-200' : 'bg-gray-200',
-          ]"
+          class="flex items-center justify-between mt-2 p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
+          :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : '']"
+          style="box-shadow: 0 1px 3px #d4d9e1"
           v-for="(item, idx) in filterMenuList"
           :key="item[menuKey.id]"
           @click="nav2Menu(item[menuKey.url])"
@@ -36,28 +34,38 @@
           <i class="iconfont icon-enter text-xl"></i>
         </div>
       </div>
-      <RhNoData v-else />
+      <RhNoData description="暂无搜索结果" v-else />
     </div>
 
     <template #footer>
       <div class="dialog-footer">
-        <div class="board-key flex items-center flex-shrink-0">
-          <div class="board-key-btn flex items-center justify-center w-10 h-8 rounded-md mr-3">
-            <i class="iconfont icon-enter"></i>
+        <div class="filter-menu-dialog-board-key flex items-center flex-shrink-0 w">
+          <div
+            class="filter-menu-dialog-board-key-btn flex items-center justify-center w-[31px] h-[26px] rounded-md mr-3"
+          >
+            <i class="iconfont icon-enter text-[15px] text-[#5a5a5a]"></i>
           </div>
           确认
         </div>
-        <div class="board-key flex items-center flex-shrink-0 ml-6">
-          <div class="board-key-btn flex items-center justify-center w-8 h-8 rounded-md mr-1">
-            <el-icon><Top /></el-icon>
+        <div class="filter-menu-dialog-board-key flex items-center flex-shrink-0 ml-6">
+          <div
+            class="filter-menu-dialog-board-key-btn flex items-center justify-center w-[26px] h-[26px] rounded-md mr-1"
+          >
+            <el-icon color="#5a5a5a"><Top /></el-icon>
           </div>
-          <div class="board-key-btn flex items-center justify-center w-8 h-8 rounded-md mr-3">
-            <el-icon><Bottom /></el-icon>
+          <div
+            class="filter-menu-dialog-board-key-btn flex items-center justify-center w-[26px] h-[26px] rounded-md mr-3"
+          >
+            <el-icon color="#5a5a5a"><Bottom /></el-icon>
           </div>
           切换
         </div>
-        <div class="board-key flex items-center flex-shrink-0 ml-6">
-          <div class="board-key-btn flex items-center justify-center w-10 h-8 rounded-md mr-3">Esc</div>
+        <div class="filter-menu-dialog-board-key flex items-center flex-shrink-0 ml-6">
+          <div
+            class="filter-menu-dialog-board-key-btn flex items-center justify-center w-[31px] h-[26px] text-[12px] text-[#5a5a5a] rounded-md mr-3"
+          >
+            Esc
+          </div>
           关闭
         </div>
       </div>
@@ -147,19 +155,22 @@ const selectMenuByKeyboard = e => {
   const { ctrlKey, key } = e;
   if (ctrlKey && key === " ") emits("update:modelValue", true); // ctrl+空格 打开弹窗
   if (!filterMenuList.value.length) return;
-  if (["ArrowDown", "ArrowUp", "Enter"].includes(key)) searchInputRef.value.blur();
   if (key === "ArrowDown") {
     // 向下
     if (listSelectIdx.value === filterMenuList.value.length - 1) return;
     listSelectIdx.value += 1;
   } else if (key === "ArrowUp") {
     // 向上
+    e.preventDefault(); // 防止光标受到上键影响
     if (listSelectIdx.value === 0) return;
     listSelectIdx.value -= 1;
   } else if (key === "Enter") {
     // 回车
     const selectedMenu = filterMenuList.value[parseInt(listSelectIdx.value)];
     nav2Menu(selectedMenu[menuKey.url]);
+  } else if (key == "Backspace") {
+    // 删除文字
+    listSelectIdx.value = 0;
   }
 };
 
@@ -181,16 +192,32 @@ const resetData = () => {
 /** menu filter END **/
 </script>
 
-<style lang="scss" scoped>
-.dialog-footer {
-  display: flex;
-}
-.board-key {
-  color: var(--el-text-color-primary);
-  &-btn {
-    color: #969faf;
-    background: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
-    box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px rgba(30, 35, 90, 0.4);
+<style lang="scss">
+.filter-menu-dialog {
+  .el-dialog__header {
+    display: none;
+  }
+  .el-dialog__body {
+    padding: 12px 14px;
+  }
+  .el-dialog__footer {
+    padding: 18px 20px;
+    line-height: initial;
+  }
+  .dialog-footer {
+    display: flex;
+  }
+  &-input {
+    height: 50px;
+    font-size: 16px;
+  }
+  &-board-key {
+    font-size: 14px;
+    color: var(--el-text-color-primary);
+    &-btn {
+      background: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+      box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px rgba(30, 35, 90, 0.4);
+    }
   }
 }
 </style>

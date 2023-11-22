@@ -32,7 +32,7 @@
     </div>
 
     <div class="absolute bottom-0 left-0 right-0 flex justify-end p-4 border-t border-t-[var(--el-border-color-light)]">
-      <el-button type="danger" @click="handleClearStorage">清空缓存并刷新页面</el-button>
+      <el-button type="danger" @click="handleClearStorage">清空缓存并返回登录页</el-button>
     </div>
   </el-drawer>
 </template>
