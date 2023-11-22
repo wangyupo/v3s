@@ -11,7 +11,7 @@
       @click.right="showRightMenu($event, routeItem)"
     >
       <div class="w-[8px] h-[8px] rounded-full bg-white mr-1.5" v-show="tabActive(routeItem)"></div>
-      {{ routeItem.title }}
+      {{ routeItem[menuKey.title] }}
       <el-icon class="ml-2" v-if="routeHistory.length != 1" @click.stop="removeRouteHistory(routeItem, idx)">
         <Close />
       </el-icon>
@@ -91,7 +91,7 @@ watch(
     userStore.$patch(state => {
       state.routeHistory.push({
         [menuKey.url]: currentRoute[menuKey.url],
-        title: currentRoute.title,
+        [menuKey.title]: currentRoute[menuKey.title],
       });
     });
     setTimeout(() => {

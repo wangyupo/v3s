@@ -21,6 +21,7 @@ import { storeToRefs } from "pinia";
 import { ref, computed, reactive, watch, watchEffect } from "vue";
 import { arr2tree } from "@/utils/index.js";
 import { useLayout } from "@/hooks/useLayout.js";
+import { menuKey } from "@/router/menuConfig.js";
 
 const { isDark, menuFold, layoutType } = useLayout();
 const el = document.documentElement;
@@ -36,7 +37,12 @@ watchEffect(() => {
 const userStore = useUserStore();
 const { menu } = storeToRefs(userStore);
 const _menu = ref([]);
-_menu.value = arr2tree(userStore.menuArr.filter(i => i.hidden === 0));
+_menu.value = arr2tree(
+  userStore.menuArr.filter(i => i.hidden === 0),
+  "id",
+  "parentId",
+  menuKey.children
+);
 
 const mode = computed(() => {
   return layoutType.value === "LayoutHeadMenu" ? "horizontal" : "vertical";

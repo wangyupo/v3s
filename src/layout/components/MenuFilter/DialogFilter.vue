@@ -26,12 +26,12 @@
             listSelectIdx === idx ? 'bg-blue-500 text-white' : isDark ? 'text-[#333] bg-gray-200' : 'bg-gray-200',
           ]"
           v-for="(item, idx) in filterMenuList"
-          :key="item.id"
+          :key="item[menuKey.id]"
           @click="nav2Menu(item[menuKey.url])"
         >
           <div class="flex items-center">
             <el-icon class="mr-2"><Document /></el-icon>
-            {{ item.title }}
+            {{ item[menuKey.title] }}
           </div>
           <i class="iconfont icon-enter text-xl"></i>
         </div>
@@ -127,7 +127,7 @@ const chinese2Pinyin = chinese => {
 watch(searchVal, val => {
   const valPinyinArr = chinese2Pinyin(val);
   filterMenuList.value = userStore.menuArrWithoutEmptyUrl.filter(i => {
-    let filterRes = chinese2Pinyin(i.title).filter(p => {
+    let filterRes = chinese2Pinyin(i[menuKey.title]).filter(p => {
       return valPinyinArr.find(o => p.indexOf(o) !== -1);
     });
     if (filterRes.length) return i;

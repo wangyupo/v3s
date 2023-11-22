@@ -62,6 +62,7 @@ import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { arr2tree } from "@/utils/index.js";
 import menuJson from "@/router/menu.json";
+import { menuKey } from "@/router/menuConfig.js";
 
 const router = useRouter();
 
@@ -92,7 +93,7 @@ const handleLogin = params => {
   // 模拟接口返回菜单 START
   const userStore = useUserStore();
   userStore.$patch(state => {
-    state.menu = arr2tree(menuJson);
+    state.menu = arr2tree(menuJson, "id", "parentId", menuKey.children);
   });
   // 模拟接口返回菜单 END
   router.replace({
