@@ -125,9 +125,11 @@ const listSelectIdx = ref(0);
 const filterMenuList = ref([]);
 
 const chinese2Pinyin = chinese => {
-  const _PY_NORMAL = pinyin(chinese, { style: "normal", heteronym: true, compact: true }).map(i => i.flat().join(""));
+  const _PY_NORMAL = pinyin(chinese, { style: "normal", heteronym: true, compact: true }).map(i =>
+    i.flat().join("").toLowerCase()
+  );
   const _PY_FIRST_LETTER = pinyin(chinese, { style: "first_letter", heteronym: true, compact: true }).map(i =>
-    i.flat().join("")
+    i.flat().join("").toLowerCase()
   );
   const RES = _PY_NORMAL.concat(_PY_FIRST_LETTER);
   return RES;
