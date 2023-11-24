@@ -210,9 +210,10 @@ const rowDrop = function () {
     //  可被拖拽的子元素
     handle: ".rh-table .rh-table-dragcursor",
     onEnd({ newIndex, oldIndex }) {
-      const currRow = _tableData.value.data.splice(oldIndex, 1)[0];
-      _tableData.value.data.splice(newIndex, 0, currRow);
-      emit("drag-end", _tableData.value.data);
+      let data = cloneDeep(_tableData.value.data);
+      const currRow = data.splice(oldIndex, 1)[0];
+      data.splice(newIndex, 0, currRow);
+      emit("drag-end", data);
     },
   });
 };

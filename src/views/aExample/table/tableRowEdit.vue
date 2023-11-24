@@ -13,27 +13,27 @@
       </template>
       <RhTable border stripe :table-data="tableData">
         <template #date="{ scope }">
-          <el-input v-model="scope.row.date" placeholder="Please input date" />
+          <el-input v-model="scope.row.date" placeholder="Please input date" v-if="rowEditIdx == scope.$index" />
+          <template v-else>{{ scope.row.date }}</template>
         </template>
         <template #name="{ scope }">
-          <el-input v-model="scope.row.name" placeholder="Please input name" />
+          <el-input v-model="scope.row.name" placeholder="Please input name" v-if="rowEditIdx == scope.$index" />
+          <template v-else>{{ scope.row.name }}</template>
         </template>
         <template #address="{ scope }">
-          <el-input v-model="scope.row.address" placeholder="Please input address" />
+          <el-input v-model="scope.row.address" placeholder="Please input address" v-if="rowEditIdx == scope.$index" />
+          <template v-else>{{ scope.row.address }}</template>
         </template>
         <template #operate="{ scope, tableData }">
           <div class="flex items-center">
-            <el-icon size="20" class="cursor-pointer" title="添加行" @click="handleAddRow(tableData)">
-              <Plus />
-            </el-icon>
-            <el-icon
-              size="20"
-              class="ml-3 cursor-pointer"
-              title="删除行"
-              @click="handleDelRow(tableData, scope.$index)"
-            >
-              <Minus />
-            </el-icon>
+            <el-button type="primary" @click="() => (rowEditIdx = scope.$index)" v-if="rowEditIdx == null">
+              编辑
+            </el-button>
+            <el-button type="primary" @click="handleConfirm(tableData)" v-else-if="rowEditIdx == scope.$index">
+              保存
+            </el-button>
+            <el-button :icon="Plus" circle title="添加行" @click="handleAddRow(tableData, scope.$index)" />
+            <el-button :icon="Minus" circle title="删除行" @click="handleDelRow(tableData, scope.$index)" />
           </div>
         </template>
       </RhTable>
@@ -42,8 +42,9 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, computed } from "vue";
+import { onMounted, reactive, computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { Plus, Minus } from "@element-plus/icons-vue";
 
 const tableData = reactive({
   showOverflowTooltip: true,
@@ -67,7 +68,7 @@ const tableData = reactive({
     {
       label: "操作",
       prop: "operate",
-      width: "200px",
+      width: "250px",
     },
   ],
   data: [
@@ -83,24 +84,33 @@ const tableData = reactive({
     pageSize: 10,
   },
 });
+const rowEditIdx = ref(null);
 const dataJson = computed(() => {
   return tableData.data;
 });
 
+// 保存编辑
+const handleConfirm = data => {
+  rowEditIdx.value = null;
+  tableData.data = data;
+};
+
 // 动态添加行
-const handleAddRow = data => {
+const handleAddRow = (data, idx) => {
   if (data) tableData.data = data;
-  tableData.data.push({
+  tableData.data.splice(idx + 1, 0, {
     date: "",
     name: "",
     address: "",
   });
+  rowEditIdx.value = null;
 };
 
 // 动态删除行
 const handleDelRow = (data, idx) => {
   tableData.data = data;
   tableData.data.splice(idx, 1);
+  rowEditIdx.value = null;
 };
 </script>
 

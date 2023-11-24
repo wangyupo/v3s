@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 // import { getList } from "@/api/api.js";
 
 // 条件配置
@@ -106,10 +106,11 @@ const tableData = reactive({
   },
 });
 const loading = ref(false);
-const dataJson = ref([]);
+const dataJson = computed(() => {
+  return tableData.data;
+});
 
 onMounted(() => {
-  dataJson.value = tableData.data;
   // fn_getList();
 });
 
@@ -150,7 +151,7 @@ const pageSizeChange = pageSize => {
 
 // 行拖拽结束
 const dragend = val => {
-  dataJson.value = val;
+  tableData.data = val;
 };
 </script>
 
