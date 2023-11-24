@@ -1,7 +1,7 @@
 <template>
   <!-- 业务说明 -->
   <div class="flex">
-    <div class="w-[300px]">
+    <div class="w-[300px] text-sm">
       <code>
         <pre>{{ dataJson }}</pre>
       </code>
