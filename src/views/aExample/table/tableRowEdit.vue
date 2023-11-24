@@ -1,36 +1,48 @@
 <template>
   <!-- 示例-行编辑的表格 -->
-  <RhWrapper>
-    <template #head-right>
-      <el-button type="primary" @click="handleAddRow()" v-if="!tableData.data.length">新增</el-button>
-      <el-button type="primary" :disabled="!tableData.data.length">保存</el-button>
-    </template>
-    <RhTable border stripe :table-data="tableData">
-      <template #date="{ scope }">
-        <el-input v-model="scope.row.date" placeholder="Please input date" />
+  <div class="flex">
+    <div class="w-[300px] text-sm">
+      <code>
+        <pre>{{ dataJson }}</pre>
+      </code>
+    </div>
+    <RhWrapper class="flex-1">
+      <template #head-right>
+        <el-button type="primary" @click="handleAddRow()" v-if="!tableData.data.length">新增</el-button>
+        <el-button type="primary" :disabled="!tableData.data.length">保存</el-button>
       </template>
-      <template #name="{ scope }">
-        <el-input v-model="scope.row.name" placeholder="Please input name" />
-      </template>
-      <template #address="{ scope }">
-        <el-input v-model="scope.row.address" placeholder="Please input address" />
-      </template>
-      <template #operate="{ scope, tableData }">
-        <div class="flex items-center">
-          <el-icon size="20" class="cursor-pointer" title="添加行" @click="handleAddRow(tableData)">
-            <Plus />
-          </el-icon>
-          <el-icon size="20" class="ml-3 cursor-pointer" title="删除行" @click="handleDelRow(tableData, scope.$index)">
-            <Minus />
-          </el-icon>
-        </div>
-      </template>
-    </RhTable>
-  </RhWrapper>
+      <RhTable border stripe :table-data="tableData">
+        <template #date="{ scope }">
+          <el-input v-model="scope.row.date" placeholder="Please input date" />
+        </template>
+        <template #name="{ scope }">
+          <el-input v-model="scope.row.name" placeholder="Please input name" />
+        </template>
+        <template #address="{ scope }">
+          <el-input v-model="scope.row.address" placeholder="Please input address" />
+        </template>
+        <template #operate="{ scope, tableData }">
+          <div class="flex items-center">
+            <el-icon size="20" class="cursor-pointer" title="添加行" @click="handleAddRow(tableData)">
+              <Plus />
+            </el-icon>
+            <el-icon
+              size="20"
+              class="ml-3 cursor-pointer"
+              title="删除行"
+              @click="handleDelRow(tableData, scope.$index)"
+            >
+              <Minus />
+            </el-icon>
+          </div>
+        </template>
+      </RhTable>
+    </RhWrapper>
+  </div>
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { onMounted, reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const tableData = reactive({
@@ -62,7 +74,7 @@ const tableData = reactive({
     {
       date: "2016-05-03",
       name: "Joe",
-      address: "No. 189, Grove St, Los Angeles",
+      address: "No. 189, Grove St",
     },
   ],
   pages: {
@@ -70,6 +82,9 @@ const tableData = reactive({
     pageNum: 1,
     pageSize: 10,
   },
+});
+const dataJson = computed(() => {
+  return tableData.data;
 });
 
 // 动态添加行
