@@ -15,6 +15,8 @@
     <tableRowEdit class="mt-3" />
     <RhTitle divider title="列字段配置（排序、显示/隐藏）" class="mt-3" />
     <tableColumnsDIY class="mt-3" />
+    <RhTitle divider title="行拖拽（必须设置row-key，且保证是唯一不重复的）" class="mt-3" />
+    <tableDragRow class="mt-3" />
   </div>
 </template>
 
@@ -24,6 +26,7 @@ import tableForm from "./tableForm.vue";
 import tableWrapper from "./tableWrapper.vue";
 import tableRowEdit from "./tableRowEdit.vue";
 import tableColumnsDIY from "./tableColumnsDIY.vue";
+import tableDragRow from "./tableDragRow.vue";
 </script>
 
 <style lang="scss" scoped></style>
