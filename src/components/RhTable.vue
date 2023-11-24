@@ -10,16 +10,17 @@
       :border="border"
       :data="_tableData.data"
     >
-      <template v-for="column in _tableData.columns" :key="column.prop">
+      <template v-for="(column, index) in _tableData.columns">
         <template v-if="column.type">
           <!-- 展开&收起 -->
-          <el-table-column fixed="left" type="expand" v-if="column.type === 'expand'">
+          <el-table-column :key="`col_${index}`" fixed="left" type="expand" v-if="column.type === 'expand'">
             <template #default="scope">
               <slot name="expand" :scope="scope"></slot>
             </template>
           </el-table-column>
           <!-- 多选 -->
           <el-table-column
+            :key="`col_${index}`"
             fixed="left"
             type="selection"
             width="50"
@@ -29,13 +30,22 @@
           <!-- 序号 -->
           <el-table-column
             :label="column.label"
+            :key="`col_${index}`"
             fixed="left"
             type="index"
             width="60"
             align="center"
-            :index="column.index ? column.index : indexMethod"
             v-if="column.type === 'index'"
-          />
+          >
+            <template #default="scope">
+              <div class="flex items-center">
+                <el-icon class="rh-table-dragcursor mr-2 hover:cursor-grab" v-if="_tableData.draggable">
+                  <Rank />
+                </el-icon>
+                {{ column.index ? column.index : indexMethod(scope.$index) }}
+              </div>
+            </template>
+          </el-table-column>
         </template>
 
         <!-- 数据列 -->
@@ -46,6 +56,7 @@
           :min-width="column.minWidth"
           :fixed="column.fixed"
           :sortable="column.sortable"
+          :key="`col_${index}`"
           :show-overflow-tooltip="
             _tableData.showOverflowTooltip === undefined
               ? true
@@ -106,6 +117,7 @@
 import { formatPhone, copy, epyReturn } from "@/utils/index";
 import { onMounted, onUpdated, reactive, ref, useAttrs, watch } from "vue";
 import { debounce, cloneDeep } from "lodash-es";
+import Sortable from "sortablejs";
 
 const props = defineProps({
   border: {
@@ -131,8 +143,9 @@ const props = defineProps({
     },
   },
 });
-
+const elTableRef = ref();
 let _tableData = ref({});
+
 watch(
   () => props.tableData,
   val => {
@@ -148,6 +161,7 @@ const emit = defineEmits([
   // 分页器事件
   "page-change",
   "page-size-change",
+  "drag-end",
 ]);
 
 // 分页事件 START
@@ -160,6 +174,10 @@ const handleSizeChange = pageSize => {
 // 分页事件 END
 
 // el-table事件 START
+onMounted(() => {
+  if (props.tableData.draggable) rowDrop();
+});
+
 //序号
 const indexMethod = idx => {
   let pageNum = 1;
@@ -171,6 +189,7 @@ const indexMethod = idx => {
   return (pageNum - 1) * pageSize + idx + 1;
 };
 
+// 复制column内容
 const handleCopy = debounce(
   (index, row, column) => {
     if (!column.copy) return;
@@ -182,6 +201,21 @@ const handleCopy = debounce(
     trailing: false,
   }
 );
+
+// 行拖拽
+const rowDrop = function () {
+  // 要拖拽元素的父容器
+  const tbody = elTableRef.value.$el.querySelector(".el-table__body-wrapper tbody");
+  Sortable.create(tbody, {
+    //  可被拖拽的子元素
+    handle: ".rh-table .rh-table-dragcursor",
+    onEnd({ newIndex, oldIndex }) {
+      const currRow = _tableData.value.data.splice(oldIndex, 1)[0];
+      _tableData.value.data.splice(newIndex, 0, currRow);
+      emit("drag-end", _tableData.value.data);
+    },
+  });
+};
 // el-table事件 END
 </script>
 
