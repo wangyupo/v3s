@@ -18,7 +18,7 @@
     >
       <RhTitle :title="title" :lineColor="lineColor" nomb />
       <div>
-        <slot name="head-right"></slot>
+        <slot name="title-right"></slot>
       </div>
     </div>
     <div :class="['rh-wrapper-main flex-1 overflow-y-auto ', noBorder ? 'mt-3' : 'p-3']">
