@@ -7,7 +7,7 @@
       </code>
     </div>
     <RhWrapper class="flex-1">
-      <template #head-right>
+      <template #title-right>
         <el-button type="primary" @click="handleAddRow()" v-if="!tableData.data.length">新增</el-button>
         <el-button type="primary" :disabled="!tableData.data.length">保存</el-button>
       </template>

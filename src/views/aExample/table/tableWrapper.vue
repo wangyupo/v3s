@@ -1,7 +1,7 @@
 <template>
   <!-- 示例-特定容器包裹的表格 -->
   <RhWrapper>
-    <template #head-right>
+    <template #title-right>
       <el-input placeholder="请输入" :suffix-icon="Search"></el-input>
     </template>
     <RhTable border stripe :table-data="tableData">
