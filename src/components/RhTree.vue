@@ -1,23 +1,35 @@
 <template>
   <!-- 树形筛选器 -->
-  <div class="rh-tree border flex flex-col flex-shrink-0">
-    <div class="rh-tree-title mb-3">{{ title }}</div>
+  <div>
     <div class="rh-tree-input mb-3">
-      <el-input v-model="input" placeholder="请输入关键字进行过滤" clearable @input="filterTree" />
+      <el-input v-model="input" :placeholder="placeholder" clearable @input="filterTree" />
     </div>
     <div class="flex-1 overflow-y-auto">
-      <el-tree ref="rhTreeRef" v-bind="$attrs" :props="defaultProps" :filter-node-method="filterNode" />
+      <el-tree ref="rhTreeRef" v-bind="$attrs" :filter-node-method="filterNode">
+        <template v-for="(index, name) in $slots" v-slot:[name]="data">
+          <slot :name="name" v-bind="data">{{ data.node.label }}</slot>
+        </template>
+      </el-tree>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, useAttrs } from "vue";
 
+const attrs = useAttrs();
 const porps = defineProps({
+  width: {
+    type: String,
+    default: "300px",
+  },
   title: {
     type: String,
     default: "默认标题",
+  },
+  placeholder: {
+    type: String,
+    default: "请输入关键字进行过滤",
   },
 });
 
@@ -30,18 +42,16 @@ const filterTree = inputVal => {
 
 const filterNode = (value, data) => {
   if (!value) return true;
-  return data.label.includes(value);
+  return data[attrs.props.label].includes(value);
 };
 
-const defaultProps = {
-  children: "children",
-  label: "label",
-};
+defineExpose({
+  rhTreeRef,
+});
 </script>
 
 <style lang="scss" scoped>
 .rh-tree {
-  width: 280px;
   height: 100%;
   &.border {
     padding: 12px;
