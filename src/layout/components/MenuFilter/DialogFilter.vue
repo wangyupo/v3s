@@ -18,10 +18,16 @@
         ref="searchInputRef"
         :prefix-icon="Search"
       />
-      <el-scrollbar class="mt-4" ref="scrollbarRef" max-height="300px" v-if="searchVal && filterMenuList.length">
+      <el-scrollbar
+        class="mt-4"
+        ref="scrollbarRef"
+        max-height="300px"
+        @scroll="scrollbarScroll"
+        v-show="searchVal && filterMenuList.length"
+      >
         <div
           ref="resultRef"
-          class="flex items-center justify-between mt-2 last:mb-2 mx-[14px] p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
+          class="flex items-center justify-between mt-2 last:mb-1 mx-[14px] p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
           :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : '']"
           style="box-shadow: 0 1px 3px #d4d9e1"
           v-for="(item, idx) in filterMenuList"
@@ -35,7 +41,7 @@
           <i class="iconfont icon-enter text-xl"></i>
         </div>
       </el-scrollbar>
-      <RhNoData description="暂无搜索结果" v-else />
+      <RhNoData description="暂无搜索结果" v-show="!searchVal || !filterMenuList.length" />
     </div>
 
     <template #footer>
@@ -126,7 +132,9 @@ const scrollbarRef = ref();
 const resultRef = ref();
 const listSelectIdx = ref(0);
 const filterMenuList = ref([]);
+const scrollbarScrollTop = ref(0); // 搜索结果列表滚动条距顶部距离
 
+// 中文转拼音
 const chinese2Pinyin = chinese => {
   const _PY_NORMAL = pinyin(chinese, { style: "normal", heteronym: true, compact: true }).map(i =>
     i.flat().join("").toLowerCase()
@@ -138,6 +146,10 @@ const chinese2Pinyin = chinese => {
   return RES;
 };
 watch(searchVal, val => {
+  setTimeout(() => {
+    scrollbarRef.value.setScrollTop(0);
+  });
+  listSelectIdx.value = 0;
   const valPinyinArr = chinese2Pinyin(val);
   filterMenuList.value = userStore.menuArrWithoutEmptyUrl.filter(i => {
     let filterRes = chinese2Pinyin(i[menuKey.title]).filter(p => {
@@ -155,18 +167,38 @@ onUnmounted(() => {
   off(document, "keydown", selectMenuByKeyboard);
 });
 
-function scrollTo(index) {
-  if (!resultRef.value[index]) return;
-  const { offsetTop } = resultRef.value[index];
-  console.log(resultRef.value[index], offsetTop);
-  let scrollTop = offsetTop + 128;
-  if (scrollTop > scrollbarRef.value.wrapRef.offsetHeight) {
-    console.log(scrollTop, scrollTop - scrollbarRef.value.wrapRef.offsetHeight);
-    scrollbarRef.value.setScrollTop(scrollTop - scrollbarRef.value.wrapRef.offsetHeight);
+// 记录搜索结果滚动条位置
+const scrollbarScroll = val => {
+  scrollbarScrollTop.value = val.scrollTop;
+};
+
+// 判断当前元素的下/上一个是否可见，并将不可见元素移至结果列表区域
+function scrollTo(index, direction) {
+  console.log(1232);
+  let idx;
+  if (direction == "down") {
+    idx = index + 1;
   } else {
-    scrollbarRef.value.setScrollTop(0);
+    idx = index - 1;
   }
-  // const scrollTop = resultRef.value.handleScroll(index);4
+  if (!resultRef.value[idx]) return;
+  const { offsetTop, offsetHeight } = resultRef.value[idx];
+  const parentWrapHeight = scrollbarRef.value.wrapRef.offsetHeight;
+
+  const nextDomTop2ClientHeight = resultRef.value[idx].getBoundingClientRect().top - 8;
+  const nextDomBottom2ClientHeight = resultRef.value[idx].getBoundingClientRect().top + offsetHeight;
+  const parentDomTop2ClientHeight = scrollbarRef.value.wrapRef.getBoundingClientRect().top;
+  const parentDomBottom2ClientHeight = parentDomTop2ClientHeight + parentWrapHeight;
+  if (direction == "down") {
+    const domBottom2ParentWrapTop = offsetTop + 8 + offsetHeight + 8;
+    if (nextDomBottom2ClientHeight > parentDomBottom2ClientHeight) {
+      scrollbarRef.value.setScrollTop(domBottom2ParentWrapTop - parentWrapHeight);
+    }
+  } else if (direction == "up") {
+    if (nextDomTop2ClientHeight < parentDomTop2ClientHeight) {
+      scrollbarRef.value.setScrollTop(scrollbarScrollTop.value - (parentDomTop2ClientHeight - nextDomTop2ClientHeight));
+    }
+  }
 }
 
 // 通过键盘选择菜单（选择菜单 & 回车跳转 & 搜索快捷键）
@@ -186,13 +218,13 @@ const selectMenuByKeyboard = e => {
     // 向下
     if (listSelectIdx.value === filterMenuList.value.length - 1) return;
     listSelectIdx.value += 1;
-    scrollTo(listSelectIdx.value);
+    scrollTo(listSelectIdx.value, "down");
   } else if (key === "ArrowUp") {
     // 向上
     e.preventDefault(); // 防止光标受到上键影响
     if (listSelectIdx.value === 0) return;
     listSelectIdx.value -= 1;
-    scrollTo(listSelectIdx.value);
+    scrollTo(listSelectIdx.value, "up");
   } else if (key === "Enter") {
     // 回车
     const selectedMenu = filterMenuList.value[parseInt(listSelectIdx.value)];
