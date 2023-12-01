@@ -21,8 +21,8 @@ const tabList = [
   { label: "基础样式", component: tableBasic },
   { label: "搜索样式", component: tableForm },
   { label: "线框样式", component: tableWrapper },
-  { label: "行编辑", component: tableRowEdit },
   { label: "列字段配置（排序、显示/隐藏）", component: tableColumnsDIY },
+  { label: "行编辑", component: tableRowEdit },
   { label: "行拖拽（必须设置row-key，且保证是唯一不重复的）", component: tableDragRow },
 ];
 </script>

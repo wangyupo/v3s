@@ -78,12 +78,17 @@
           <template #default="scope">
             <div class="inline" @click="handleCopy(scope.$index, scope.row, column)">
               <slot :name="column.prop" :scope="scope" :table-data="_tableData.data">
-                <!-- 识别并格式化手机号 -->
-                <template v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
-                  {{ formatPhone(scope.row[column.prop]) }}
-                </template>
-                <template v-else>
-                  {{ column.prop === "operate" ? "" : epyReturn(scope.row[column.prop]) }}
+                <template v-if="column.prop != 'operate'">
+                  <!-- 自定义前缀 -->
+                  <span v-html="column.prefix" v-if="scope.row[column.prop] && column.prefix"></span>
+                  <!-- 识别并格式化手机号 -->
+                  <span v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
+                    {{ formatPhone(scope.row[column.prop]) }}
+                  </span>
+                  <!-- 空值默认返回 -- -->
+                  <span v-else>{{ epyReturn(scope.row[column.prop]) }}</span>
+                  <!-- 自定义后缀 -->
+                  <span v-html="column.suffix" v-if="scope.row[column.prop] && column.suffix"></span>
                 </template>
               </slot>
             </div>

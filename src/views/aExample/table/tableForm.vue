@@ -106,12 +106,14 @@ const tableData = reactive({
     {
       label: "地址",
       prop: "address",
+      prefix: "<span class='font-bold'>送货地址：</span>",
+      suffix: "(not too spicy)",
     },
   ],
   data: [
     {
-      date: "2016-05-03",
-      name: "",
+      date: "15311665523",
+      name: "Tom",
       address: "No. 189, Grove St, Los Angeles",
     },
     {
