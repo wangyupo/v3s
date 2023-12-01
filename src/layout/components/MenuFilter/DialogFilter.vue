@@ -12,15 +12,16 @@
     <div class="main">
       <el-input
         v-model="searchVal"
-        class="filter-menu-dialog-input"
+        class="filter-menu-dialog-input px-[14px]"
         size="large"
         placeholder="支持菜单全称|关键词|拼音搜索"
         ref="searchInputRef"
         :prefix-icon="Search"
       />
-      <div class="mt-4" ref="menuListRef" v-if="searchVal && filterMenuList.length">
+      <el-scrollbar class="mt-4" ref="scrollbarRef" max-height="300px" v-if="searchVal && filterMenuList.length">
         <div
-          class="flex items-center justify-between mt-2 p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
+          ref="resultRef"
+          class="flex items-center justify-between mt-2 last:mb-2 mx-[14px] p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
           :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : '']"
           style="box-shadow: 0 1px 3px #d4d9e1"
           v-for="(item, idx) in filterMenuList"
@@ -33,7 +34,7 @@
           </div>
           <i class="iconfont icon-enter text-xl"></i>
         </div>
-      </div>
+      </el-scrollbar>
       <RhNoData description="暂无搜索结果" v-else />
     </div>
 
@@ -120,7 +121,9 @@ const { isDark } = useLayout();
 const userStore = useUserStore();
 const router = useRouter();
 const searchVal = ref("");
-const searchInputRef = ref(null);
+const searchInputRef = ref();
+const scrollbarRef = ref();
+const resultRef = ref();
 const listSelectIdx = ref(0);
 const filterMenuList = ref([]);
 
@@ -152,20 +155,44 @@ onUnmounted(() => {
   off(document, "keydown", selectMenuByKeyboard);
 });
 
+function scrollTo(index) {
+  if (!resultRef.value[index]) return;
+  const { offsetTop } = resultRef.value[index];
+  console.log(resultRef.value[index], offsetTop);
+  let scrollTop = offsetTop + 128;
+  if (scrollTop > scrollbarRef.value.wrapRef.offsetHeight) {
+    console.log(scrollTop, scrollTop - scrollbarRef.value.wrapRef.offsetHeight);
+    scrollbarRef.value.setScrollTop(scrollTop - scrollbarRef.value.wrapRef.offsetHeight);
+  } else {
+    scrollbarRef.value.setScrollTop(0);
+  }
+  // const scrollTop = resultRef.value.handleScroll(index);4
+}
+
 // 通过键盘选择菜单（选择菜单 & 回车跳转 & 搜索快捷键）
 const selectMenuByKeyboard = e => {
-  const { ctrlKey, key } = e;
-  if (ctrlKey && key === " ") emits("update:modelValue", true); // ctrl+空格 打开弹窗
+  const { metaKey, ctrlKey, key } = e;
+  const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+  if (isMac) {
+    if (metaKey && key === "k") {
+      e.preventDefault();
+      emits("update:modelValue", true); // mac使用 command+k 打开弹窗
+    }
+  } else {
+    if (ctrlKey && key === " ") emits("update:modelValue", true); // windows使用 ctrl+空格 打开弹窗
+  }
   if (!filterMenuList.value.length) return;
   if (key === "ArrowDown") {
     // 向下
     if (listSelectIdx.value === filterMenuList.value.length - 1) return;
     listSelectIdx.value += 1;
+    scrollTo(listSelectIdx.value);
   } else if (key === "ArrowUp") {
     // 向上
     e.preventDefault(); // 防止光标受到上键影响
     if (listSelectIdx.value === 0) return;
     listSelectIdx.value -= 1;
+    scrollTo(listSelectIdx.value);
   } else if (key === "Enter") {
     // 回车
     const selectedMenu = filterMenuList.value[parseInt(listSelectIdx.value)];
@@ -200,7 +227,7 @@ const resetData = () => {
     display: none;
   }
   .el-dialog__body {
-    padding: 12px 14px;
+    padding: 12px 0;
   }
   .el-dialog__footer {
     padding: 18px 20px;
