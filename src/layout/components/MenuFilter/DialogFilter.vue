@@ -174,7 +174,6 @@ const scrollbarScroll = val => {
 
 // 判断当前元素的下/上一个是否可见，并将不可见元素移至结果列表区域
 function scrollTo(index, direction) {
-  console.log(1232);
   let idx;
   if (direction == "down") {
     idx = index + 1;
