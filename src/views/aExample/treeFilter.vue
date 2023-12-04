@@ -1,7 +1,19 @@
 <template>
   <div class="flex">
-    <RhTree title="示例列表（单选）" default-expand-all :data="data" @node-click="handleNodeClick" />
-    <RhTree class="ml-3" title="示例列表（多选）" default-expand-all show-checkbox :data="data" @check="handleCheck" />
+    <RhWrapper title="单选" class="w-[300px]">
+      <RhTree default-expand-all :data="data" @node-click="handleNodeClick" />
+    </RhWrapper>
+    <RhWrapper title="多选" class="ml-3 w-[300px]">
+      <RhTree default-expand-all show-checkbox :data="data" @check="handleCheck" />
+    </RhWrapper>
+    <RhWrapper title="自定义节点内容" class="ml-3 w-[300px]">
+      <RhTree default-expand-all show-checkbox :data="data" @check="handleCheck">
+        <template #default="{ node, data }">
+          {{ node.label }}
+          <el-icon class="ml-2"><Link /></el-icon>
+        </template>
+      </RhTree>
+    </RhWrapper>
   </div>
 </template>
 
