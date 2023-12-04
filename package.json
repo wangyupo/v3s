@@ -14,7 +14,7 @@
     "axios": "^1.6.1",
     "countup.js": "^2.6.0",
     "echarts": "^5.4.3",
-    "element-plus": "^2.4.0",
+    "element-plus": "^2.4.3",
     "js-cookie": "^3.0.1",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
