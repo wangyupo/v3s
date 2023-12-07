@@ -71,7 +71,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
     &-content {
       position: relative;
       margin: 12px;
-      padding: 0;
+      padding: 12px;
       background-color: var(--el-bg-color-overlay);
       border-radius: 4px;
       overflow-x: hidden;
@@ -84,7 +84,6 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
         }
       }
       &:deep(> div) {
-        padding: 12px;
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
