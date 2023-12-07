@@ -1,7 +1,6 @@
 <template>
   <!-- 通用业务包裹 -->
   <div
-    ref="rhWrapperRef"
     :class="[
       'rh-wrapper flex flex-col',
       noRound ? 'noRound' : '',
@@ -22,13 +21,9 @@
         <slot name="title-right"></slot>
       </div>
     </div>
-    <el-scrollbar
-      view-style="height: inherit"
-      :class="['rh-wrapper-main flex-1 overflow-y-auto ', noBorder ? 'mt-3' : 'm-3']"
-      ref="mainRef"
-    >
+    <div ref="mainRef" :class="['rh-wrapper-main flex-1 overflow-y-auto ', noBorder ? 'mt-3' : 'p-3']">
       <slot></slot>
-    </el-scrollbar>
+    </div>
   </div>
 </template>
 
@@ -82,11 +77,9 @@ const props = defineProps({
   },
 });
 
-const rhWrapperRef = ref();
 const mainRef = ref();
 
 defineExpose({
-  rhWrapperRef,
   mainRef,
 });
 </script>
