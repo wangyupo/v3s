@@ -76,6 +76,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       border-radius: 4px;
       overflow-x: hidden;
       &.transparent {
+        padding: 0;
         background-color: var(--el-bg-color-page);
       }
       &.breadInContent {
