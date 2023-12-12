@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/index";
 import NProgress from "@/utils/nProgress.js";
-
 import { menuKey } from "@/router/menuConfig.js";
+import { useLayoutStore } from "@/stores/layout.js";
+
 const login = () => import("@/views/login.vue");
 const main = () => import("@/views/main.vue");
 const refreshPage = () => import("@/views/refreshPage.vue");
@@ -103,7 +104,12 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach(() => {
+router.afterEach(to => {
+  const layoutStore = useLayoutStore();
+  layoutStore.$patch(state => {
+    state.isTransparent = to.meta.transparentBackground ? true : false;
+    state.isNoBreadcrumb = to.meta.noBreadcrumb ? true : false;
+  });
   NProgress.done();
 });
 
