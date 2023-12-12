@@ -11,11 +11,11 @@
     <el-container class="layout-main flex-col">
       <RouterHistoryTabs />
       <el-main
-        class="layout-main-content"
-        :class="[isTransparent ? 'transparent' : '', layoutType === 'LayoutHeadMenu' ? 'breadInContent' : '']"
+        class="layout-main-content headmenuLayout"
+        :class="[isTransparent ? 'transparent' : '', isNoBreadcrumb ? 'noBreadcrumb' : '']"
       >
-        <Breadcrumb />
-        <slot></slot>
+        <Breadcrumb class="mb-3" v-if="!isNoBreadcrumb" />
+        <div class="main-wrapper"><slot></slot></div>
       </el-main>
     </el-container>
   </el-container>
@@ -27,22 +27,12 @@ import HeaderTitle from "@/layout/components/HeaderTitle.vue";
 import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
-import { onMounted, ref } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useRoute } from "vue-router";
 
-const { layoutType, isDark } = useLayout();
+const { layoutType, isDark, isTransparent, isNoBreadcrumb } = useLayout();
 const route = useRoute();
-const isTransparent = ref(false);
-
-onMounted(() => {
-  isTransparent.value = route.meta.transparentBackground;
-});
-
-onBeforeRouteUpdate(val => {
-  isTransparent.value = val.meta.transparentBackground;
-});
 </script>
 
 <style lang="scss" scoped>

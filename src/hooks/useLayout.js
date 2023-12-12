@@ -18,6 +18,8 @@ export function useLayout() {
     menuFold,
     isGray,
     isZh,
+    isTransparent,
+    isNoBreadcrumb,
     menuFilterDialogVisible,
   } = storeToRefs(layoutStore);
 
@@ -45,6 +47,8 @@ export function useLayout() {
     menuFold,
     isGray,
     isZh,
+    isTransparent,
+    isNoBreadcrumb,
     menuFilterDialogVisible,
   };
 }

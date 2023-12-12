@@ -79,15 +79,21 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
         padding: 0;
         background-color: var(--el-bg-color-page);
       }
-      &.breadInContent {
-        &:deep(> div) {
-          height: calc(100% - 40px);
-        }
-      }
-      &:deep(> div) {
+      .main-wrapper {
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
+      }
+      &.headmenuLayout {
+        padding-top: 0;
+        .main-wrapper {
+          height: calc(100% - 52px);
+        }
+        &.noBreadcrumb {
+          .main-wrapper {
+            height: 100%;
+          }
+        }
       }
     }
   }

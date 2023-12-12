@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex h-full">
     <RhWrapper title="单选" class="w-[300px]">
       <RhTree default-expand-all :data="data" @node-click="handleNodeClick" />
     </RhWrapper>

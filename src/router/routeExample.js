@@ -65,6 +65,7 @@ const route = [
     component: transparentBackground,
     meta: {
       transparentBackground: true,
+      noBreadcrumb: true,
     },
   },
 ];
