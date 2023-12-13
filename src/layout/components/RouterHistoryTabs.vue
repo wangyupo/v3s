@@ -142,13 +142,13 @@ const rightClickMenus = ref([
     disabled: false,
   },
   {
-    label: "关闭右侧标签页(R)",
-    value: "R",
+    label: "关闭左侧标签页(L)",
+    value: "L",
     disabled: false,
   },
   {
-    label: "关闭左侧标签页(L)",
-    value: "L",
+    label: "关闭右侧标签页(R)",
+    value: "R",
     disabled: false,
   },
   {
