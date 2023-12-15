@@ -14,7 +14,7 @@
         class="layout-main-content headmenuLayout"
         :class="[isTransparent ? 'transparent' : '', isNoBreadcrumb ? 'noBreadcrumb' : '']"
       >
-        <Breadcrumb class="mb-3" v-if="!isNoBreadcrumb" />
+        <Breadcrumb class="px-3" v-if="!isNoBreadcrumb" />
         <div class="main-wrapper"><slot></slot></div>
       </el-main>
     </el-container>
