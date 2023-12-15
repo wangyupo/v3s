@@ -44,7 +44,12 @@
       <div class="mt-4">
         <el-checkbox v-model="checked" label="记住我" class="h-auto" />
       </div>
-      <el-button type="primary" class="mt-4 w-[300px] h-[48px] text-xl rounded-lg tracking-wider" @click="handleLogin">
+      <el-button
+        type="primary"
+        class="mt-4 w-[300px] h-[48px] text-xl rounded-lg tracking-wider"
+        :loading="isNavigating"
+        @click="handleLogin"
+      >
         登录
       </el-button>
       <div class="mt-3">
@@ -63,9 +68,11 @@ import { storeToRefs } from "pinia";
 import { arr2tree } from "@/utils/index.js";
 import menuJson from "@/router/menu.json";
 import { menuKey } from "@/router/menuConfig.js";
+import { useLayoutStore } from "@/stores/layout.js";
 
+const layoutStore = useLayoutStore();
+const { isNavigating } = storeToRefs(layoutStore);
 const router = useRouter();
-
 const nameInputFocus = ref(false);
 const passwordInputFocus = ref(false);
 const checked = ref(false);
