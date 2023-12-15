@@ -10,8 +10,9 @@ export const useLayoutStore = defineStore("layout", {
     menuFold: false, // 菜单折叠状态。true-折叠，false-展开
     isZh: true, // 是否中文
     isGray: false, // 是否全站灰色
-    isTransparent: false,
-    isNoBreadcrumb: false,
+    isTransparent: false, // 是否透明背景
+    isNoBreadcrumb: false, // 是否不显示面包屑导航
+    isNavigating: false, // 是否处于导航跳转过程中
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
     colorPrimaryBg: "#515a6e", // parimary 背景色
     colorPrimaryLight2: "", // parimary hover 背景色

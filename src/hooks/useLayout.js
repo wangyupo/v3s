@@ -20,6 +20,7 @@ export function useLayout() {
     isZh,
     isTransparent,
     isNoBreadcrumb,
+    isNavigating,
     menuFilterDialogVisible,
   } = storeToRefs(layoutStore);
 
@@ -49,6 +50,7 @@ export function useLayout() {
     isZh,
     isTransparent,
     isNoBreadcrumb,
+    isNavigating,
     menuFilterDialogVisible,
   };
 }
