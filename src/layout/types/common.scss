@@ -54,6 +54,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: $menuTranstionDuration;
     background-color: var(--el-color-primary);
+    scrollbar-width: thin;
     &.dark {
       background-color: var(--el-bg-color-overlay);
     }

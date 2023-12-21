@@ -268,6 +268,7 @@ const setMenuDisabled = () => {
 .router-tabs {
   border-top: 1px solid var(--el-border-color-light);
   background-color: var(--el-bg-color-overlay);
+  scrollbar-width: thin;
   &-item {
     border: 1px solid var(--el-border-color);
   }
