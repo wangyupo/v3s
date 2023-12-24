@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps({
   // 标题
@@ -79,8 +79,18 @@ const props = defineProps({
 
 const mainRef = ref();
 
+const realReac = computed(() => {
+  const pHeight = Number(window.getComputedStyle(mainRef.value).paddingTop.split("px")[0]);
+  const pWidth = Number(window.getComputedStyle(mainRef.value).paddingLeft.split("px")[0]);
+  return {
+    innerWidth: mainRef.value.clientWidth - 2 * pWidth,
+    innerHeight: mainRef.value.clientHeight - 2 * pHeight,
+  };
+});
+
 defineExpose({
   mainRef,
+  realReac,
 });
 </script>
 
