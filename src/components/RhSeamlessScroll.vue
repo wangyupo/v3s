@@ -81,9 +81,10 @@ const listStyle = computed(() => {
 
 watch(
   () => props.data,
-  () => {
+  val => {
     // 数据传入后，在dom重绘后初始化 “列表高度” 和 “列表复制品”，并执行无缝滚动动画。
     nextTick(() => {
+      resetAndCancelReqFrame();
       slotListWidth.value = slotListRef.value.offsetWidth;
       slotListHeight.value = slotListRef.value.offsetHeight;
       copyHtml.value = slotListRef.value.innerHTML;
@@ -116,15 +117,12 @@ const seamlessInit = () => {
   const distanceDirection = props.options.direction === "vertical" ? slotListTop : slotListLeft;
   const itemLength = props.options.direction === "vertical" ? -slotListHeight.value : -slotListWidth.value;
   const move = () => {
+    console.log(123);
     distanceDirection.value -= props.options.step;
-    if (distanceDirection.value > itemLength) {
-      reqFrame.value = window.requestAnimationFrame(move);
-    } else {
-      if (distanceDirection.value <= itemLength) {
-        distanceDirection.value = 0;
-        reqFrame.value = window.requestAnimationFrame(move);
-      }
+    if (distanceDirection.value <= itemLength) {
+      distanceDirection.value = 0;
     }
+    if (slotListRef.value) reqFrame.value = window.requestAnimationFrame(move);
   };
   reqFrame.value = window.requestAnimationFrame(move);
 };
@@ -143,6 +141,7 @@ const handleMouseLeave = params => {
 <style lang="scss" scoped>
 .rh-seamless-wrapper {
   transition: all 150ms;
+  overflow: hidden;
   div {
     flex-shrink: 0;
   }
