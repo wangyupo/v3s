@@ -117,11 +117,8 @@ const seamlessInit = () => {
   const distanceDirection = props.options.direction === "vertical" ? slotListTop : slotListLeft;
   const itemLength = props.options.direction === "vertical" ? -slotListHeight.value : -slotListWidth.value;
   const move = () => {
-    console.log(123);
     distanceDirection.value -= props.options.step;
-    if (distanceDirection.value <= itemLength) {
-      distanceDirection.value = 0;
-    }
+    if (distanceDirection.value <= itemLength) distanceDirection.value = 0;
     if (slotListRef.value) reqFrame.value = window.requestAnimationFrame(move);
   };
   reqFrame.value = window.requestAnimationFrame(move);
