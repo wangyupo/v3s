@@ -84,15 +84,8 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       }
       .main-wrapper {
         padding: 12px;
-        min-height: 100%;
         background-color: var(--el-bg-color-overlay);
         border-radius: 4px;
-      }
-      &.headmenuLayout {
-        .main-wrapper {
-          padding-top: 0;
-          min-height: 100%;
-        }
       }
     }
   }

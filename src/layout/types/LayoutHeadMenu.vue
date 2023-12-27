@@ -14,9 +14,11 @@
         class="layout-main-content headmenuLayout"
         :class="[isTransparent ? 'transparent' : '', isNoBreadcrumb ? 'noBreadcrumb' : '']"
       >
-        <div class="main-wrapper">
+        <div class="main-wrapper" :style="wrapStyle">
           <Breadcrumb class="mb-3" v-if="!isNoBreadcrumb" />
-          <slot></slot>
+          <div :style="isNoBreadcrumb ? 'height: 100%' : 'height: calc(100% - 40px)'">
+            <slot></slot>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -32,8 +34,9 @@ import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "@/hooks/useLayout.js";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useRoute } from "vue-router";
+import { computed } from "vue";
 
-const { layoutType, isDark, isTransparent, isNoBreadcrumb } = useLayout();
+const { layoutType, isDark, isTransparent, isNoBreadcrumb, wrapStyle } = useLayout();
 const route = useRoute();
 </script>
 

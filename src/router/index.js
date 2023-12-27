@@ -118,6 +118,7 @@ router.afterEach(to => {
   layoutStore.$patch(state => {
     state.isTransparent = to.meta.transparentBackground ? true : false;
     state.isNoBreadcrumb = to.meta.noBreadcrumb ? true : false;
+    state.wrapperType = to.meta.wrapperType ? to.meta.wrapperType : "";
     state.isNavigating = false;
   });
 });

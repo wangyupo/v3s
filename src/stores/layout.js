@@ -13,6 +13,7 @@ export const useLayoutStore = defineStore("layout", {
     isTransparent: false, // 是否透明背景
     isNoBreadcrumb: false, // 是否不显示面包屑导航
     isNavigating: false, // 是否处于导航跳转过程中
+    wrapperType: "", // 业务区域包裹类型 flowPage、fullPage、''(defalut)
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
     colorPrimaryBg: "#515a6e", // parimary 背景色
     colorPrimaryLight2: "", // parimary hover 背景色
