@@ -16,7 +16,7 @@
       <el-container class="flex-col">
         <RouterHistoryTabs />
         <el-main class="layout-main-content" :class="[isTransparent ? 'transparent' : '']">
-          <div class="main-wrapper"><slot></slot></div>
+          <div class="main-wrapper" :style="wrapStyle"><slot></slot></div>
         </el-main>
       </el-container>
     </el-container>
@@ -34,7 +34,7 @@ import { useLayout } from "@/hooks/useLayout.js";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useRoute } from "vue-router";
 
-const { menuFold, isDark, isTransparent, isNoBreadcrumb } = useLayout();
+const { menuFold, isDark, isTransparent, isNoBreadcrumb, wrapStyle } = useLayout();
 const route = useRoute();
 </script>
 
