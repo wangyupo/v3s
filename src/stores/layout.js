@@ -13,7 +13,7 @@ export const useLayoutStore = defineStore("layout", {
     isTransparent: false, // 是否透明背景
     isNoBreadcrumb: false, // 是否不显示面包屑导航
     isNavigating: false, // 是否处于导航跳转过程中
-    wrapperType: "", // 业务区域包裹类型 flowPage（不设置高度，遵循默认文档流，适合展示业务）、fullPage（高度100%，溢出后，适合添加/编辑业务）、''（最小高度100%，溢出后自动撑开，适合大部分业务）
+    wrapperType: "", // 业务区域包裹类型 flowPage（不设置高度，遵循默认文档流，适合展示业务）、fullPage（高度固定100%，适合添加/编辑业务）、''（最小高度100%，溢出后自动撑开，适合大部分业务）
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
     colorPrimaryBg: "#515a6e", // parimary 背景色
     colorPrimaryLight2: "", // parimary hover 背景色
