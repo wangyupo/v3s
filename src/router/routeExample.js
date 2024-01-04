@@ -53,6 +53,9 @@ const route = [
     path: "/example/tree",
     name: "exampleTreeFilter",
     component: exampleTreeFilter,
+    meta: {
+      wrapperType: "fullPage",
+    },
   },
   {
     path: "/example/seamlessScroll",
