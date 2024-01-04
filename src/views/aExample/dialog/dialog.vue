@@ -4,26 +4,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-
 /** dialog START **/
-const emits = defineEmits(["update:modelValue", "opened", "closed"]);
-const dialogVisible = ref(false);
-
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    require: true,
-    default: false,
-  },
-});
-
-watch(
-  () => props.modelValue,
-  val => {
-    dialogVisible.value = val;
-  }
-);
+const emits = defineEmits(["opened", "closed"]);
+const dialogVisible = defineModel();
 
 // 弹窗开启
 const opened = () => {
@@ -33,8 +16,6 @@ const opened = () => {
 // 弹窗关闭
 const closed = () => {
   resetData();
-  dialogVisible.value = false;
-  emits("update:modelValue", false);
   emits("closed");
 };
 
