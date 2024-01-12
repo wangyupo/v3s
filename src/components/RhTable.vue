@@ -198,7 +198,7 @@ const indexMethod = idx => {
 const handleCopy = debounce(
   (index, row, column) => {
     if (!column.copy) return;
-    copy(row[column.prop]);
+    copy(row[column.prop], column.label);
   },
   1000,
   {
