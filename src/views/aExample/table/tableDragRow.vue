@@ -101,7 +101,7 @@ const tableData = reactive({
   ],
   pages: {
     total: 0,
-    pageNum: 1,
+    pageNumber: 1,
     pageSize: 10,
   },
 });
@@ -121,11 +121,11 @@ const handleSearch = params => {
 };
 
 // 列表查询
-const fn_getList = (pageNum = 1) => {
+const fn_getList = (pageNumber = 1) => {
   loading.value = true;
   const params = Object.assign(
     {
-      pageNum: pageNum ? pageNum : tableData.pages.pageNum,
+      pageNumber: pageNumber ? pageNumber : tableData.pages.pageNumber,
       pageSize: tableData.pages.pageSize,
     },
     searchForm.value
@@ -135,7 +135,7 @@ const fn_getList = (pageNum = 1) => {
       if (res.code == 200) {
         tableData.data = res.rows;
         tableData.pages.total = res.total;
-        tableData.pages.pageNum = params.pageNum;
+        tableData.pages.pageNumber = params.pageNumber;
       }
     })
     .finally(() => {
