@@ -2,9 +2,9 @@
 
 #### 一、我如何组织路由？需要嵌套吗？后端需要给我传什么样的菜单格式？
 
-1、组织路由见 [menu.json](https://github.com/wangyupo/v3s/blob/main/src/router/menu.json) 这个示例。这是一个简单的对象数组，它包括了`id/parentId/title/url/hidden`，只要你组织好这些，保证其对应关系（parentId 对应 id），那最终的路由就能按照你理想的方式组织并展示。
+1、组织路由见 [menu.json](https://github.com/wangyupo/v3s/blob/main/src/router/menu.json) 这个示例。这是一个简单的对象数组，它包括了`id/parentId/title/url/hidden`，只要你组织好这些，保证其对应关系（parentId 对应 id），那最终的路由就能按照你理想的方式组织并展示。【注意：hidden:1 的页面（通常是菜单页的下级功能页，不需要展示在菜单中），需要在router配置时，配置它对应高亮的上级路由，如：meta: { targetMenuPath: "/example/page" }，可以看这里 [routeExample](https://github.com/wangyupo/v3s/blob/main/src/router/routeExample.js#L49)】
 
-2、v3s 中的路由组织很简单，全部铺平即可，内部会通过函数为你组织成树状数据，进而展现成你理想的菜单组合方式。（但是需要你的 id 和 parentId 严格对应哦，这点非常重要！）
+2、v3s 中的路由组织很简单，全部铺平即可，内部会通过函数为你组织成树状数据，进而展现成你理想的菜单组合方式。（注意：id 和 parentId 必须严格对应。）
 
 3、后端可以铺平传，即传一个对象数组即可，同时也可以传一个组织好的树状数据。因为后端给你传的路由，在 v3s 中，只起到了“权限判断”的作用，实际参与前端路由形成的，仍然是 v3s 的 [index.js](https://github.com/wangyupo/v3s/blob/main/src/router/index.js) 中的路由。（如果你想要限定某个角色、用户的页面访问，那后端的菜单就必须要传哦，后端的菜单内容是唯一的判断。）
 
