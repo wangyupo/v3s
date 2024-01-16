@@ -107,7 +107,7 @@
     <el-pagination
       class="mt-3 flex justify-end"
       layout="total, sizes, prev, pager, next, jumper"
-      :current-page="_tableData.pages.pageNum"
+      :current-page="_tableData.pages.pageNumber"
       :page-size="_tableData.pages.pageSize"
       :page-sizes="[10, 20, 30]"
       :total="_tableData.pages.total"
@@ -141,7 +141,7 @@ const props = defineProps({
         data: [],
         pages: {
           total: 0,
-          pageNum: 1,
+          pageNumber: 1,
           pageSize: 10,
         },
       };
@@ -170,8 +170,8 @@ const emit = defineEmits([
 ]);
 
 // 分页事件 START
-const handlePageChange = pageNum => {
-  emit("page-change", pageNum);
+const handlePageChange = pageNumber => {
+  emit("page-change", pageNumber);
 };
 const handleSizeChange = pageSize => {
   emit("page-size-change", pageSize);
@@ -185,20 +185,20 @@ onMounted(() => {
 
 //序号
 const indexMethod = idx => {
-  let pageNum = 1;
+  let pageNumber = 1;
   let pageSize = 10;
   if (_tableData.value.pages) {
-    pageNum = _tableData.value.pages.pageNum;
+    pageNumber = _tableData.value.pages.pageNumber;
     pageSize = _tableData.value.pages.pageSize;
   }
-  return (pageNum - 1) * pageSize + idx + 1;
+  return (pageNumber - 1) * pageSize + idx + 1;
 };
 
 // 复制column内容
 const handleCopy = debounce(
   (index, row, column) => {
     if (!column.copy) return;
-    copy(row[column.prop]);
+    copy(row[column.prop], column.label);
   },
   1000,
   {
