@@ -56,7 +56,7 @@ const tableData = reactive({
   ],
   pages: {
     total: 100,
-    pageNum: 1,
+    pageNumber: 1,
     pageSize: 10,
   },
 });
