@@ -2,7 +2,7 @@
 
 #### 一、我如何组织路由？需要嵌套吗？后端需要给我传什么样的菜单格式？
 
-1、组织路由见 [menu.json](https://github.com/wangyupo/v3s/blob/main/src/router/menu.json) 这个示例。这是一个简单的对象数组，它包括了`id/parentId/title/url/hidden`，只要你组织好这些，保证其对应关系（parentId 对应 id），那最终的路由就能按照你理想的方式组织并展示。【注意：hidden:1 的页面（通常是菜单页的下级功能页，不需要展示在菜单中），需要在router配置时，配置它对应高亮的上级路由，如：meta: { targetMenuPath: "/example/page" }，可以看这里 [routeExample](https://github.com/wangyupo/v3s/blob/main/src/router/routeExample.js#L49)】
+1、组织路由见 [menu.json](https://github.com/wangyupo/v3s/blob/main/src/router/menu.json) 这个示例。这是一个简单的对象数组，它包括了`id/parentId/title/url/hidden`，只要你组织好这些，保证其对应关系（parentId 对应 id），那最终的路由就能按照你理想的方式组织并展示。【注意：menuType:1 的页面（通常是菜单页的下级功能页，不需要展示在菜单中），需要在router配置时，配置它对应高亮的上级路由，如：meta: { targetMenuPath: "/example/page" }，可以看这里 [routeExample](https://github.com/wangyupo/v3s/blob/main/src/router/routeExample.js#L49)】
 
 2、v3s 中的路由组织很简单，全部铺平即可，内部会通过函数为你组织成树状数据，进而展现成你理想的菜单组合方式。（注意：id 和 parentId 必须严格对应。）
 
