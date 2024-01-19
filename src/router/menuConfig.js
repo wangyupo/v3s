@@ -9,5 +9,7 @@ export const menuKey = {
   url: "url", // 路由跳转
   title: "title", // 菜单名称
   icon: "icon", // 菜单icon
-  hidden: "hidden", // 是否菜单
+  // 下面这俩，其实就是 menu.json 里，"menuType": 0 的 key 和 value 的拆解
+  menuType: "menuType", // 菜单类型：菜单、业务页面
+  menuValue: "0", // 菜单的值，0-菜单，其它-隐藏
 };
