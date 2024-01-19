@@ -78,11 +78,11 @@ watch(
       scrollTabs(routeIdxInHistory);
     });
     if (!currentRoute) return;
-    if (currentRoute.hidden === 1) {
+    if (currentRoute[menuKey.menuType] != menuKey.menuValue) {
       function findParentRouteWithoutHidden(_route) {
         let _parentRoute = userStore.menuArrWithoutEmptyUrl.find(i => i.id === _route.parentId);
         if (!_parentRoute) return;
-        if (_parentRoute.hidden === 0) return _parentRoute;
+        if (_parentRoute[menuKey.menuType] == menuKey.menuValue) return _parentRoute;
         findParentRouteWithoutHidden(_parentRoute);
       }
       currentRoute = findParentRouteWithoutHidden(currentRoute);

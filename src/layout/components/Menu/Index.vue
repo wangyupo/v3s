@@ -38,7 +38,7 @@ const userStore = useUserStore();
 const { menu } = storeToRefs(userStore);
 const _menu = ref([]);
 _menu.value = arr2tree(
-  userStore.menuArr.filter(i => i.hidden === 0),
+  userStore.menuArr.filter(i => i[menuKey.menuType] == menuKey.menuValue),
   "id",
   "parentId",
   menuKey.children
