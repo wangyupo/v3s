@@ -22,11 +22,6 @@
   background-color: var(--el-color-primary);
 }
 
-.el-menu-item.is-active,
-.el-sub-menu.is-active:not(.is-opened) {
-  background-color: var(--el-color-primary-dark-2);
-}
-
 .el-button.is-link:focus,
 .el-button.is-link:hover {
   color: var(--el-color-primary-light-4);
