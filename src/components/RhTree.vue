@@ -27,7 +27,7 @@ const porps = defineProps({
   // 是否固定搜索框
   fixSearch: {
     type: Boolean,
-    default: false, // true-搜索框固定不动；false-搜索框归属文档流
+    default: false, // true-搜索框固定不动；false-搜索框随文档流滚动
   },
 });
 
