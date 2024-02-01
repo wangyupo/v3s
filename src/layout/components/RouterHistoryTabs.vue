@@ -1,6 +1,6 @@
 <template>
   <!-- 路由访问历史&标签右键菜单（注意事项：实际开发请依据定义的字段配置 /src/router/menuConfig.js 中的 key） -->
-  <div class="router-tabs flex flex-shrink-0 items-center px-3 py-1 overflow-x-auto" ref="tabsWrapperRef">
+  <div class="router-tabs flex flex-shrink-0 items-center px-3 overflow-x-auto" ref="tabsWrapperRef">
     <div
       class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm rounded"
       :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-[--el-text-color-primary]' : 'text-gray-600']"
@@ -266,6 +266,7 @@ const setMenuDisabled = () => {
 
 <style lang="scss" scoped>
 .router-tabs {
+  height: 40px;
   border-top: 1px solid var(--el-border-color-light);
   background-color: var(--el-bg-color-overlay);
   scrollbar-width: thin;
