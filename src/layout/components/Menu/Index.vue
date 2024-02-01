@@ -56,8 +56,5 @@ const mode = computed(() => {
   &.dark {
     background-color: var(--el-bg-color-overlay);
   }
-  :deep(.el-sub-menu .el-sub-menu__title:hover) {
-    background-color: var(--el-color-primary-dark-2);
-  }
 }
 </style>
