@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full">
     <RhWrapper title="单选" class="w-[300px]">
-      <RhTree default-expand-all :data="data" @node-click="handleNodeClick" />
+      <RhTree default-expand-all fixSearch :data="data" @node-click="handleNodeClick" />
     </RhWrapper>
     <RhWrapper title="多选" class="ml-3 w-[300px]">
       <RhTree default-expand-all show-checkbox :data="data" @check="handleCheck" />
