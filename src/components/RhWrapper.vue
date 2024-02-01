@@ -21,7 +21,7 @@
         <slot name="title-right"></slot>
       </div>
     </div>
-    <div ref="mainRef" :class="['rh-wrapper-main flex-1 overflow-y-auto ', noBorder ? 'mt-3' : 'p-3']">
+    <div ref="mainRef" :class="['rh-wrapper-main flex-1 overflow-y-auto relative', noBorder ? 'mt-3' : 'p-3']">
       <slot></slot>
     </div>
   </div>
