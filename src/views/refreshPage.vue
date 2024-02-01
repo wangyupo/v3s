@@ -1,11 +1,19 @@
 <template>
   <!-- tab刷新中转页 -->
-  <div v-loading="loading" element-loading-text="加载中..." class="absolute left-0 right-0 bottom-0 top-0"></div>
+  <div
+    v-loading="loading"
+    :element-loading-text="contentAreaLoadingText"
+    :element-loading-spinner="contentAreaLoadingSvg"
+    class="absolute left-0 right-0 bottom-0 top-0"
+  ></div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useLayout } from "@/hooks/useLayout.js";
+
+const { contentAreaLoadingText, contentAreaLoadingSvg } = useLayout();
 
 const loading = ref(true);
 const router = useRouter();
