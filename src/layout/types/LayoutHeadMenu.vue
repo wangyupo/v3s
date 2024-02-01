@@ -14,7 +14,13 @@
         class="layout-main-content headmenuLayout"
         :class="[isTransparent ? 'transparent' : '', isNoBreadcrumb ? 'noBreadcrumb' : '']"
       >
-        <div class="main-wrapper" :style="wrapStyle">
+        <div
+          class="main-wrapper"
+          :style="wrapStyle"
+          v-loading="isNavigating"
+          :element-loading-text="contentAreaLoadingText"
+          :element-loading-spinner="contentAreaLoadingSvg"
+        >
           <Breadcrumb class="mb-3" v-if="!isNoBreadcrumb" />
           <div :style="isNoBreadcrumb ? 'height: 100%' : 'height: calc(100% - 40px)'">
             <slot></slot>
@@ -32,12 +38,16 @@ import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "@/hooks/useLayout.js";
-import { onBeforeRouteUpdate } from "vue-router";
-import { useRoute } from "vue-router";
-import { computed } from "vue";
 
-const { layoutType, isDark, isTransparent, isNoBreadcrumb, wrapStyle } = useLayout();
-const route = useRoute();
+const {
+  isDark,
+  isTransparent,
+  isNoBreadcrumb,
+  wrapStyle,
+  isNavigating,
+  contentAreaLoadingText,
+  contentAreaLoadingSvg,
+} = useLayout();
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <!-- 示例-table样式 -->
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+  <el-tabs v-model="activeName" class="demo-tabs">
     <el-tab-pane :label="item.label" :name="index" v-for="(item, index) in tabList" :key="index">
       <component :is="item.component"></component>
     </el-tab-pane>
