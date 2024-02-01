@@ -44,15 +44,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-html,
-body,
-#app {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
-    sans-serif;
-}
-</style>
+<style lang="scss"></style>
