@@ -7,7 +7,7 @@
     <div class="rh-tree-main flex-1" :class="fixSearch ? 'overflow-y-auto' : ''">
       <el-tree ref="rhTreeRef" v-bind="$attrs" :filter-node-method="filterNode">
         <template v-for="(index, name) in $slots" v-slot:[name]="data">
-          <slot :name="name" v-bind="data">{{ data.node.label }}</slot>
+          <slot :name="name" v-bind="data" :key="index">{{ data.node.label }}</slot>
         </template>
       </el-tree>
     </div>
