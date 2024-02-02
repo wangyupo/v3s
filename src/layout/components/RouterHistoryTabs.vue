@@ -3,14 +3,17 @@
   <div class="router-tabs flex flex-shrink-0 items-center px-3 overflow-x-auto" ref="tabsWrapperRef">
     <div
       class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-sm rounded"
-      :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'text-[--el-text-color-primary]' : 'text-gray-600']"
+      :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'dark text-[--el-text-color-primary]' : 'text-gray-600']"
       v-for="(routeItem, idx) in routeHistory"
       :key="routeItem[menuKey.url]"
       ref="tabRef"
       @click="changeRoute(routeItem, idx)"
       @click.right="showRightMenu($event, routeItem)"
     >
-      <div class="w-[8px] h-[8px] rounded-full bg-white mr-1.5" v-show="tabActive(routeItem)"></div>
+      <div
+        class="router-tabs-item-point w-[8px] h-[8px] rounded-full bg-white mr-1.5"
+        v-show="tabActive(routeItem)"
+      ></div>
       {{ routeItem[menuKey.title] }}
       <el-icon class="ml-2" v-if="routeHistory.length != 1" @click.stop="removeRouteHistory(routeItem, idx)">
         <Close />
@@ -266,17 +269,34 @@ const setMenuDisabled = () => {
 
 <style lang="scss" scoped>
 .router-tabs {
-  height: 40px;
+  height: 42px;
   border-top: 1px solid var(--el-border-color-light);
   background-color: var(--el-bg-color-overlay);
   scrollbar-width: thin;
   &-item {
     border: 1px solid var(--el-border-color);
+    &:hover {
+      background-color: var(--el-color-info-light-9);
+    }
+    &.active {
+      color: #fff;
+      border-color: var(--el-color-primary);
+      background-color: var(--el-color-primary);
+    }
   }
-  &-item.active {
-    color: #fff;
-    background-color: var(--el-color-primary);
-    border: var(--el-color-primary);
+  &-item.dark {
+    background-color: var(--el-bg-color-overlay);
+    &:hover {
+      background-color: var(--el-color-info-light-7);
+    }
+    &.active {
+      color: var(--el-color-primary);
+      border-color: var(--el-color-primary);
+      background-color: var(--el-color-primary-light-8);
+      .router-tabs-item-point {
+        background-color: var(--el-color-primary);
+      }
+    }
   }
 }
 
