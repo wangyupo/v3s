@@ -26,19 +26,10 @@ import { ref } from "vue";
 import { TinyColor } from "@ctrl/tinycolor";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const {
-  layoutStore,
-  colorPrimaryBg,
-  colorPrimaryLight2,
-  colorPrimaryLight9,
-  colorPrimaryLight7,
-  colorPrimaryLight4,
-  colorPrimaryLight5,
-  colorPrimaryDark2,
-} = useLayout();
+const { layoutStore, colorPrimaryBg, setElementUIThemeColor } = useLayout();
 const predefineColors = ref([
   { color: "#515a6e", name: "阴影灰（默认）" },
-  { color: "#385DE3", name: "科技蓝" },
+  { color: "#409eff", name: "科技蓝" },
   { color: "#925F69", name: "樱花红" },
 ]);
 
@@ -67,19 +58,6 @@ const changeThemeColor = color => {
   });
 
   setElementUIThemeColor();
-};
-
-// 设置 css 变量
-const setElementUIThemeColor = () => {
-  const el = document.documentElement;
-
-  el.style.setProperty("--el-color-primary", colorPrimaryBg.value); // el-button primary 背景色
-  el.style.setProperty("--el-color-primary-light-3", colorPrimaryLight2.value); // el-button primary hover 背景色
-  el.style.setProperty("--el-color-primary-light-4", colorPrimaryLight4.value); // el-button link primary hover色
-  el.style.setProperty("--el-color-primary-light-5", colorPrimaryLight5.value); // el-button primary disabled 背景色
-  el.style.setProperty("--el-color-primary-light-7", colorPrimaryLight7.value); // el-button default border 激活色
-  el.style.setProperty("--el-color-primary-light-9", colorPrimaryLight9.value); // el-button default hover 背景色
-  el.style.setProperty("--el-color-primary-dark-2", colorPrimaryDark2.value); // el-button primary acitve 背景色
 };
 </script>
 

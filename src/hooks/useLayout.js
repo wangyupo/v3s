@@ -51,6 +51,19 @@ export function useLayout() {
     }
   });
 
+  // 设置主题色 css 变量
+  const setElementUIThemeColor = () => {
+    const el = document.documentElement;
+
+    el.style.setProperty("--el-color-primary", colorPrimaryBg.value); // el-button primary 背景色
+    el.style.setProperty("--el-color-primary-light-3", colorPrimaryLight2.value); // el-button primary hover 背景色
+    el.style.setProperty("--el-color-primary-light-4", colorPrimaryLight4.value); // el-button link primary hover色
+    el.style.setProperty("--el-color-primary-light-5", colorPrimaryLight5.value); // el-button primary disabled 背景色
+    el.style.setProperty("--el-color-primary-light-7", colorPrimaryLight7.value); // el-button default border 激活色
+    el.style.setProperty("--el-color-primary-light-9", colorPrimaryLight9.value); // el-button default hover 背景色
+    el.style.setProperty("--el-color-primary-dark-2", colorPrimaryDark2.value); // el-button primary acitve 背景色
+  };
+
   return {
     colorPrimaryBg,
     colorPrimaryLight2,
@@ -73,5 +86,6 @@ export function useLayout() {
     menuFilterDialogVisible,
     contentAreaLoadingText,
     contentAreaLoadingSvg,
+    setElementUIThemeColor,
   };
 }
