@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { TinyColor } from "@ctrl/tinycolor";
 import { useLayout } from "@/hooks/useLayout.js";
 
@@ -41,11 +41,6 @@ const predefineColors = ref([
   { color: "#385DE3", name: "科技蓝" },
   { color: "#925F69", name: "樱花红" },
 ]);
-
-// 加载主题色
-onMounted(() => {
-  setElementUIThemeColor();
-});
 
 // 修改主题色
 const changeThemeColor = color => {
