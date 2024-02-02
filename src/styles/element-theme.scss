@@ -4,10 +4,6 @@
 :root {
   --el-menu-border-color: transparent;
   --el-menu-bg-color: transparent;
-  --el-menu-hover-bg-color: var(--el-color-primary-dark-2);
-  --el-menu-text-color: #ddd;
-  --el-menu-hover-text-color: #fff;
-  --el-menu-active-color: #fff;
 
   --el-color-primary: #515a6e;
   --el-color-primary-dark-2: #454c5c;
@@ -16,6 +12,13 @@
   --el-color-primary-light-5: #a8adb7;
   --el-color-primary-light-7: #cbced4;
   --el-color-primary-light-9: #eeeff1;
+}
+
+html:not(.dark) {
+  --el-menu-hover-bg-color: var(--el-color-primary-dark-2);
+  --el-menu-text-color: #ddd;
+  --el-menu-hover-text-color: #fff;
+  --el-menu-active-color: #fff;
 }
 
 .el-menu--popup-container {
