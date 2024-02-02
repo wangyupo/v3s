@@ -2,9 +2,9 @@
   <!-- 布局-顶栏菜单 -->
   <el-container class="layout">
     <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
-      <div class="flex items-center">
+      <div class="flex items-center w-[80%]">
         <HeaderTitle />
-        <Menu />
+        <Menu class="w-[80%]" />
       </div>
       <HeaderRightTools />
     </el-header>
