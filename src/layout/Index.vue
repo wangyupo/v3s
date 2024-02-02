@@ -7,9 +7,10 @@
 import LayoutClassic from "./types/LayoutClassic.vue";
 import LayoutSideMenu from "./types/LayoutSideMenu.vue";
 import LayoutHeadMenu from "./types/LayoutHeadMenu.vue";
+import { onMounted } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { layoutType } = useLayout();
+const { layoutType, setElementUIThemeColor } = useLayout();
 
 /**
  * 布局类型
@@ -21,6 +22,10 @@ const types = {
   LayoutSideMenu,
   LayoutHeadMenu,
 };
+
+onMounted(() => {
+  setElementUIThemeColor();
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -8,8 +8,22 @@
 
   <el-drawer v-model="drawerVisible" title="个性化配置" direction="rtl" append-to-body :size="400">
     <div class="overflow-y-auto h-[calc(100%-65px)]">
-      <div class="">
-        <RhTitle title="切换布局"></RhTitle>
+      <el-radio-group v-model="isDark">
+        <el-radio-button :label="false">
+          <div class="flex items-center">
+            <el-icon size="16" class="mr-1"><Sunny /></el-icon>
+            日间模式
+          </div>
+        </el-radio-button>
+        <el-radio-button :label="true">
+          <div class="flex items-center">
+            <el-icon size="16" class="mr-1"><Moon /></el-icon>
+            夜间模式
+          </div>
+        </el-radio-button>
+      </el-radio-group>
+      <div class="mt-6">
+        <RhTitle title="导航模式"></RhTitle>
         <div class="flex">
           <el-radio-group v-model="layoutType">
             <el-radio v-for="(item, index) in layouts" :key="index" class="layout-item" :label="item.layout">
@@ -22,7 +36,7 @@
         </div>
       </div>
       <div class="mt-6">
-        <RhTitle title="切换主题色">
+        <RhTitle title="主题色">
           <template #title-right></template>
         </RhTitle>
         <div class="flex items-center">
@@ -44,7 +58,8 @@ import { deleteAllCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-const { layoutStore, layoutType, colorPrimaryBg } = useLayout();
+const radio = ref("日间模式");
+const { layoutStore, layoutType, colorPrimaryBg, isDark } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
   { name: "经典布局", icon: "icon-a-bianzu2", layout: "LayoutClassic" },
@@ -71,6 +86,12 @@ const handleClearStorage = () => {
       window.location.reload();
     })
     .catch(() => {});
+};
+
+// 用途
+const handleDD = a => {
+  console.log(a);
+  isDark.value = a;
 };
 </script>
 
