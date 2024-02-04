@@ -91,23 +91,7 @@ import { on, off } from "@/utils/index";
 import { menuKey } from "@/router/menuConfig.js";
 
 /** dialog START **/
-const emits = defineEmits(["update:modelValue"]);
-const dialogVisible = ref(false);
-
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    require: true,
-    default: false,
-  },
-});
-
-watch(
-  () => props.modelValue,
-  val => {
-    dialogVisible.value = val;
-  }
-);
+const dialogVisible = defineModel(false);
 
 // 弹窗开启
 const opened = () => {
@@ -118,7 +102,6 @@ const opened = () => {
 const closed = () => {
   resetData();
   dialogVisible.value = false;
-  emits("update:modelValue", false);
 };
 /** dialog END **/
 
@@ -204,13 +187,15 @@ function scrollTo(index, direction) {
 const selectMenuByKeyboard = e => {
   const { metaKey, ctrlKey, key } = e;
   const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+  // mac使用 command+k 打开弹窗
   if (isMac) {
     if (metaKey && key === "k") {
       e.preventDefault();
-      emits("update:modelValue", true); // mac使用 command+k 打开弹窗
+      dialogVisible.value = true;
     }
   } else {
-    if (ctrlKey && key === " ") emits("update:modelValue", true); // windows使用 ctrl+空格 打开弹窗
+    // windows使用 ctrl+空格 打开弹窗
+    if (ctrlKey && key === " ") dialogVisible.value = true;
   }
   if (!filterMenuList.value.length) return;
   if (key === "ArrowDown") {

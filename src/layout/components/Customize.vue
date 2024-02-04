@@ -58,8 +58,7 @@ import { deleteAllCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-const radio = ref("日间模式");
-const { layoutStore, layoutType, colorPrimaryBg, isDark } = useLayout();
+const { layoutType, isDark } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
   { name: "经典布局", icon: "icon-a-bianzu2", layout: "LayoutClassic" },
@@ -86,12 +85,6 @@ const handleClearStorage = () => {
       window.location.reload();
     })
     .catch(() => {});
-};
-
-// 用途
-const handleDD = a => {
-  console.log(a);
-  isDark.value = a;
 };
 </script>
 

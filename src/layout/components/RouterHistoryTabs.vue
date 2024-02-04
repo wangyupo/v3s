@@ -83,7 +83,7 @@ watch(
     if (!currentRoute) return;
     if (currentRoute[menuKey.menuType] != menuKey.menuValue) {
       function findParentRouteWithoutHidden(_route) {
-        let _parentRoute = userStore.menuArrWithoutEmptyUrl.find(i => i.id === _route.parentId);
+        let _parentRoute = userStore.menuArrWithoutEmptyUrl.find(i => i[menuKey.id] === _route.parentId);
         if (!_parentRoute) return;
         if (_parentRoute[menuKey.menuType] == menuKey.menuValue) return _parentRoute;
         findParentRouteWithoutHidden(_parentRoute);
