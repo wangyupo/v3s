@@ -35,6 +35,10 @@ html:not(.dark) {
   border-bottom: 1px solid var(--el-border-color-light);
 }
 
+.el-dialog__body {
+  padding: 16px 0;
+}
+
 .el-dialog__footer {
   border-top: 1px solid var(--el-border-color-light);
 }
