@@ -1,4 +1,9 @@
 html,
+body {
+  overflow: hidden;
+}
+
+html,
 body,
 #app {
   position: relative;
