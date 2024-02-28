@@ -2,87 +2,109 @@
   <!-- 搜索组件-支持传参配置搜索项、自动换行、插槽 -->
   <div class="rh-search-wrapper mb-3" :class="[noBorder ? 'noBorder' : '']">
     <div class="rh-search-content flex items-center flex-wrap">
-      <el-row :gutter="12" class="w-full">
-        <el-col :span="searchItem.colSpan" v-for="(searchItem, idx) in searchInfo" :key="idx">
-          <!-- 输入框 -->
-          <el-input
-            class="rh-search-item"
-            v-model="_searchData[searchItem.key]"
-            clearable
-            :placeholder="searchItem.placeholder"
-            :formatter="searchItem.formatter ? searchItem.formatter : value => value.replace(/\s*/g, '')"
-            v-if="searchItem.type === 'input'"
-          />
-          <!-- 单选 -->
-          <el-select
-            class="rh-search-item"
-            v-model="_searchData[searchItem.key]"
-            clearable
-            :placeholder="searchItem.placeholder"
-            :filterable="searchItem.filterable"
-            @change="searchItem.change"
-            v-if="searchItem.type === 'select'"
-          >
-            <el-option
-              v-for="item in searchItem.options"
-              :key="item[searchItem.props && searchItem.props.value ? searchItem.props.value : 'value']"
-              :label="item[searchItem.props && searchItem.props.label ? searchItem.props.label : 'label']"
-              :value="item[searchItem.props && searchItem.props.value ? searchItem.props.value : 'value']"
-            />
-          </el-select>
-          <!-- 多选 -->
-          <el-select
-            class="rh-search-item"
-            v-model="_searchData[searchItem.key]"
-            multiple
-            clearable
-            :placeholder="searchItem.placeholder"
-            :collapse-tags="searchItem.collapseTags"
-            :collapse-tags-tooltip="searchItem.collapseTagsTooltip"
-            :filterable="searchItem.filterable"
-            v-if="searchItem.type === 'selectMultiple'"
-          >
-            <el-option v-for="item in searchItem.options" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-          <!-- 级联选择 -->
-          <el-cascader
-            class="w-full"
-            v-model="_searchData[searchItem.key]"
-            :options="searchItem.options"
-            :props="searchItem.props"
-            :placeholder="searchItem.placeholder"
-            clearable
-            v-if="searchItem.type === 'cascader'"
-          />
-          <!-- 日期单选 -->
-          <el-date-picker
-            v-model="_searchData[searchItem.key]"
-            type="date"
-            clearable
-            :placeholder="searchItem.placeholder"
-            value-format="YYYY-MM-DD"
-            v-if="searchItem.type === 'date'"
-          />
-          <!-- 日期范围 -->
-          <el-date-picker
-            v-model="_searchData[searchItem.key]"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            unlink-panels
-            clearable
-            :range-separator="searchItem.rangeSeparator ? searchItem.rangeSeparator : '至'"
-            :start-placeholder="searchItem.startPlaceholder ? searchItem.startPlaceholder : '开始日期'"
-            :end-placeholder="searchItem.endPlaceholder ? searchItem.endPlaceholder : '结束日期'"
-            :shortcuts="searchItem.shortcuts ? shortcuts : []"
-            style="width: 100%"
-            v-if="searchItem.type === 'daterange'"
-          />
-        </el-col>
-        <el-col class="mb-3" :span="4" v-if="searchInfo.length">
-          <el-button type="primary" @click="handleSearch">搜索</el-button>
-          <el-button @click="handleReset">重置</el-button>
-        </el-col>
-      </el-row>
+      <el-form label-width="auto" class="w-full">
+        <el-row :gutter="16" class="w-full">
+          <el-col :span="searchItem.colSpan" v-for="(searchItem, idx) in searchInfo" :key="idx">
+            <!-- 输入框 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'input'">
+              <el-input
+                class="rh-search-item"
+                v-model="_searchData[searchItem.key]"
+                clearable
+                :placeholder="searchItem.placeholder"
+                :formatter="searchItem.formatter ? searchItem.formatter : value => value.replace(/\s*/g, '')"
+              />
+            </el-form-item>
+
+            <!-- 单选 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'select'">
+              <el-select
+                class="rh-search-item"
+                v-model="_searchData[searchItem.key]"
+                clearable
+                :placeholder="searchItem.placeholder"
+                :filterable="searchItem.filterable"
+                @change="searchItem.change"
+              >
+                <el-option
+                  v-for="item in searchItem.options"
+                  :key="item[searchItem.props && searchItem.props.value ? searchItem.props.value : 'value']"
+                  :label="item[searchItem.props && searchItem.props.label ? searchItem.props.label : 'label']"
+                  :value="item[searchItem.props && searchItem.props.value ? searchItem.props.value : 'value']"
+                />
+              </el-select>
+            </el-form-item>
+
+            <!-- 多选 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'selectMultiple'">
+              <el-select
+                class="rh-search-item"
+                v-model="_searchData[searchItem.key]"
+                multiple
+                clearable
+                :placeholder="searchItem.placeholder"
+                :collapse-tags="searchItem.collapseTags"
+                :collapse-tags-tooltip="searchItem.collapseTagsTooltip"
+                :filterable="searchItem.filterable"
+              >
+                <el-option
+                  v-for="item in searchItem.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+
+            <!-- 级联选择 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'cascader'">
+              <el-cascader
+                class="w-full"
+                v-model="_searchData[searchItem.key]"
+                :options="searchItem.options"
+                :props="searchItem.props"
+                :placeholder="searchItem.placeholder"
+                clearable
+              />
+            </el-form-item>
+
+            <!-- 日期单选 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'date'">
+              <el-date-picker
+                v-model="_searchData[searchItem.key]"
+                type="date"
+                clearable
+                :placeholder="searchItem.placeholder"
+                value-format="YYYY-MM-DD"
+              />
+            </el-form-item>
+
+            <!-- 日期范围 -->
+            <el-form-item :label="searchItem.label" v-if="searchItem.type === 'daterange'">
+              <el-date-picker
+                v-model="_searchData[searchItem.key]"
+                type="daterange"
+                value-format="YYYY-MM-DD"
+                unlink-panels
+                clearable
+                :range-separator="searchItem.rangeSeparator ? searchItem.rangeSeparator : '至'"
+                :start-placeholder="searchItem.startPlaceholder ? searchItem.startPlaceholder : '开始日期'"
+                :end-placeholder="searchItem.endPlaceholder ? searchItem.endPlaceholder : '结束日期'"
+                :shortcuts="searchItem.shortcuts ? shortcuts : []"
+                style="width: 100%"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col class="mb-3" :span="4" v-if="searchInfo.length <= 2">
+            <el-button type="primary" @click="handleSearch">搜索</el-button>
+            <el-button @click="handleReset">重置</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+    <div class="flex justify-center mb-3" :span="4" v-if="searchInfo.length > 2">
+      <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
+      <el-button :icon="RefreshRight" @click="handleReset">重置</el-button>
     </div>
     <div class="flex items-center">
       <slot name="right-slot"></slot>
@@ -128,7 +150,7 @@ import { on, off } from "@/utils/index";
 import { cloneDeep, debounce, isEqual } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
 import draggable from "vuedraggable";
-import { Setting } from "@element-plus/icons-vue";
+import { Setting, Search, RefreshRight } from "@element-plus/icons-vue";
 
 const { menuFilterDialogVisible } = useLayout();
 const emit = defineEmits(["search", "updateColumns"]);
@@ -310,12 +332,12 @@ watch(columnCheckList, checkedLabelList => {
 
 <style lang="scss" scoped>
 .rh-search-wrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   border-bottom: 1px solid var(--el-border-color-light);
   &.noBorder {
     border-bottom: none;
+  }
+  :deep(.el-form-item) {
+    margin-bottom: initial;
   }
 }
 
