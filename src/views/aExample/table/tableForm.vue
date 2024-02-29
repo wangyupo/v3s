@@ -36,12 +36,14 @@ const searchData = ref({
 const searchInfo = ref([
   {
     type: "input",
+    label: "姓名",
     placeholder: "请输入姓名",
     key: "name",
-    colSpan: 4,
+    colSpan: 8,
   },
   {
     type: "select",
+    label: "地址",
     placeholder: "请选择地址",
     key: "address",
     options: [
@@ -54,23 +56,25 @@ const searchInfo = ref([
         label: "No. 189, Grove St, Los Angeles",
       },
     ],
-    colSpan: 4,
+    colSpan: 8,
   },
   {
     type: "date",
+    label: "日期",
     placeholder: "请选择日期",
     key: "date",
-    colSpan: 4,
+    colSpan: 8,
   },
   {
     type: "daterange",
+    label: "日期范围",
     startPlaceholder: "开始日期",
     endPlaceholder: "结束日期",
     key: "time",
     startKey: "beginTime",
     endKey: "endTime",
     value: null,
-    colSpan: 6,
+    colSpan: 8,
   },
 ]);
 const selectable = (row, index) => {
