@@ -31,14 +31,16 @@ const searchForm = ref({
 const searchInfo = ref([
   {
     type: "input",
-    placeholder: "请输入",
+    label: "姓名",
+    placeholder: "请输入姓名",
     key: "input",
     value: "",
-    colSpan: 4,
+    colSpan: 8,
   },
   {
     type: "select",
-    placeholder: "请选择",
+    label: "日期",
+    placeholder: "请选择日期",
     key: "select",
     value: "",
     options: [
@@ -51,7 +53,7 @@ const searchInfo = ref([
         label: "选项二",
       },
     ],
-    colSpan: 4,
+    colSpan: 8,
   },
 ]);
 // 表格配置
