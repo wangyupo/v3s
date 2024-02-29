@@ -3,6 +3,7 @@ import RhNoData from "./RhNoData.vue";
 import RhTitle from "./RhTitle.vue";
 import RhWrapper from "./RhWrapper.vue";
 import RhTable from "./RhTable.vue";
+import RhTableColumnDIY from "./RhTableColumnDIY.vue";
 import RhSearch from "./RhSearch.vue";
 import RhCountUp from "./RhCountUp.vue";
 import RhTree from "./RhTree.vue";
@@ -14,6 +15,7 @@ const plugins = {
     app.component("RhTitle", RhTitle);
     app.component("RhWrapper", RhWrapper);
     app.component("RhTable", RhTable);
+    app.component("RhTableColumnDIY", RhTableColumnDIY);
     app.component("RhSearch", RhSearch);
     app.component("RhCountUp", RhCountUp);
     app.component("RhTree", RhTree);

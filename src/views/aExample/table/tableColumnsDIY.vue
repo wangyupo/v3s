@@ -1,14 +1,10 @@
 <template>
   <!-- 示例-列字段配置（排序、显示/隐藏） -->
   <div>
-    <RhSearch
-      diyColumns
-      :searchInfo="searchInfo"
-      :searchForm="searchForm"
-      :columns="tableData.columns"
-      @update-columns="updateColumns"
-      @search="handleSearch"
-    />
+    <RhSearch diyColumns :searchInfo="searchInfo" :searchForm="searchForm" @search="handleSearch" />
+    <div class="flex justify-end mb-3">
+      <RhTableColumnDIY :columns="tableData.columns" @update-columns="updateColumns"></RhTableColumnDIY>
+    </div>
     <RhTable
       border
       stripe
