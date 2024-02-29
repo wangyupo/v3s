@@ -3,6 +3,7 @@
   <div>
     <RhSearch diyColumns :searchInfo="searchInfo" :searchForm="searchForm" @search="handleSearch" />
     <div class="flex justify-end mb-3">
+      <el-button type="default" :icon="Download" circle class="mr-3" @click="handleDownload"></el-button>
       <RhTableColumnDIY :columns="tableData.columns" @update-columns="updateColumns"></RhTableColumnDIY>
     </div>
     <RhTable
@@ -23,6 +24,9 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 // import { getList } from "@/api/api.js";
+import { Download } from "@element-plus/icons-vue";
+import { exportToExcel } from "@/utils/index.js";
+import { cloneDeep } from "lodash-es";
 
 // 条件配置
 const searchForm = ref({
@@ -141,6 +145,17 @@ const updateColumns = newColumns => {
   const lastTypeIdx = tableData.columns.findLastIndex(i => i.type);
   const types = tableData.columns.slice(0, lastTypeIdx + 1);
   tableData.columns = types.concat(newColumns);
+};
+
+// 下载Excel
+const handleDownload = () => {
+  exportToExcel({
+    excelData: {
+      firstRow: cloneDeep(tableData.columns).slice(1, 3),
+      contentRow: cloneDeep(tableData.data),
+    },
+    fileName: "Excel示例",
+  });
 };
 </script>
 
