@@ -11,6 +11,7 @@
       noYBorder ? 'noYBorder' : '',
       noTopBorder ? 'noTopBorder' : '',
       noBottomBorder ? 'noBottomBorder' : '',
+      isDark ? 'bg-[var(--el-bg-color)]' : 'bg-white',
     ]"
   >
     <div
@@ -29,6 +30,8 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import { useLayout } from "@/hooks/useLayout.js";
+const { isDark } = useLayout();
 
 const props = defineProps({
   // 标题
