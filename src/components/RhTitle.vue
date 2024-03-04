@@ -1,7 +1,7 @@
 <template>
   <!-- section标题（形式：左侧是线，右侧是标题。常用于区分不容内容块。） -->
   <div
-    class="rh-title flex items-center justify-between"
+    class="rh-title flex items-center justify-between text-[var(--el-text-color-primary)]"
     :class="[divider ? 'pb-3 border-b border-b-[var(--el-border-color-light)]' : '', nomb ? '' : 'mb-4']"
   >
     <!-- 标题 -->
