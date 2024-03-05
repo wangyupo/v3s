@@ -1,8 +1,8 @@
 <template>
   <!-- 个性化配置 -->
   <el-tooltip effect="dark" content="个性化" placement="bottom" :show-after="250">
-    <div class="flex items-center px-3 h-full cursor-pointer hover:bg-[--el-color-primary-dark-2]" @click="openDrawer">
-      <el-icon color="#fff" size="20"><Setting /></el-icon>
+    <div class="flex items-center px-3 h-full cursor-pointer hover:bg-[var(--el-fill-color-dark)]" @click="openDrawer">
+      <el-icon color="var(--el-text-color-primary)" size="20"><Setting /></el-icon>
     </div>
   </el-tooltip>
 

@@ -1,8 +1,7 @@
 <template>
   <!-- 布局专用-侧边栏折叠器 -->
   <el-icon
-    class="cursor-pointer"
-    :class="[isDark ? 'text-[var(--el-text-color-primary)]' : 'text-white']"
+    class="cursor-pointer text-[var(--el-text-color-primary)]"
     size="20"
     @click="toggleMenuFold"
   >
@@ -14,7 +13,7 @@
 <script setup>
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { menuFold, toggleMenuFold, isDark } = useLayout();
+const { menuFold, toggleMenuFold } = useLayout();
 </script>
 
 <style lang="scss" scoped></style>

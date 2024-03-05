@@ -21,6 +21,14 @@ html:not(.dark) {
   --el-menu-active-color: #fff;
 }
 
+.el-menu-item.is-active {
+  background-color: var(--el-color-primary);
+}
+
+.el-sub-menu.is-active:not(.is-opened) {
+  background-color: var(--el-color-primary);
+}
+
 .el-menu--popup-container {
   background-color: var(--el-color-primary);
 }
