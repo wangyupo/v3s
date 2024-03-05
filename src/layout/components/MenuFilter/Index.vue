@@ -1,6 +1,6 @@
 <template>
   <!-- 菜单过滤器 -->
-  <el-tooltip effect="dark" content="搜索" placement="bottom" :show-after="250">
+  <el-tooltip effect="dark" content="菜单搜索" placement="bottom" :show-after="250">
     <div
       class="flex items-center px-3 h-full cursor-pointer hover:bg-[--el-color-primary-dark-2]"
       @click="showFilterDialog"

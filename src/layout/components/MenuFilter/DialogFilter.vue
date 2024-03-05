@@ -14,7 +14,7 @@
         v-model="searchVal"
         class="filter-menu-dialog-input px-[14px]"
         size="large"
-        placeholder="支持菜单全称|关键词|拼音搜索"
+        placeholder="支持菜单全称|关键词|全拼|首字母搜索"
         ref="searchInputRef"
         :prefix-icon="Search"
       />
