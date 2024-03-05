@@ -22,6 +22,7 @@
         class="mt-4"
         ref="scrollbarRef"
         max-height="300px"
+        always
         @scroll="scrollbarScroll"
         v-show="searchVal && filterMenuList.length"
       >
