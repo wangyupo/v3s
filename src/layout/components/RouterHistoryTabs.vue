@@ -22,7 +22,7 @@
 
     <!-- 右键菜单 -->
     <div
-      class="rightClickMenu flex flex-col fixed rounded z-50 border border-[--el-border-color] shadow-md"
+      class="rightClickMenu flex flex-col fixed rounded z-50 shadow-md"
       :class="[isDark ? 'dark' : 'bg-white']"
       :style="{ left: menuPositin.x + 'px', top: menuPositin.y + 'px' }"
       v-show="rightMenuVisible"
@@ -285,30 +285,35 @@ const setMenuDisabled = () => {
     }
   }
   &-item.dark {
-    background-color: var(--el-bg-color-overlay);
+    color: var(--el-text-color-secondary);
+    background-color: transparent;
     &:hover {
-      background-color: var(--el-color-info-light-7);
+      background-color: var(--el-fill-color);
     }
     &.active {
-      color: var(--el-color-primary);
-      border-color: var(--el-color-primary);
-      background-color: var(--el-color-primary-light-8);
+      color: var(--el-text-color-primary);
+      border-color: var(--el-border-color-dark);
+      background-color: var(--el-fill-color-dark);
       .router-tabs-item-point {
-        background-color: var(--el-color-primary);
+        background-color: var(--el-text-color-primary);
       }
     }
   }
 }
 
 .rightClickMenu {
-  color: var(--el-text-color-primary);
+  color: var(--el-text-color-regular);
+  border: 1px solid var(--el-border-color);
   &.dark {
     background-color: var(--el-bg-color-overlay);
     .rightClickMenu-item:hover {
-      background-color: var(--el-bg-color);
+      color: var(--el-text-color-regular);
+      background-color: var(--el-fill-color);
     }
+    .rightClickMenu-item.disabled,
     .rightClickMenu-item.disabled:hover {
-      background: none;
+      color: var(--el-text-color-disabled);
+      background-color: transparent;
     }
   }
   &-item {
