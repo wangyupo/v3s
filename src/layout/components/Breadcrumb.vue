@@ -69,14 +69,4 @@ watch(
     cursor: pointer;
   }
 }
-
-.breadcrumb-in-header {
-  :deep(.el-breadcrumb__inner),
-  :deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover) {
-    color: #ddd;
-  }
-  :deep(.el-breadcrumb__inner.is-link:hover) {
-    color: #fff;
-  }
-}
 </style>
