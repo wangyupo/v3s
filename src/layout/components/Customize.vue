@@ -65,9 +65,9 @@ import { ElMessage, ElMessageBox } from "element-plus";
 const { layoutType, isDark } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
-  { name: "经典布局", icon: "icon-layout-jd", layout: "LayoutSideMenu" },
-  { name: "通栏布局", icon: "icon-layout-tl", layout: "LayoutClassic" },
-  { name: "顶部菜单布局", icon: "icon-layout-dbcd", layout: "LayoutHeadMenu" },
+  { name: "侧边导航", icon: "icon-layout-cbdh", layout: "LayoutSideMenu" },
+  { name: "通栏导航", icon: "icon-layout-tldh", layout: "LayoutClassic" },
+  { name: "顶部导航", icon: "icon-layout-dbdh", layout: "LayoutHeadMenu" },
 ]);
 
 // 展开抽屉
