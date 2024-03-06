@@ -22,11 +22,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { TinyColor } from "@ctrl/tinycolor";
+import { ref, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { layoutStore, colorPrimaryBg, setElementUIThemeColor } = useLayout();
+const { layoutStore, colorPrimaryBg, setElementUIThemeColor, calcThemeColor, isDark } = useLayout();
 const predefineColors = ref([
   { color: "#515a6e", name: "阴影灰（默认）" },
   { color: "#409eff", name: "科技蓝" },
@@ -40,25 +39,17 @@ const changeThemeColor = color => {
     setElementUIThemeColor();
     return;
   }
-  const colorPrimaryLight2 = new TinyColor(color).tint(20).toHexString();
-  const colorPrimaryLight4 = new TinyColor(color).tint(40).toHexString();
-  const colorPrimaryLight5 = new TinyColor(color).tint(50).toHexString();
-  const colorPrimaryLight7 = new TinyColor(color).tint(70).toHexString();
-  const colorPrimaryLight9 = new TinyColor(color).tint(90).toHexString();
-  const colorPrimaryDark2 = new TinyColor(color).mix("#141414", 20).toHexString();
-
-  layoutStore.$patch(state => {
-    state.colorPrimaryBg = color;
-    state.colorPrimaryLight2 = colorPrimaryLight2;
-    state.colorPrimaryLight9 = colorPrimaryLight9;
-    state.colorPrimaryLight7 = colorPrimaryLight7;
-    state.colorPrimaryLight5 = colorPrimaryLight5;
-    state.colorPrimaryLight4 = colorPrimaryLight4;
-    state.colorPrimaryDark2 = colorPrimaryDark2;
-  });
-
+  calcThemeColor(color);
   setElementUIThemeColor();
 };
+
+// 监测亮/暗模式切换，自动计算主色值及配套颜色
+watch(
+  isDark,
+  debounce(() => {
+    changeThemeColor(colorPrimaryBg.value);
+  }, 200)
+);
 </script>
 
 <style lang="scss" scoped></style>

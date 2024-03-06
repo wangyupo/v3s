@@ -4,6 +4,7 @@ import { useLayoutStore } from "@/stores/layout.js";
 import { useDark } from "@vueuse/core";
 import { debounce } from "lodash-es";
 import { computed } from "vue";
+import { TinyColor } from "@ctrl/tinycolor";
 
 export function useLayout() {
   const contentAreaLoadingText = "加载中...";
@@ -51,6 +52,48 @@ export function useLayout() {
     }
   });
 
+  // 修改主题色后，计算并设置 css 变量
+  const calcThemeColor = themeColor => {
+    // 计算暗色模式下主题色的配套色值
+    function darken(colorInst, amount = 20) {
+      return colorInst.mix("#141414", amount).toHexString();
+    }
+
+    const colorInst = new TinyColor(themeColor);
+
+    let colorPrimaryDark2 = "";
+    let colorPrimaryLight2 = "";
+    let colorPrimaryLight4 = "";
+    let colorPrimaryLight5 = "";
+    let colorPrimaryLight7 = "";
+    let colorPrimaryLight9 = "";
+
+    if (!isDark.value) {
+      colorPrimaryLight2 = colorInst.tint(20).toHexString();
+      colorPrimaryLight4 = colorInst.tint(40).toHexString();
+      colorPrimaryLight5 = colorInst.tint(50).toHexString();
+      colorPrimaryLight7 = colorInst.tint(70).toHexString();
+      colorPrimaryLight9 = colorInst.tint(90).toHexString();
+    } else {
+      colorPrimaryDark2 = darken(colorInst, 20);
+      colorPrimaryLight2 = darken(colorInst, 20);
+      colorPrimaryLight4 = darken(colorInst, 40);
+      colorPrimaryLight5 = darken(colorInst, 50);
+      colorPrimaryLight7 = darken(colorInst, 70);
+      colorPrimaryLight9 = darken(colorInst, 90);
+    }
+
+    layoutStore.$patch(state => {
+      state.colorPrimaryBg = themeColor;
+      state.colorPrimaryLight2 = colorPrimaryLight2;
+      state.colorPrimaryLight9 = colorPrimaryLight9;
+      state.colorPrimaryLight7 = colorPrimaryLight7;
+      state.colorPrimaryLight5 = colorPrimaryLight5;
+      state.colorPrimaryLight4 = colorPrimaryLight4;
+      state.colorPrimaryDark2 = colorPrimaryDark2;
+    });
+  };
+
   // 设置主题色 css 变量
   const setElementUIThemeColor = () => {
     const el = document.documentElement;
@@ -86,6 +129,7 @@ export function useLayout() {
     menuFilterDialogVisible,
     contentAreaLoadingText,
     contentAreaLoadingSvg,
+    calcThemeColor,
     setElementUIThemeColor,
   };
 }
