@@ -5,7 +5,7 @@
       class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full"
       :class="layoutType == 'LayoutHeadMenu' ? 'hover:bg-[#405270]' : 'hover:bg-[var(--el-fill-color)]'"
     >
-      <el-avatar :size="30" />
+      <el-avatar :size="30" :icon="UserFilled" />
       <div class="ml-2">管理员</div>
     </div>
     <template #dropdown>
@@ -27,6 +27,7 @@
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { removeAllLoginInfo } from "@/utils/index";
+import { UserFilled } from "@element-plus/icons-vue";
 
 const router = useRouter();
 
