@@ -65,8 +65,8 @@ import { ElMessage, ElMessageBox } from "element-plus";
 const { layoutType, isDark } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
-  { name: "经典布局", icon: "icon-layout-cdbtyt", layout: "LayoutClassic" },
-  { name: "菜单标题一体布局", icon: "icon-layout-jd", layout: "LayoutSideMenu" },
+  { name: "经典布局", icon: "icon-layout-jd", layout: "LayoutSideMenu" },
+  { name: "通栏布局", icon: "icon-layout-tl", layout: "LayoutClassic" },
   { name: "顶部菜单布局", icon: "icon-layout-dbcd", layout: "LayoutHeadMenu" },
 ]);
 
