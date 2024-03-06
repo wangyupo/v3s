@@ -7,22 +7,22 @@
   "glyphs": [
     {
       "icon_id": "38045942",
-      "name": "顶部菜单",
-      "font_class": "layout-dbcd",
+      "name": "顶部导航",
+      "font_class": "layout-dbdh",
       "unicode": "e610",
       "unicode_decimal": 58896
     },
     {
       "icon_id": "38045941",
-      "name": "经典布局",
-      "font_class": "layout-jd",
+      "name": "侧边导航",
+      "font_class": "layout-cbdh",
       "unicode": "e611",
       "unicode_decimal": 58897
     },
     {
       "icon_id": "38045940",
-      "name": "通栏布局",
-      "font_class": "layout-tl",
+      "name": "通栏导航",
+      "font_class": "layout-tldh",
       "unicode": "e612",
       "unicode_decimal": 58898
     },
