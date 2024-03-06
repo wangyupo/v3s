@@ -3,7 +3,6 @@
 
 :root {
   --el-menu-border-color: transparent;
-  --el-menu-bg-color: transparent;
 
   --el-color-primary: #515a6e;
   --el-color-primary-dark-2: #454c5c;
@@ -19,9 +18,12 @@ html:not(.dark) {
   --el-menu-text-color: #ddd;
   --el-menu-hover-text-color: #fff;
   --el-menu-active-color: #fff;
+  --el-menu-hover-bg-color: var(--el-color-primary);
 }
 
-.el-menu-item.is-active {
+.el-menu-item.is-active,
+.el-menu--horizontal .el-menu .el-menu-item.is-active,
+.el-menu--horizontal .el-menu .el-sub-menu.is-active .el-sub-menu__title {
   background-color: var(--el-color-primary);
 }
 

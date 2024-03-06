@@ -285,7 +285,7 @@ const setMenuDisabled = () => {
     }
   }
   &-item.dark {
-    color: var(--el-text-color-secondary);
+    color: var(--el-text-color-regular);
     background-color: transparent;
     &:hover {
       background-color: var(--el-fill-color);

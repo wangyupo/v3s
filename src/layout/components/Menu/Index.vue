@@ -14,7 +14,7 @@
       <template v-if="menu[menuKey.children] && menu[menuKey.children].length > 0">
         <el-sub-menu :key="menu[menuKey.id]" :index="menu[menuKey.id]">
           <template #title>
-            <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
+            <i :class="['iconfont text-base mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
             <span>{{ menu[menuKey.title] }}</span>
           </template>
           <MenuItem :menu="menu[menuKey.children]" />
@@ -22,7 +22,7 @@
       </template>
 
       <el-menu-item v-else-if="menu[menuKey.url]" :index="menu[menuKey.url]" :key="menu[menuKey.id]">
-        <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
+        <i :class="['iconfont text-base mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
         <template #title>
           <span>{{ menu[menuKey.title] }}</span>
         </template>
@@ -44,10 +44,10 @@ const { isDark, menuFold, layoutType } = useLayout();
 const el = document.documentElement;
 
 watchEffect(() => {
-  if (layoutType.value == "LayoutHeadMenu" && !isDark.value) {
-    el.style.setProperty("--el-menu-bg-color", "var(--el-color-primary)");
+  if (!isDark.value) {
+    el.style.setProperty("--el-menu-bg-color", "#324057");
   } else {
-    el.style.setProperty("--el-menu-bg-color", "transparent");
+    el.style.setProperty("--el-menu-bg-color", "var(--el-bg-color-overlay)");
   }
 });
 

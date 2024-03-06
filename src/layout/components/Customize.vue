@@ -1,8 +1,12 @@
 <template>
   <!-- 个性化配置 -->
   <el-tooltip effect="dark" content="个性化" placement="bottom" :show-after="250">
-    <div class="flex items-center px-3 h-full cursor-pointer hover:bg-[var(--el-fill-color-dark)]" @click="openDrawer">
-      <el-icon color="var(--el-text-color-primary)" size="20"><Setting /></el-icon>
+    <div
+      class="flex items-center px-3 h-full cursor-pointer"
+      :class="layoutType == 'LayoutHeadMenu' ? 'hover:bg-[#405270]' : 'hover:bg-[var(--el-fill-color)]'"
+      @click="openDrawer"
+    >
+      <el-icon size="20"><Setting /></el-icon>
     </div>
   </el-tooltip>
 
@@ -61,9 +65,9 @@ import { ElMessage, ElMessageBox } from "element-plus";
 const { layoutType, isDark } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
-  { name: "经典布局", icon: "icon-a-bianzu2", layout: "LayoutClassic" },
-  { name: "菜单标题一体布局", icon: "icon-a-bianzu3", layout: "LayoutSideMenu" },
-  { name: "顶部菜单布局", icon: "icon-bianzu", layout: "LayoutHeadMenu" },
+  { name: "经典布局", icon: "icon-layout-cdbtyt", layout: "LayoutClassic" },
+  { name: "菜单标题一体布局", icon: "icon-layout-jd", layout: "LayoutSideMenu" },
+  { name: "顶部菜单布局", icon: "icon-layout-dbcd", layout: "LayoutHeadMenu" },
 ]);
 
 // 展开抽屉
