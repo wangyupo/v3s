@@ -1,7 +1,7 @@
 <template>
   <!-- 布局-顶栏菜单 -->
   <el-container class="layout">
-    <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
+    <el-header class="layout-header horizontal" :class="[isDark ? 'dark' : '']">
       <div class="flex items-center w-[80%]">
         <HeaderTitle />
         <Menu class="w-[80%]" />

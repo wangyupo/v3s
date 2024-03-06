@@ -1,9 +1,12 @@
 <template>
   <!-- 个人信息 -->
   <el-dropdown trigger="click" class="h-full">
-    <div class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full hover:bg-[var(--el-fill-color-dark)]">
+    <div
+      class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full"
+      :class="layoutType == 'LayoutHeadMenu' ? 'hover:bg-[#405270]' : 'hover:bg-[var(--el-fill-color)]'"
+    >
       <el-avatar :size="30" />
-      <div class="ml-2 text-[var(--el-text-color-primary)]">管理员</div>
+      <div class="ml-2">管理员</div>
     </div>
     <template #dropdown>
       <div class="menu">

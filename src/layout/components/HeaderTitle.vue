@@ -10,6 +10,7 @@
         : 'expand title-height',
       isDark ? 'dark' : '',
     ]"
+    :title="title"
     @click="toHomePage"
   >
     {{ layoutType === "LayoutSideMenu" && menuFold ? titleSimple : title }}
