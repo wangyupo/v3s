@@ -34,25 +34,14 @@
 <script setup>
 import MenuItem from "./MenuItem.vue";
 import { useUserStore } from "@/stores/user.js";
-import { storeToRefs } from "pinia";
-import { ref, computed, reactive, watch, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { arr2tree } from "@/utils/index.js";
 import { useLayout } from "@/hooks/useLayout.js";
 import { menuKey } from "@/router/menuConfig.js";
 
 const { isDark, menuFold, layoutType } = useLayout();
-const el = document.documentElement;
-
-watchEffect(() => {
-  if (!isDark.value) {
-    el.style.setProperty("--el-menu-bg-color", "#324057");
-  } else {
-    el.style.setProperty("--el-menu-bg-color", "var(--el-bg-color-overlay)");
-  }
-});
 
 const userStore = useUserStore();
-const { menu } = storeToRefs(userStore);
 const _menu = ref([]);
 _menu.value = arr2tree(
   userStore.menuArr.filter(i => i[menuKey.menuType] == menuKey.menuValue),
