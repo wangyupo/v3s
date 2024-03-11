@@ -7,10 +7,10 @@
 import LayoutClassic from "./types/LayoutClassic.vue";
 import LayoutSideMenu from "./types/LayoutSideMenu.vue";
 import LayoutHeadMenu from "./types/LayoutHeadMenu.vue";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { layoutType, setElementUIThemeColor } = useLayout();
+const { layoutStore, layoutType, setElementUIThemeColor } = useLayout();
 
 /**
  * 布局类型
@@ -22,6 +22,13 @@ const types = {
   LayoutSideMenu,
   LayoutHeadMenu,
 };
+
+// 更变布局后取消菜单折叠状态
+watch(layoutType, val => {
+  layoutStore.$patch(state => {
+    state.menuFold = false;
+  });
+});
 
 onMounted(() => {
   setElementUIThemeColor();
