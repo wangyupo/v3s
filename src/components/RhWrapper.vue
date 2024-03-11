@@ -99,6 +99,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .rh-wrapper {
+  width: 100%;
   border: 1px solid var(--el-border-color-light);
   border-radius: 4px;
   &-head {
