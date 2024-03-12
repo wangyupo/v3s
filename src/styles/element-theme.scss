@@ -13,6 +13,10 @@
   --el-color-primary-light-9: #eeeff1;
 }
 
+html {
+  color: var(--el-text-color-primary);
+}
+
 html:not(.dark) {
   --el-menu-text-color: #ddd;
   --el-menu-hover-text-color: #fff;
