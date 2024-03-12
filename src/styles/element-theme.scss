@@ -1,9 +1,7 @@
 // 专门用来管理 ElementPlus 样式的文件，推荐通过 css变量 来从顶层覆盖其原有样式。
 // 可以从这里看到 ElementPlus 对 css变量 的支持：http://element-plus.org/zh-CN/guide/theming.html#通过-css-变量设置
-@import "@/styles/var.scss";
-
 :root {
-  --el-menu-bg-color: #{$menuBgColor};
+  --el-menu-bg-color: #324057;
   --el-menu-border-color: transparent;
 
   --el-color-primary: #515a6e;
@@ -19,21 +17,21 @@ html:not(.dark) {
   --el-menu-text-color: #ddd;
   --el-menu-hover-text-color: #fff;
   --el-menu-active-color: #fff;
-  --el-menu-hover-bg-color: #{$menuActiveBgColor};
+  --el-menu-hover-bg-color: var(--el-color-primary);
 }
 
 .el-menu-item.is-active,
 .el-menu--horizontal .el-menu .el-menu-item.is-active,
 .el-menu--horizontal .el-menu .el-sub-menu.is-active .el-sub-menu__title {
-  background-color: $menuActiveBgColor;
+  background-color: var(--el-menu-hover-bg-color);
 }
 
 .el-sub-menu.is-active:not(.is-opened) {
-  background-color: $menuActiveBgColor;
+  background-color: var(--el-menu-hover-bg-color);
 }
 
 .el-menu--popup-container {
-  background-color: $menuBgColor;
+  background-color: var(--el-menu-bg-color);
 }
 
 .el-button.is-link:focus,
