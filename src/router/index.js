@@ -121,6 +121,9 @@ router.afterEach(to => {
     state.wrapperType = to.meta.wrapperType ? to.meta.wrapperType : "";
     state.isNavigating = false;
   });
+  // 业务区域滚动条自动返回顶部
+  const wrapper = document.getElementsByClassName("layout-main-content");
+  if (wrapper.length) wrapper[0].scrollTop = 0;
 });
 
 export default router;

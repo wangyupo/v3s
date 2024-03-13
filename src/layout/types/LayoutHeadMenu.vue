@@ -26,6 +26,7 @@
             <slot></slot>
           </div>
         </div>
+        <el-backtop target=".layout-main-content" />
       </el-main>
     </el-container>
   </el-container>

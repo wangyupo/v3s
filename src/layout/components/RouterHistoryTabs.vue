@@ -22,7 +22,7 @@
 
     <!-- 右键菜单 -->
     <div
-      class="rightClickMenu flex flex-col fixed rounded z-50 shadow-md"
+      class="rightClickMenu flex flex-col fixed rounded z-[9999] shadow-md"
       :class="[isDark ? 'dark' : 'bg-white']"
       :style="{ left: menuPositin.x + 'px', top: menuPositin.y + 'px' }"
       v-show="rightMenuVisible"

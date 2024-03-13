@@ -12,12 +12,9 @@
 </template>
 
 <script setup>
-import NProgress from "@/utils/nProgress.js";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
-import { storeToRefs } from "pinia";
-import { ref, computed, onMounted } from "vue";
-import { addClass, removeClass } from "@/utils/index.js";
+import { ref, computed, onMounted, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
 // 遮罩
@@ -28,20 +25,19 @@ onMounted(() => {
   }, 1000);
 });
 
-const { isZh, isGray } = useLayout();
+const { isZh, isGray, toggleGray } = useLayout();
 
 // 国际化
 const locale = computed(() => (isZh.value ? zhCn : en));
 
 // 全站置灰
-onMounted(() => {
-  const el = document.documentElement;
-  if (isGray.value) {
-    addClass(el, "gray");
-  } else {
-    removeClass(el, "gray");
-  }
-});
+watch(
+  isGray,
+  () => {
+    toggleGray();
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss"></style>
