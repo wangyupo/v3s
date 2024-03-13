@@ -40,11 +40,16 @@
         </div>
       </div>
       <div class="mt-6">
-        <RhTitle title="主题色">
-          <template #title-right></template>
-        </RhTitle>
+        <RhTitle title="主题色"></RhTitle>
         <div class="flex items-center">
           <ThemeColorPicker />
+        </div>
+      </div>
+      <div class="mt-6">
+        <RhTitle title="界面显示"></RhTitle>
+        <div class="flex items-center justify-between w-full">
+          <div>灰色模式</div>
+          <el-switch v-model="isGray" inline-prompt active-text="开" inactive-text="关" />
         </div>
       </div>
     </div>
@@ -62,7 +67,7 @@ import { deleteAllCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-const { layoutType, isDark } = useLayout();
+const { layoutType, isDark, isGray } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
   { name: "侧边导航", icon: "icon-layout-cbdh", layout: "LayoutSideMenu" },

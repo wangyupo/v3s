@@ -5,6 +5,7 @@ import { useDark } from "@vueuse/core";
 import { debounce } from "lodash-es";
 import { computed } from "vue";
 import { TinyColor } from "@ctrl/tinycolor";
+import { addClass, removeClass } from "@/utils/index.js";
 
 export function useLayout() {
   const contentAreaLoadingText = "加载中...";
@@ -31,6 +32,16 @@ export function useLayout() {
   } = storeToRefs(layoutStore);
 
   const isDark = useDark({ disableTransition: false }); // 是否暗黑模式
+
+  // 设置全站置灰
+  const toggleGray = () => {
+    const el = document.documentElement;
+    if (isGray.value) {
+      addClass(el, "gray");
+    } else {
+      removeClass(el, "gray");
+    }
+  };
 
   // 侧边栏折叠/展开
   const toggleMenuFold = debounce(() => {
@@ -117,6 +128,7 @@ export function useLayout() {
     colorPrimaryDark2,
     layoutStore,
     isDark,
+    toggleGray,
     toggleMenuFold,
     layoutType,
     menuFold,

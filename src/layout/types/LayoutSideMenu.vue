@@ -9,7 +9,7 @@
       <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
         <div class="flex items-center">
           <SidebarFolder class="ml-3" />
-          <Breadcrumb class="ml-3" v-if="!isNoBreadcrumb" />
+          <Breadcrumb class="ml-3" />
         </div>
         <HeaderRightTools />
       </el-header>
@@ -25,6 +25,7 @@
           >
             <slot></slot>
           </div>
+          <el-backtop target=".layout-main-content" />
         </el-main>
       </el-container>
     </el-container>
