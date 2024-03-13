@@ -86,13 +86,13 @@ export function useLayout() {
       colorPrimaryLight7 = colorInst.tint(70).toHexString();
       colorPrimaryLight9 = colorInst.tint(90).toHexString();
     } else {
-      colorPrimaryDark2 = darken(colorInst, 20);
       colorPrimaryLight2 = darken(colorInst, 20);
       colorPrimaryLight4 = darken(colorInst, 40);
       colorPrimaryLight5 = darken(colorInst, 50);
       colorPrimaryLight7 = darken(colorInst, 70);
       colorPrimaryLight9 = darken(colorInst, 90);
     }
+    colorPrimaryDark2 = darken(colorInst, 20);
 
     layoutStore.$patch(state => {
       state.colorPrimaryBg = themeColor;
@@ -110,12 +110,12 @@ export function useLayout() {
     const el = document.documentElement;
 
     el.style.setProperty("--el-color-primary", colorPrimaryBg.value); // el-button primary 背景色
+    el.style.setProperty("--el-color-primary-dark-2", colorPrimaryDark2.value); // el-button primary acitve 背景色
     el.style.setProperty("--el-color-primary-light-3", colorPrimaryLight2.value); // el-button primary hover 背景色
     el.style.setProperty("--el-color-primary-light-4", colorPrimaryLight4.value); // el-button link primary hover色
     el.style.setProperty("--el-color-primary-light-5", colorPrimaryLight5.value); // el-button primary disabled 背景色
     el.style.setProperty("--el-color-primary-light-7", colorPrimaryLight7.value); // el-button default border 激活色
     el.style.setProperty("--el-color-primary-light-9", colorPrimaryLight9.value); // el-button default hover 背景色
-    el.style.setProperty("--el-color-primary-dark-2", colorPrimaryDark2.value); // el-button primary acitve 背景色
   };
 
   return {
