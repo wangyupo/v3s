@@ -24,6 +24,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
+import { debounce } from "lodash-es";
 
 const { layoutStore, colorPrimaryBg, setElementUIThemeColor, calcThemeColor, isDark } = useLayout();
 const predefineColors = ref([
