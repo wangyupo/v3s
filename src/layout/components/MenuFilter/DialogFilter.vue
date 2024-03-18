@@ -136,6 +136,7 @@ watch(searchVal, val => {
   listSelectIdx.value = 0;
   const valPinyinArr = chinese2Pinyin(val);
   filterMenuList.value = userStore.menuArrWithoutEmptyUrl.filter(i => {
+    if (i[menuKey.menuType] != menuKey.menuValue) return false;
     let filterRes = chinese2Pinyin(i[menuKey.title]).filter(p => {
       return valPinyinArr.find(o => p.indexOf(o) !== -1);
     });
