@@ -15,7 +15,7 @@
     ]"
   >
     <div
-      :class="['rh-wrapper-head flex justify-between items-center', noBorder ? 'border-b-0' : 'p-3 h-default border-b']"
+      :class="['rh-wrapper-head flex justify-between items-center overflow-hidden', noBorder ? 'border-b-0' : 'p-3 h-default border-b']"
     >
       <RhTitle :title="title" :lineColor="lineColor" nomb />
       <div>
@@ -99,7 +99,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .rh-wrapper {
-  width: 100%;
   border: 1px solid var(--el-border-color-light);
   border-radius: 4px;
   &-head {
