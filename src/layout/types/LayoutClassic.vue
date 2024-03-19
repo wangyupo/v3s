@@ -11,7 +11,7 @@
     </el-header>
     <el-container class="layout-main">
       <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand', isDark ? 'dark' : '']">
-        <Menu />
+        <Menu class="layout-aside-menu classic" />
       </el-aside>
       <el-container class="flex-col">
         <RouterHistoryTabs />
@@ -45,7 +45,6 @@ const {
   menuFold,
   isDark,
   isTransparent,
-  isNoBreadcrumb,
   wrapStyle,
   isNavigating,
   contentAreaLoadingText,
