@@ -3,7 +3,7 @@
   <el-container class="layout">
     <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand', isDark ? 'dark' : '']">
       <HeaderTitle />
-      <Menu />
+      <Menu class="layout-aside-menu sideMenu" />
     </el-aside>
     <el-container>
       <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
@@ -46,7 +46,6 @@ const {
   menuFold,
   isDark,
   isTransparent,
-  isNoBreadcrumb,
   wrapStyle,
   isNavigating,
   contentAreaLoadingText,

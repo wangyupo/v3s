@@ -2,7 +2,7 @@
   <!-- 菜单 -->
   <el-menu
     class="menu"
-    :class="[isDark ? 'dark' : '']"
+    :class="[isDark ? 'dark' : '', mode]"
     router
     unique-opened
     :mode="mode"
@@ -57,8 +57,11 @@ const mode = computed(() => {
 
 <style lang="scss" scoped>
 @import "@/layout/types/common.scss";
+
 .menu {
-  height: $headerHeight;
+  &.horizontal {
+    height: $headerHeight;
+  }
   &.dark {
     background-color: var(--el-bg-color-overlay);
   }

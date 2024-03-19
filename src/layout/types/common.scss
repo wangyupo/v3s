@@ -56,13 +56,11 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
   }
 
   &-aside {
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: $menuTranstionDuration;
     background-color: var(--el-menu-bg-color);
-    scrollbar-width: thin;
     &.dark {
       border-right: 1px solid var(--el-border-color);
       background-color: var(--el-bg-color-overlay);
@@ -72,6 +70,16 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
     }
     &.expand {
       width: $menuExpandWidth;
+    }
+    &-menu {
+      &.sideMenu {
+        height: calc(100% - $headerHeight);
+      }
+      &.classic {
+        height: 100%;
+      }
+      overflow: auto;
+      scrollbar-width: thin;
     }
   }
 
