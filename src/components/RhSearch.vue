@@ -1,7 +1,10 @@
 <template>
   <!-- 搜索组件-支持传参配置搜索项、自动换行、插槽 -->
   <div class="rh-search-wrapper mb-3" :class="[noBorder ? 'noBorder' : '']">
-    <div class="rh-search-content flex items-center flex-wrap">
+    <div
+      class="rh-search-content flex items-center flex-wrap overflow-hidden"
+      :class="[!toggle && searchInfo.length > 6 ? 'h-[88px]' : '']"
+    >
       <el-form label-width="auto" class="w-full">
         <el-row :gutter="16" class="w-full">
           <el-col :span="searchItem.colSpan" v-for="(searchItem, idx) in searchInfo" :key="idx">
@@ -95,6 +98,8 @@
               />
             </el-form-item>
           </el-col>
+
+          <!-- 行内搜索（搜索条件小于等于2个） -->
           <el-col class="mb-3" :span="4" v-if="searchInfo.length <= 2">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
             <el-button @click="handleReset">重置</el-button>
@@ -102,9 +107,22 @@
         </el-row>
       </el-form>
     </div>
+
+    <!-- 多行搜索（搜索条件大于3个） -->
     <div class="flex justify-center mb-3" :span="4" v-if="searchInfo.length > 2">
       <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
       <el-button :icon="RefreshRight" @click="handleReset">重置</el-button>
+      <!-- 展开/收起（搜索条件大于6个） -->
+      <el-button type="primary" link @click="handleToggle" v-if="searchInfo.length > 6">
+        <template v-if="!toggle">
+          展开
+          <el-icon><ArrowDown /></el-icon>
+        </template>
+        <template v-if="toggle">
+          收起
+          <el-icon><ArrowUp /></el-icon>
+        </template>
+      </el-button>
     </div>
   </div>
 </template>
@@ -172,6 +190,7 @@ const shortcuts = [
   },
 ];
 const _searchData = reactive(props.searchData || {});
+const toggle = ref(false);
 
 watch(
   _searchData,
@@ -243,12 +262,17 @@ const handleReset = debounce(searchConfig => {
   keys.forEach(key => {
     if (typeOf(_searchData[key]) === "array") {
       _searchData[key] = [];
-    } else if (_searchData[key]) {
+    } else if (_searchData[key] || _searchData[key] === 0) {
       _searchData[key] = "";
     }
   });
   handleSearch();
 }, 200);
+
+// 展开/收起
+const handleToggle = () => {
+  toggle.value = !toggle.value;
+};
 </script>
 
 <style lang="scss" scoped>
