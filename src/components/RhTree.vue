@@ -42,7 +42,9 @@ const filterTree = inputVal => {
 // 筛选树节点
 const filterNode = (value, data) => {
   if (!value) return true;
-  return data[attrs.props.label].includes(value);
+  let key = "label";
+  if (attrs.props && attrs.props.label) key = attrs.props.label;
+  return data[key].includes(value);
 };
 
 defineExpose({
