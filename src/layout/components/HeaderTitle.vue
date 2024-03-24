@@ -13,7 +13,9 @@
     :title="title"
     @click="toHomePage"
   >
-    {{ layoutType === "LayoutSideMenu" && menuFold ? titleSimple : title }}
+    <div :class="layoutType === 'LayoutClassic' ? 'text-[var(--el-text-color-primary)]' : 'text-white'">
+      {{ layoutType === "LayoutSideMenu" && menuFold ? "" : title }}
+    </div>
   </div>
 </template>
 
