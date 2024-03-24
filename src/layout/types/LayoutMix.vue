@@ -76,7 +76,6 @@ const sideMenu = ref([]); // 侧栏菜单（一级页面 && 非一级菜单）
 
 onMounted(() => {
   menu.value = getMenu();
-  console.log(menu.value);
   headerMenu.value = menu.value.filter(i => i.parentId == 0);
   const currentMenuRootParent = findRootNodeAndIndex(route.path, getAllMenu());
   handleHeaderMenu(currentMenuRootParent.rootIndex);
