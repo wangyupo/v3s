@@ -100,7 +100,11 @@ const handleLogin = params => {
   // 模拟接口返回菜单 START
   const userStore = useUserStore();
   userStore.$patch(state => {
-    state.menu = arr2tree(menuJson, "id", "parentId", menuKey.children);
+    state.menu = arr2tree(menuJson, {
+      id: menuKey.id,
+      parentId: menuKey.parentId,
+      children: menuKey.children,
+    });
   });
   // 模拟接口返回菜单 END
   router.replace({

@@ -10,21 +10,27 @@
     :collapse-transition="false"
     :default-active="$route.meta.targetMenuPath || $route.path"
   >
-    <template v-for="menu in _menu">
-      <template v-if="menu[menuKey.children] && menu[menuKey.children].length > 0">
-        <el-sub-menu :key="menu[menuKey.id]" :index="menu[menuKey.id]">
+    <template v-for="menuItem in menu">
+      <template v-if="menuItem[menuKey.children] && menuItem[menuKey.children].length > 0">
+        <el-sub-menu :key="menuItem[menuKey.id]" :index="menuItem[menuKey.id]">
           <template #title>
-            <i :class="['iconfont text-base mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
-            <span>{{ menu[menuKey.title] }}</span>
+            <i
+              :class="['iconfont text-base mr-2 menuItem-ew-icon', menuItem[menuKey.icon]]"
+              v-if="menuItem[menuKey.icon]"
+            ></i>
+            <span>{{ menuItem[menuKey.title] }}</span>
           </template>
-          <MenuItem :menu="menu[menuKey.children]" />
+          <MenuItem :menu="menuItem[menuKey.children]" />
         </el-sub-menu>
       </template>
 
-      <el-menu-item v-else-if="menu[menuKey.url]" :index="menu[menuKey.url]" :key="menu[menuKey.id]">
-        <i :class="['iconfont text-base mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
+      <el-menu-item v-else-if="menuItem[menuKey.url]" :index="menuItem[menuKey.url]" :key="menuItem[menuKey.id]">
+        <i
+          :class="['iconfont text-base mr-2 menuItem-ew-icon', menuItem[menuKey.icon]]"
+          v-if="menuItem[menuKey.icon]"
+        ></i>
         <template #title>
-          <span>{{ menu[menuKey.title] }}</span>
+          <span>{{ menuItem[menuKey.title] }}</span>
         </template>
       </el-menu-item>
     </template>
@@ -33,23 +39,17 @@
 
 <script setup>
 import MenuItem from "./MenuItem.vue";
-import { useUserStore } from "@/stores/user.js";
-import { ref, computed } from "vue";
-import { arr2tree } from "@/utils/index.js";
+import { ref, computed, onMounted } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 import { menuKey } from "@/router/menuConfig.js";
 
-const { isDark, menuFold, layoutType } = useLayout();
-
-const userStore = useUserStore();
-const _menu = ref([]);
-_menu.value = arr2tree(
-  userStore.menuArr.filter(i => i[menuKey.menuType] == menuKey.menuValue),
-  "id",
-  "parentId",
-  menuKey.children
-);
-
+const props = defineProps({
+  menu: {
+    type: Array,
+    default: () => [],
+  },
+});
+const { isDark, menuFold, layoutType, getMenu } = useLayout();
 const mode = computed(() => {
   return layoutType.value === "LayoutHeadMenu" ? "horizontal" : "vertical";
 });

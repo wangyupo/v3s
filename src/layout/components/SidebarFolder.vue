@@ -3,6 +3,7 @@
   <el-icon
     class="cursor-pointer text-[var(--el-text-color-primary)]"
     size="20"
+    :title="menuFold ? '展开菜单' : '折叠菜单'"
     @click="toggleMenuFold"
   >
     <Fold v-show="!menuFold" />

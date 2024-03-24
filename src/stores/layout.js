@@ -7,6 +7,7 @@ import { defineStore } from "pinia";
 export const useLayoutStore = defineStore("layout", {
   state: () => ({
     layoutType: "LayoutSideMenu", // 在 src/views/layout/typs 中新增布局，通过组件名称切换
+    headerMenuActiveIdx: 0, // 混合布局，顶栏菜单当前激活下标（必须与 el-menu-item 的 index 属性匹配）
     menuFold: false, // 菜单折叠状态。true-折叠，false-展开
     isZh: true, // 是否中文
     isGray: false, // 是否全站灰色
@@ -15,7 +16,7 @@ export const useLayoutStore = defineStore("layout", {
     isNavigating: false, // 是否处于导航跳转过程中
     wrapperType: "", // 业务区域包裹类型 flowPage（不设置高度，遵循默认文档流，适合展示业务）、fullPage（高度固定100%，适合添加/编辑业务）、''（默认，最小高度100%，溢出后自动撑开，适合大部分业务）
     menuFilterDialogVisible: false, // 搜索菜单弹框是否显示
-    colorPrimaryBg: "#515a6e", // parimary 背景色
+    colorPrimaryBg: "#427bff", // parimary 背景色
     colorPrimaryLight2: "", // parimary hover 背景色
     colorPrimaryLight9: "", // default hover 背景色
     colorPrimaryLight7: "", // default hover 边框色
@@ -31,7 +32,7 @@ export const useLayoutStore = defineStore("layout", {
     },
     // 重置主题色
     resetColors() {
-      this.colorPrimaryBg = "#515a6e";
+      this.colorPrimaryBg = "#427bff";
       this.colorPrimaryLight2 = "";
       this.colorPrimaryDark2 = "";
       this.colorPrimaryLight9 = "";
@@ -43,6 +44,7 @@ export const useLayoutStore = defineStore("layout", {
   persist: {
     paths: [
       "layoutType",
+      "headerMenuActiveIdx",
       "menuFold",
       "isZh",
       "isGray",

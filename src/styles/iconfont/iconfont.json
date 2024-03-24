@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "39398779",
+      "name": "资源管理",
+      "font_class": "layout-hhdh",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
       "icon_id": "38045942",
       "name": "顶部导航",
       "font_class": "layout-dbdh",

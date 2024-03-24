@@ -1,20 +1,26 @@
 <template>
   <!-- 菜单组 -->
-  <template v-for="menu in menu">
-    <template v-if="menu[menuKey.children] && menu[menuKey.children].length > 0">
-      <el-sub-menu :key="menu[menuKey.id]" :index="menu[menuKey.id]">
+  <template v-for="menuItem in menu">
+    <template v-if="menuItem[menuKey.children] && menuItem[menuKey.children].length > 0">
+      <el-sub-menu :key="menuItem[menuKey.id]" :index="menuItem[menuKey.id]">
         <template #title>
-          <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
-          <span>{{ menu[menuKey.title] }}</span>
+          <i
+            :class="['iconfont text-base mr-2 menuItem-ew-icon', menuItem[menuKey.icon]]"
+            v-if="menuItem[menuKey.icon]"
+          ></i>
+          <span>{{ menuItem[menuKey.title] }}</span>
         </template>
-        <MenuItem :menu="menu[menuKey.children]" />
+        <MenuItem :menu="menuItem[menuKey.children]" />
       </el-sub-menu>
     </template>
 
-    <el-menu-item v-else-if="menu[menuKey.url]" :index="menu[menuKey.url]" :key="menu[menuKey.id]">
-      <i :class="['iconfont text-xl mr-2 menuItem-ew-icon', menu[menuKey.icon]]" v-if="menu[menuKey.icon]"></i>
+    <el-menu-item v-else-if="menuItem[menuKey.url]" :index="menuItem[menuKey.url]" :key="menuItem[menuKey.id]">
+      <i
+        :class="['iconfont text-base mr-2 menuItem-ew-icon', menuItem[menuKey.icon]]"
+        v-if="menuItem[menuKey.icon]"
+      ></i>
       <template #title>
-        <span>{{ menu[menuKey.title] }}</span>
+        <span>{{ menuItem[menuKey.title] }}</span>
       </template>
     </el-menu-item>
   </template>

@@ -4,7 +4,7 @@
     <el-header class="layout-header horizontal" :class="[isDark ? 'dark' : '']">
       <div class="flex items-center w-[80%]">
         <HeaderTitle />
-        <Menu class="w-[80%]" />
+        <Menu class="w-[80%]" :menu="menu" />
       </div>
       <HeaderRightTools />
     </el-header>
@@ -39,6 +39,7 @@ import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "@/hooks/useLayout.js";
+import { ref, onMounted } from "vue";
 
 const {
   isDark,
@@ -48,7 +49,13 @@ const {
   isNavigating,
   contentAreaLoadingText,
   contentAreaLoadingSvg,
+  getMenu,
 } = useLayout();
+
+const menu = ref([]);
+onMounted(() => {
+  menu.value = getMenu();
+});
 </script>
 
 <style lang="scss" scoped>

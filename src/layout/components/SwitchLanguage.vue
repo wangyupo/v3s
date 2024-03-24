@@ -1,9 +1,12 @@
 <template>
   <!-- 国际化 -->
   <el-tooltip effect="dark" :content="`${isZh ? 'English' : '中文'}`" placement="bottom" :show-after="250">
-    <div class="flex items-center h-full hover:bg-[--el-color-primary-dark-2]">
+    <div
+      class="flex items-center px-3 h-full cursor-pointer"
+      :class="headerToolHoverClasses"
+      @click.self="handleChangeLanguage"
+    >
       <el-switch
-        class="px-3"
         v-model="isZh"
         inline-prompt
         style="--el-switch-on-color: #ee1c25; --el-switch-off-color: #002164"
@@ -15,10 +18,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
-const { isZh } = useLayout();
+const { layoutStore, isZh, headerToolHoverClasses } = useLayout();
+
+// 切换语言
+const handleChangeLanguage = () => {
+  layoutStore.$patch(state => {
+    state.isZh = !isZh.value;
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>
