@@ -17,7 +17,8 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
     padding: 0;
     height: $headerHeight;
     line-height: $headerHeight;
-    background-color: #fff;
+    background-color: var(--v3s-header-color);
+    &.mix,
     &.horizontal {
       .el-dropdown {
         color: #fff;
@@ -25,9 +26,9 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       color: #fff;
       background-color: var(--el-menu-bg-color);
     }
-    &.dark {
-      background-color: var(--el-bg-color-overlay);
-    }
+    // &.dark {
+    //   background-color: var(--el-bg-color-overlay);
+    // }
     &-title {
       display: flex;
       align-items: center;

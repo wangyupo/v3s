@@ -13,20 +13,32 @@
     :title="title"
     @click="toHomePage"
   >
-    <div :class="layoutType === 'LayoutClassic' ? 'text-[var(--el-text-color-primary)]' : 'text-white'">
-      {{ layoutType === "LayoutSideMenu" && menuFold ? "" : title }}
+    <div :class="titleColorClass">
+      {{ layoutType === "LayoutSideMenu" && menuFold ? titleSimple : title }}
     </div>
   </div>
 </template>
 
 <script setup>
 import { useLayout } from "@/hooks/useLayout.js";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 const { layoutType, menuFold, isDark } = useLayout();
 
 const title = import.meta.env.VITE_SYSTEM_TITLE;
 const titleSimple = import.meta.env.VITE_SYSTEM_TITLE_SIMPLE;
+
+const titleColorClass = computed(() => {
+  // 定义一个根据layoutType来返回文字颜色的计算属性
+  const colorClasses = {
+    LayoutClassic: "text-[var(--el-text-color-primary)]",
+    default: "text-white", // 默认值
+  };
+
+  // 返回相应的color类，如果layoutType不存在则使用默认值
+  return colorClasses[layoutType.value] ?? colorClasses["default"];
+});
 
 const router = useRouter();
 const toHomePage = () => {

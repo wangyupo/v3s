@@ -4,16 +4,18 @@
   --el-menu-bg-color: #324057;
   --el-menu-border-color: transparent;
 
-  --el-color-primary: #515a6e;
-  --el-color-primary-dark-2: #454c5c;
-  --el-color-primary-light-3: #747b8b;
-  --el-color-primary-light-4: #979ca8;
-  --el-color-primary-light-5: #a8adb7;
-  --el-color-primary-light-7: #cbced4;
-  --el-color-primary-light-9: #eeeff1;
+  --el-color-primary: #427bff;
+  --el-color-primary-dark-2: #3966d0;
+  --el-color-primary-light-3: #6895ff;
+  --el-color-primary-light-4: #8eb0ff;
+  --el-color-primary-light-5: #a1bdff;
+  --el-color-primary-light-7: #c6d7ff;
+  --el-color-primary-light-9: #ecf2ff;
 }
 
 html {
+  --v3s-header-color: #fff;
+
   color: var(--el-text-color-primary);
 }
 

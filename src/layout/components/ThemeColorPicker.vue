@@ -28,8 +28,8 @@ import { debounce } from "lodash-es";
 
 const { layoutStore, colorPrimaryBg, setElementUIThemeColor, calcThemeColor, isDark } = useLayout();
 const predefineColors = ref([
-  { color: "#515a6e", name: "阴影灰（默认）" },
-  { color: "#409eff", name: "科技蓝" },
+  { color: "#427bff", name: "科技蓝（默认）" },
+  { color: "#515a6e", name: "阴影灰" },
   { color: "#925F69", name: "樱花红" },
 ]);
 

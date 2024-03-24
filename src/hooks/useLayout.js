@@ -1,18 +1,32 @@
 // layout 共用方法&参数
 import { storeToRefs } from "pinia";
 import { useLayoutStore } from "@/stores/layout.js";
+import { useUserStore } from "@/stores/user.js";
 import { useDark } from "@vueuse/core";
 import { debounce } from "lodash-es";
 import { computed } from "vue";
 import { TinyColor } from "@ctrl/tinycolor";
-import { addClass, removeClass } from "@/utils/index.js";
+import { addClass, removeClass, arr2tree } from "@/utils/index.js";
+import { menuKey } from "@/router/menuConfig.js";
 
 export function useLayout() {
   const contentAreaLoadingText = "加载中...";
   const contentAreaLoadingSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="var(--el-color-primary)" d="M512 64a32 32 0 0 1 32 32v192a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32m0 640a32 32 0 0 1 32 32v192a32 32 0 1 1-64 0V736a32 32 0 0 1 32-32m448-192a32 32 0 0 1-32 32H736a32 32 0 1 1 0-64h192a32 32 0 0 1 32 32m-640 0a32 32 0 0 1-32 32H96a32 32 0 0 1 0-64h192a32 32 0 0 1 32 32M195.2 195.2a32 32 0 0 1 45.248 0L376.32 331.008a32 32 0 0 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm452.544 452.544a32 32 0 0 1 45.248 0L828.8 783.552a32 32 0 0 1-45.248 45.248L647.744 692.992a32 32 0 0 1 0-45.248zM828.8 195.264a32 32 0 0 1 0 45.184L692.992 376.32a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0m-452.544 452.48a32 32 0 0 1 0 45.248L240.448 828.8a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0z"></path></svg>`;
 
+  const userStore = useUserStore();
+  const getMenu = () => {
+    return arr2tree(
+      userStore.menuArr.filter(i => i[menuKey.menuType] == menuKey.menuValue),
+      { id: menuKey.id, parentId: menuKey.parentId, children: menuKey.children }
+    );
+  };
+  const getAllMenu = () => {
+    return arr2tree(userStore.menuArr, { id: menuKey.id, parentId: menuKey.parentId, children: menuKey.children });
+  };
+
   const layoutStore = useLayoutStore();
   const {
+    headerMenuActiveIdx,
     colorPrimaryBg,
     colorPrimaryLight2,
     colorPrimaryLight9,
@@ -32,6 +46,20 @@ export function useLayout() {
   } = storeToRefs(layoutStore);
 
   const isDark = useDark({ disableTransition: false }); // 是否暗黑模式
+
+  // Header 工具区条目 hover 背景色
+  const headerToolHoverClasses = computed(() => {
+    // 定义一个根据layoutType来返回hover颜色的计算属性
+    const hoverClasses = {
+      LayoutHeadMenu: "hover:bg-[#405270]",
+      LayoutMix: "hover:bg-[#405270]",
+      // 可以添加其他情况的映射
+      default: "hover:bg-[var(--el-fill-color)]", // 默认值
+    };
+
+    // 返回相应的hover类，如果layoutType不存在则使用默认值
+    return hoverClasses[layoutType.value] ?? hoverClasses["default"];
+  });
 
   // 设置全站置灰
   const toggleGray = () => {
@@ -119,6 +147,7 @@ export function useLayout() {
   };
 
   return {
+    headerMenuActiveIdx,
     colorPrimaryBg,
     colorPrimaryLight2,
     colorPrimaryLight9,
@@ -132,6 +161,7 @@ export function useLayout() {
     toggleMenuFold,
     layoutType,
     menuFold,
+    menuKey,
     isGray,
     isZh,
     isTransparent,
@@ -143,5 +173,8 @@ export function useLayout() {
     contentAreaLoadingSvg,
     calcThemeColor,
     setElementUIThemeColor,
+    getMenu,
+    getAllMenu,
+    headerToolHoverClasses,
   };
 }

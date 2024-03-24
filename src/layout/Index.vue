@@ -7,6 +7,7 @@
 import LayoutClassic from "./types/LayoutClassic.vue";
 import LayoutSideMenu from "./types/LayoutSideMenu.vue";
 import LayoutHeadMenu from "./types/LayoutHeadMenu.vue";
+import LayoutMix from "./types/LayoutMix.vue";
 import { onMounted, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
 
@@ -21,6 +22,7 @@ const types = {
   LayoutClassic,
   LayoutSideMenu,
   LayoutHeadMenu,
+  LayoutMix,
 };
 
 // 更变布局后取消菜单折叠状态

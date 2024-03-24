@@ -1,10 +1,7 @@
 <template>
   <!-- 个人信息 -->
   <el-dropdown trigger="click" class="h-full">
-    <div
-      class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full"
-      :class="layoutType == 'LayoutHeadMenu' ? 'hover:bg-[#405270]' : 'hover:bg-[var(--el-fill-color)]'"
-    >
+    <div class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full" :class="headerToolHoverClasses">
       <el-avatar :size="30" :icon="UserFilled" />
       <div class="ml-2">管理员</div>
     </div>
@@ -27,14 +24,11 @@
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { removeAllLoginInfo } from "@/utils/index";
+import { useLayout } from "@/hooks/useLayout.js";
 import { UserFilled } from "@element-plus/icons-vue";
 
 const router = useRouter();
-
-// 跳转v3s
-const handleV3s = () => {
-  window.open("https://github.com/wangyupo/v3s");
-};
+const { headerToolHoverClasses } = useLayout();
 
 // 退出登录
 const handleLoginOut = params => {

@@ -1,11 +1,7 @@
 <template>
   <!-- 个性化配置 -->
   <el-tooltip effect="dark" content="个性化" placement="bottom" :show-after="250">
-    <div
-      class="flex items-center px-3 h-full cursor-pointer"
-      :class="layoutType == 'LayoutHeadMenu' ? 'hover:bg-[#405270]' : 'hover:bg-[var(--el-fill-color)]'"
-      @click="openDrawer"
-    >
+    <div class="flex items-center px-3 h-full cursor-pointer" :class="headerToolHoverClasses" @click="openDrawer">
       <el-icon size="20"><Setting /></el-icon>
     </div>
   </el-tooltip>
@@ -67,12 +63,13 @@ import { deleteAllCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-const { layoutType, isDark, isGray } = useLayout();
+const { layoutType, isDark, isGray, headerToolHoverClasses } = useLayout();
 const drawerVisible = ref(false);
 const layouts = ref([
   { name: "侧边导航", icon: "icon-layout-cbdh", layout: "LayoutSideMenu" },
   { name: "通栏导航", icon: "icon-layout-tldh", layout: "LayoutClassic" },
   { name: "顶部导航", icon: "icon-layout-dbdh", layout: "LayoutHeadMenu" },
+  { name: "混合导航", icon: "icon-layout-hhdh", layout: "LayoutMix" },
 ]);
 
 // 展开抽屉
@@ -88,6 +85,7 @@ const handleClearStorage = () => {
     type: "warning",
   })
     .then(() => {
+      ElMessage({ type: "success", message: "缓存清空成功！" });
       sessionStorage.clear();
       localStorage.clear();
       deleteAllCookies();

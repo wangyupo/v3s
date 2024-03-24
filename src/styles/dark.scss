@@ -1,5 +1,7 @@
 /* 自定义深色背景颜色 */
 html.dark {
+  --v3s-header-color: var(--el-bg-color-overlay);
+
   --el-menu-bg-color: var(--el-bg-color-overlay);
   --el-menu-hover-bg-color: var(--el-fill-color);
 

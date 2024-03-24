@@ -3,7 +3,7 @@
   <el-container class="layout">
     <el-aside class="layout-aside" :class="[menuFold ? 'fold' : 'expand', isDark ? 'dark' : '']">
       <HeaderTitle />
-      <Menu class="layout-aside-menu sideMenu" />
+      <Menu class="layout-aside-menu sideMenu" :menu="menu" />
     </el-aside>
     <el-container>
       <el-header class="layout-header" :class="[isDark ? 'dark' : '']">
@@ -40,7 +40,7 @@ import RouterHistoryTabs from "@/layout/components/RouterHistoryTabs.vue";
 import HeaderRightTools from "@/layout/components/HeaderRightTools.vue";
 import Breadcrumb from "@/layout/components/Breadcrumb.vue";
 import { useLayout } from "@/hooks/useLayout.js";
-import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 
 const {
   menuFold,
@@ -50,8 +50,13 @@ const {
   isNavigating,
   contentAreaLoadingText,
   contentAreaLoadingSvg,
+  getMenu,
 } = useLayout();
-const route = useRoute();
+
+const menu = ref([]);
+onMounted(() => {
+  menu.value = getMenu();
+});
 </script>
 
 <style lang="scss" scoped>
