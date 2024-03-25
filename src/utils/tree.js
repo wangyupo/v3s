@@ -76,11 +76,10 @@ export function tree2arr(treeData, config = {}) {
     }
   }
 
-  const _treeData =
-    // 遍历树数组的每个元素
-    treeData.forEach(rootNode => {
-      traverse(rootNode);
-    });
+  // 遍历树数组的每个元素
+  treeData.forEach(rootNode => {
+    traverse(rootNode);
+  });
 
   return result;
 }
