@@ -6,32 +6,32 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "39398779",
-      "name": "资源管理",
-      "font_class": "layout-hhdh",
-      "unicode": "e62b",
-      "unicode_decimal": 58923
+      "icon_id": "39675323",
+      "name": "通栏导航备份",
+      "font_class": "layout-tldh",
+      "unicode": "e634",
+      "unicode_decimal": 58932
     },
     {
-      "icon_id": "38045942",
-      "name": "顶部导航",
-      "font_class": "layout-dbdh",
-      "unicode": "e610",
-      "unicode_decimal": 58896
-    },
-    {
-      "icon_id": "38045941",
+      "icon_id": "39675356",
       "name": "侧边导航",
       "font_class": "layout-cbdh",
-      "unicode": "e611",
-      "unicode_decimal": 58897
+      "unicode": "e631",
+      "unicode_decimal": 58929
     },
     {
-      "icon_id": "38045940",
+      "icon_id": "39675409",
+      "name": "顶部导航",
+      "font_class": "layout-dbdh",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "39675490",
       "name": "通栏导航",
-      "font_class": "layout-tldh",
-      "unicode": "e612",
-      "unicode_decimal": 58898
+      "font_class": "layout-hhdh",
+      "unicode": "e633",
+      "unicode_decimal": 58931
     },
     {
       "icon_id": "577364",
