@@ -79,7 +79,8 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       &.classic {
         height: 100%;
       }
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
       scrollbar-width: thin;
     }
   }
