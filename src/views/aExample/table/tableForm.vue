@@ -25,6 +25,7 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { selectData_example } from "@/enums/index.js";
 
 const loading = ref(false);
 const searchData = ref({
@@ -46,16 +47,7 @@ const searchInfo = ref([
     label: "地址",
     placeholder: "请选择地址",
     key: "address",
-    options: [
-      {
-        value: "No. 188, Grove St, Los Angeles",
-        label: "No. 188, Grove St, Los Angeles",
-      },
-      {
-        value: "No. 189, Grove St, Los Angeles",
-        label: "No. 189, Grove St, Los Angeles",
-      },
-    ],
+    options: selectData_example,
     colSpan: 8,
   },
   {
