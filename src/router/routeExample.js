@@ -10,6 +10,7 @@ const exampleSeamlessScroll = () => import("@/views/aExample/seamlessScroll.vue"
 const transparentBackground = () => import("@/views/aExample/transparentBackground.vue");
 
 const route = [
+  // 配置示例：菜单页
   {
     path: "/example/menu1/menu1-1",
     name: "exampleNestMenu1Sub",
@@ -37,6 +38,13 @@ const route = [
     component: exampleNumCountUp,
   },
   {
+    path: "/example/seamlessScroll",
+    name: "exampleSeamlessScroll",
+    component: exampleSeamlessScroll,
+  },
+
+  // 配置示例：多级路由，高亮父级菜单
+  {
     path: "/example/page",
     name: "examplePage",
     component: examplePage,
@@ -49,6 +57,8 @@ const route = [
       targetMenuPath: "/example/page",
     },
   },
+
+  // 配置示例：业务区域全屏
   {
     path: "/example/tree",
     name: "exampleTreeFilter",
@@ -57,11 +67,8 @@ const route = [
       wrapperType: "fullPage",
     },
   },
-  {
-    path: "/example/seamlessScroll",
-    name: "exampleSeamlessScroll",
-    component: exampleSeamlessScroll,
-  },
+
+  // 配置示例：背景色透明、取消面包屑
   {
     path: "/example/transparentBackground",
     name: "transparentBackground",

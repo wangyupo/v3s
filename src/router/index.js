@@ -17,16 +17,8 @@ import routeExample from "./routeExample";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    {
-      path: "/login",
-      name: "登录页",
-      component: login,
-    },
-    {
-      path: "/largeScreen",
-      name: "largeScreen",
-      component: largeScreen,
-    },
+    { path: "/login", name: "登录页", component: login },
+    { path: "/largeScreen", name: "largeScreen", component: largeScreen },
     {
       path: "/",
       name: "主体框架",
@@ -58,18 +50,10 @@ const router = createRouter({
           },
         },
 
-        {
-          path: "/home",
-          name: "home",
-          component: home,
-        },
+        { path: "/home", name: "home", component: home },
         ...routeExample,
 
-        {
-          path: "/404",
-          name: "notFound",
-          component: notFound,
-        },
+        { path: "/404", name: "notFound", component: notFound },
         { path: "/:pathMatch(.*)*", redirect: "/404" },
       ],
     },
