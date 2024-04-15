@@ -101,5 +101,12 @@
     "url": "/example/transparentBackground",
     "title": "透明背景",
     "menuType": 0
+  },
+  {
+    "id": "3-8",
+    "parentId": "3",
+    "url": "/example/echarts",
+    "title": "echarts",
+    "menuType": 0
   }
 ]

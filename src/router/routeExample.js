@@ -8,6 +8,7 @@ const exampleNestMenu2 = () => import("@/views/aExample/menuNest/nestMenu2.vue")
 const exampleTreeFilter = () => import("@/views/aExample/treeFilter.vue");
 const exampleSeamlessScroll = () => import("@/views/aExample/seamlessScroll.vue");
 const transparentBackground = () => import("@/views/aExample/transparentBackground.vue");
+const chartTest = () => import("@/views/aExample/chartTest.vue");
 
 const route = [
   // 配置示例：菜单页
@@ -77,6 +78,11 @@ const route = [
       transparentBackground: true,
       noBreadcrumb: true,
     },
+  },
+  {
+    path: "/example/echarts",
+    name: "chartTest",
+    component: chartTest,
   },
 ];
 
