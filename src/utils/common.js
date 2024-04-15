@@ -227,6 +227,8 @@ export const epyReturn = obj => {
     result = obj.length ? obj : emptyStr;
   } else if (typeOf(obj) === "object") {
     result = Object.keys(obj).length ? obj : emptyStr;
+  } else if (typeOf(obj) === "number") {
+    result = obj;
   } else {
     result = obj ? obj : emptyStr;
   }
