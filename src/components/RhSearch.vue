@@ -12,7 +12,7 @@
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'input'">
               <el-input
                 class="rh-search-item"
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 clearable
                 :placeholder="searchItem.placeholder"
                 :formatter="searchItem.formatter ? searchItem.formatter : value => value.replace(/\s*/g, '')"
@@ -23,7 +23,7 @@
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'select'">
               <el-select
                 class="rh-search-item"
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 clearable
                 :placeholder="searchItem.placeholder"
                 :filterable="searchItem.filterable"
@@ -42,7 +42,7 @@
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'selectMultiple'">
               <el-select
                 class="rh-search-item"
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 multiple
                 clearable
                 :placeholder="searchItem.placeholder"
@@ -63,7 +63,7 @@
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'cascader'">
               <el-cascader
                 class="w-full"
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 :options="searchItem.options"
                 :props="searchItem.props"
                 :placeholder="searchItem.placeholder"
@@ -74,7 +74,7 @@
             <!-- 日期单选 -->
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'date'">
               <el-date-picker
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 type="date"
                 clearable
                 :placeholder="searchItem.placeholder"
@@ -85,7 +85,7 @@
             <!-- 日期范围 -->
             <el-form-item :label="searchItem.label" v-if="searchItem.type === 'daterange'">
               <el-date-picker
-                v-model="_searchData[searchItem.key]"
+                v-model="searchData[searchItem.key]"
                 type="daterange"
                 value-format="YYYY-MM-DD"
                 unlink-panels
@@ -101,8 +101,8 @@
 
           <!-- 行内搜索（搜索条件小于等于2个） -->
           <el-col class="mb-3" :span="4" v-if="searchInfo.length <= 2">
-            <el-button type="primary" @click="handleSearch">搜索</el-button>
-            <el-button @click="handleReset">重置</el-button>
+            <el-button icon="Search" type="primary" @click="handleSearch">搜索</el-button>
+            <el-button icon="RefreshRight" @click="handleReset">重置</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -110,8 +110,8 @@
 
     <!-- 多行搜索（搜索条件大于3个） -->
     <div class="flex justify-center mb-3" :span="4" v-if="searchInfo.length > 2">
-      <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
-      <el-button :icon="RefreshRight" @click="handleReset">重置</el-button>
+      <el-button type="primary" icon="Search" @click="handleSearch">查询</el-button>
+      <el-button icon="RefreshRight" @click="handleReset">重置</el-button>
       <!-- 展开/收起（搜索条件大于6个） -->
       <el-button type="primary" link @click="handleToggle" v-if="searchInfo.length > 6">
         <template v-if="!toggle">
@@ -128,25 +128,18 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
-import { typeOf } from "@/utils/index";
-import { on, off } from "@/utils/index";
-import { debounce } from "lodash-es";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import { typeOf, on, off } from "@/utils/index";
+import { debounce, cloneDeep } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
-import { Search, RefreshRight } from "@element-plus/icons-vue";
+import { shortcuts } from "@/enums/index.js";
 
-const { menuFilterDialogVisible } = useLayout();
-const emit = defineEmits(["search"]);
+const emit = defineEmits(["search"]); // 对外暴露 search 事件
 const props = defineProps({
   // 搜索配置
   searchInfo: {
     type: Array,
     default: () => [],
-  },
-  // 搜索值组成的对象
-  searchData: {
-    type: Object,
-    default: () => {},
   },
   // 不显示底部分割线
   noBorder: {
@@ -159,49 +152,71 @@ const props = defineProps({
     default: false,
   },
 });
-// 日期范围快捷操作
-const shortcuts = [
-  {
-    text: "过于一周",
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-      return [start, end];
-    },
-  },
-  {
-    text: "过去一月",
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-      return [start, end];
-    },
-  },
-  {
-    text: "过去一年",
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
-      return [start, end];
-    },
-  },
-];
-const _searchData = reactive(props.searchData || {});
-const toggle = ref(false);
+const searchData = ref({}); // 搜索绑定对象
+const toggle = ref(false); // 展开/收起搜索栏目
+const canSearch = ref(false); // 开关-回车是否能触发搜索。只有搜索值改变时，才能触发。
+
+/**
+ * 初始化searchData
+ * 源数据：[{ key: 'key1', defaultValue: 'defaultValue1' }, { key: 'key2', defaultValue: 'defaultValue2'}]
+ * 目标数据：{ key1: defaultValue1, key2: defaultValue2 }
+ */
+const initSearchData = () => {
+  const searchInfo = cloneDeep(props.searchInfo);
+  searchData.value = searchInfo.reduce((accumulator, current) => {
+    accumulator[current.key] = current.defaultValue;
+    return accumulator;
+  }, {});
+};
 
 watch(
-  _searchData,
+  () => props.searchInfo,
   () => {
     canSearch.value = true;
+    initSearchData();
   },
-  { deep: true }
+  { immediate: true, deep: true }
 );
 
+// 搜索
+const handleSearch = debounce(searchConfig => {
+  let params = {};
+  const keys = Object.keys(searchData.value);
+  for (let idx = 0; idx < keys.length; idx++) {
+    const key = keys[idx];
+    const emptyArr = typeOf(searchData.value[key]) === "array" && !searchData.value[key].length;
+    const emptyStr = typeOf(searchData.value[key]) === "string" && !searchData.value[key];
+    if (emptyArr || emptyStr) {
+      // 过滤空值
+      continue;
+    } else {
+      const searchCfg = props.searchInfo.find(i => i.key === key);
+      // 组装日期范围。由“数组”组装成“startKey”、“endKey”两个值。
+      if (searchCfg.type === "daterange" && searchCfg.startKey && searchCfg.endKey) {
+        params[searchCfg.startKey] = searchData.value[key][0];
+        params[searchCfg.endKey] = searchData.value[key][1];
+      } else {
+        params[key] = searchData.value[key];
+      }
+    }
+  }
+  emit("search", params);
+  if (searchConfig && searchConfig.isEnterSearch) canSearch.value = false;
+}, 200);
+
+// 重置
+const handleReset = debounce(() => {
+  initSearchData();
+  handleSearch();
+}, 200);
+
+// 展开/收起
+const handleToggle = () => {
+  toggle.value = !toggle.value;
+};
+
 /* 回车触发搜索事件 START */
-const canSearch = ref(false); // 开关-回车是否能触发搜索。只有搜索值改变时，才能触发。
+const { menuFilterDialogVisible } = useLayout();
 onMounted(() => {
   if (!props.noKeyBoard) on(document, "keydown", keyboardTrigger); // 键盘监听事件-添加
 });
@@ -229,50 +244,6 @@ const handleEnterSearch = () => {
   });
 };
 /* 回车触发搜索事件 END */
-
-// 搜索
-const handleSearch = debounce(searchConfig => {
-  let params = {};
-  const keys = Object.keys(_searchData);
-  for (let idx = 0; idx < keys.length; idx++) {
-    const key = keys[idx];
-    const emptyArr = typeOf(_searchData[key]) === "array" && !_searchData[key].length;
-    const emptyStr = typeOf(_searchData[key]) === "string" && !_searchData[key];
-    if (emptyArr || emptyStr) {
-      // 过滤空值
-      continue;
-    } else {
-      const searchCfg = props.searchInfo.find(i => i.key === key);
-      // 组装日期范围。由“数组”组装成“startKey”、“endKey”两个值。
-      if (searchCfg.type === "daterange" && searchCfg.startKey && searchCfg.endKey) {
-        params[searchCfg.startKey] = _searchData[key][0];
-        params[searchCfg.endKey] = _searchData[key][1];
-      } else {
-        params[key] = _searchData[key];
-      }
-    }
-  }
-  emit("search", params);
-  if (searchConfig && searchConfig.isEnterSearch) canSearch.value = false;
-}, 200);
-
-// 重置
-const handleReset = debounce(searchConfig => {
-  const keys = Object.keys(_searchData);
-  keys.forEach(key => {
-    if (typeOf(_searchData[key]) === "array") {
-      _searchData[key] = [];
-    } else if (_searchData[key] || _searchData[key] === 0) {
-      _searchData[key] = "";
-    }
-  });
-  handleSearch();
-}, 200);
-
-// 展开/收起
-const handleToggle = () => {
-  toggle.value = !toggle.value;
-};
 </script>
 
 <style lang="scss" scoped>

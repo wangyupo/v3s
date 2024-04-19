@@ -7,7 +7,7 @@
       </code>
     </div>
     <div class="flex-1">
-      <RhSearch :searchInfo="searchInfo" :searchForm="searchForm" @search="handleSearch" />
+      <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
       <RhTable
         border
         stripe
@@ -29,11 +29,10 @@
 <script setup>
 import { onMounted, reactive, ref, computed } from "vue";
 // import { getList } from "@/api/api.js";
+import { initSearchData } from "@/utils/index.js";
 
 // 条件配置
-const searchForm = ref({
-  key: "",
-});
+const searchForm = ref({});
 const searchInfo = ref([
   {
     type: "input",
@@ -50,14 +49,8 @@ const searchInfo = ref([
     key: "select",
     value: "",
     options: [
-      {
-        value: "1",
-        label: "选项一",
-      },
-      {
-        value: "2",
-        label: "选项二",
-      },
+      { value: "1", label: "选项一" },
+      { value: "2", label: "选项二" },
     ],
     colSpan: 8,
   },
@@ -67,45 +60,17 @@ const tableData = reactive({
   showOverflowTooltip: true,
   draggable: true,
   columns: [
-    {
-      label: "序号",
-      type: "index",
-    },
-    {
-      label: "日期",
-      prop: "date",
-      minWidth: "120px",
-    },
-    {
-      label: "姓名",
-      prop: "name",
-      // width: "120px",
-    },
-    {
-      label: "操作",
-      prop: "operate",
-      width: "200px",
-    },
+    { label: "序号", type: "index" },
+    { label: "日期", prop: "date", minWidth: "120px" },
+    { label: "姓名", prop: "name" },
+    { label: "操作", prop: "operate", width: "200px" },
   ],
   data: [
-    {
-      date: "2016-05-01",
-      name: "home 示例数据1",
-    },
-    {
-      date: "2016-05-02",
-      name: "home 示例数据2",
-    },
-    {
-      date: "2016-05-03",
-      name: "home 示例数据3",
-    },
+    { date: "2016-05-01", name: "home 示例数据1" },
+    { date: "2016-05-02", name: "home 示例数据2" },
+    { date: "2016-05-03", name: "home 示例数据3" },
   ],
-  pages: {
-    total: 0,
-    pageNumber: 1,
-    pageSize: 10,
-  },
+  pages: { total: 0, pageNumber: 1, pageSize: 10 },
 });
 const loading = ref(false);
 const dataJson = computed(() => {
@@ -113,6 +78,7 @@ const dataJson = computed(() => {
 });
 
 onMounted(() => {
+  // searchForm.value = initSearchData(searchInfo.value);
   // fn_getList();
 });
 

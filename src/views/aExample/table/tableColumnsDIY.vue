@@ -1,7 +1,7 @@
 <template>
   <!-- 示例-列字段配置（排序、显示/隐藏） -->
   <div>
-    <RhSearch diyColumns :searchInfo="searchInfo" :searchForm="searchForm" @search="handleSearch" />
+    <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
     <div class="flex justify-end mb-3">
       <el-button type="default" :icon="Download" circle class="mr-3" @click="handleDownload"></el-button>
       <RhTableColumnDIY :columns="tableData.columns" @update-columns="updateColumns"></RhTableColumnDIY>
@@ -25,20 +25,18 @@
 import { onMounted, reactive, ref } from "vue";
 // import { getList } from "@/api/api.js";
 import { Download } from "@element-plus/icons-vue";
-import { exportToExcel } from "@/utils/index.js";
+import { exportToExcel, initSearchData } from "@/utils/index.js";
 import { cloneDeep } from "lodash-es";
 
 // 条件配置
-const searchForm = ref({
-  key: "",
-});
+const searchForm = ref({});
 const searchInfo = ref([
   {
     type: "input",
     label: "姓名",
     placeholder: "请输入姓名",
-    key: "input",
-    value: "",
+    key: "name",
+    defaultValue: "",
     colSpan: 8,
   },
   {
@@ -46,16 +44,10 @@ const searchInfo = ref([
     label: "日期",
     placeholder: "请选择日期",
     key: "select",
-    value: "",
+    defaultValue: "",
     options: [
-      {
-        value: "1",
-        label: "选项一",
-      },
-      {
-        value: "2",
-        label: "选项二",
-      },
+      { value: "1", label: "选项一" },
+      { value: "2", label: "选项二" },
     ],
     colSpan: 8,
   },
@@ -64,44 +56,18 @@ const searchInfo = ref([
 const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
-    {
-      label: "序号",
-      type: "index",
-    },
-    {
-      label: "日期",
-      prop: "date",
-      minWidth: "120px",
-      show: true,
-    },
-    {
-      label: "姓名",
-      prop: "name",
-      width: "120px",
-      show: true,
-    },
-    {
-      label: "操作",
-      prop: "operate",
-      width: "200px",
-      show: true,
-    },
+    { label: "序号", type: "index" },
+    { label: "日期", prop: "date", minWidth: "120px", show: true },
+    { label: "姓名", prop: "name", width: "120px", show: true },
+    { label: "操作", prop: "operate", width: "200px", show: true },
   ],
-  data: [
-    {
-      date: "2016-05-03",
-      name: "tableColumnsDIY 示例数据",
-    },
-  ],
-  pages: {
-    total: 0,
-    pageNumber: 1,
-    pageSize: 10,
-  },
+  data: [{ date: "2016-05-03", name: "tableColumnsDIY 示例数据" }],
+  pages: { total: 0, pageNumber: 1, pageSize: 10 },
 });
 const loading = ref(false);
 
 onMounted(() => {
+  // searchForm.value = initSearchData(searchInfo.value);
   // fn_getList();
 });
 

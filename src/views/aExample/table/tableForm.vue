@@ -1,7 +1,7 @@
 <template>
   <!-- 示例-带搜索的表格 -->
   <div>
-    <RhSearch :searchInfo="searchInfo" :searchData="searchData" @search="handleSearch" />
+    <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
     <RhTable
       border
       stripe
@@ -26,20 +26,17 @@
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { selectData_example } from "@/enums/index.js";
+import { initSearchData } from "@/utils/index.js";
 
 const loading = ref(false);
-const searchData = ref({
-  name: "",
-  address: "",
-  date: "",
-  time: "",
-});
+const searchData = ref({});
 const searchInfo = ref([
   {
     type: "input",
     label: "姓名",
     placeholder: "请输入姓名",
     key: "name",
+    defaultValue: "",
     colSpan: 8,
   },
   {
@@ -47,6 +44,7 @@ const searchInfo = ref([
     label: "地址",
     placeholder: "请选择地址",
     key: "address",
+    defaultValue: "",
     options: selectData_example,
     colSpan: 8,
   },
@@ -55,6 +53,7 @@ const searchInfo = ref([
     label: "日期",
     placeholder: "请选择日期",
     key: "date",
+    defaultValue: "",
     colSpan: 8,
   },
   {
@@ -65,7 +64,7 @@ const searchInfo = ref([
     key: "time",
     startKey: "beginTime",
     endKey: "endTime",
-    value: null,
+    defaultValue: [],
     colSpan: 8,
   },
 ]);
@@ -77,65 +76,24 @@ const multipleSelection = ref([]);
 const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
-    {
-      type: "expand",
-    },
-    {
-      type: "selection",
-      selectable,
-    },
-    {
-      label: "序号",
-      type: "index",
-    },
-    {
-      label: "日期",
-      prop: "date",
-      width: "150px",
-      diyHeader: true,
-      sortable: true,
-    },
-    {
-      label: "姓名",
-      prop: "name",
-    },
-    {
-      label: "地址",
-      prop: "address",
-      prefix: "<span class='font-bold'>送货地址：</span>",
-      suffix: "(not too spicy)",
-    },
+    { type: "expand" },
+    { type: "selection", selectable },
+    { label: "序号", type: "index" },
+    { label: "日期", prop: "date", width: "150px", diyHeader: true, sortable: true },
+    { label: "姓名", prop: "name" },
+    { label: "地址", prop: "address", prefix: "<span class='font-bold'>送货地址：</span>", suffix: "(not too spicy)" },
   ],
   data: [
-    {
-      date: "15311665523",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-02",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-04",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-01",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
+    { date: "15311665523", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
+    { date: "2016-05-02", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
+    { date: "2016-05-04", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
+    { date: "2016-05-01", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
   ],
-  pages: {
-    total: 100,
-    pageNumber: 1,
-    pageSize: 10,
-  },
+  pages: { total: 0, pageNumber: 1, pageSize: 10 },
 });
 
 onMounted(() => {
+  // searchForm.value = initSearchData(searchInfo.value);
   // fn_getList();
 });
 

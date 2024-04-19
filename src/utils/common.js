@@ -80,11 +80,16 @@ export function removeEmptyInObj(obj) {
   }
   if (obj instanceof Array) {
     newObj = [];
-  }
-  if (obj instanceof Object) {
+    for (let i = 0; i < obj.length; i++) {
+      newObj.push(removeEmptyInObj(obj[i]));
+    }
+  } else if (obj instanceof Object) {
     for (let attr in obj) {
       if (obj.hasOwnProperty(attr) && obj[attr] !== "" && obj[attr] !== null && obj[attr] !== undefined) {
-        if (obj[attr] instanceof Object) {
+        if (obj[attr] === 0 || obj[attr] === false) {
+          // 保留数字0和布尔值false
+          newObj[attr] = obj[attr];
+        } else if (obj[attr] instanceof Object) {
           if (JSON.stringify(obj[attr]) === "{}" || JSON.stringify(obj[attr]) === "[]") {
             continue;
           }
@@ -244,4 +249,13 @@ export const numberFormat = num => {
   return num.toString().replace(/\d+/, function (n) {
     return n.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
   });
+};
+
+// 通过 searchInfo 初始化搜索数据
+export const initSearchData = searchInfo => {
+  const data = searchInfo.reduce((accumulator, current) => {
+    accumulator[current.key] = current.defaultValue;
+    return accumulator;
+  }, {});
+  return removeEmptyInObj(data);
 };
