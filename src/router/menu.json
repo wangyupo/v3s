@@ -42,7 +42,7 @@
     "id": "3",
     "parentId": "0",
     "url": "",
-    "title": "组件",
+    "title": "组件示例",
     "icon": "icon-kaifazujian",
     "menuType": 0
   },
@@ -70,43 +70,59 @@
   {
     "id": "3-4",
     "parentId": "3",
-    "url": "/example/page",
-    "title": "多级页面",
-    "menuType": 0
-  },
-  {
-    "id": "3-4-1",
-    "parentId": "3-4",
-    "url": "/example/page/child",
-    "title": "子页面",
-    "menuType": 1
-  },
-  {
-    "id": "3-5",
-    "parentId": "3",
     "url": "/example/tree",
     "title": "树形筛选器",
     "menuType": 0
   },
   {
-    "id": "3-6",
+    "id": "3-5",
     "parentId": "3",
     "url": "/example/seamlessScroll",
     "title": "无缝滚动",
     "menuType": 0
   },
   {
-    "id": "3-7",
-    "parentId": "3",
-    "url": "/example/transparentBackground",
-    "title": "透明背景",
-    "menuType": 0
-  },
-  {
-    "id": "3-8",
+    "id": "3-6",
     "parentId": "3",
     "url": "/example/echarts",
     "title": "echarts",
     "menuType": 0
+  },
+
+  {
+    "id": "4",
+    "parentId": "0",
+    "url": "",
+    "title": "页面示例",
+    "icon": "icon-kaifazujian",
+    "menuType": 0
+  },
+  {
+    "id": "4-1",
+    "parentId": "4",
+    "url": "/examplePage/fullScreenShowPage",
+    "title": "全屏展示页",
+    "menuType": 0
+  },
+  {
+    "id": "4-2",
+    "parentId": "4",
+    "url": "/examplePage/transparentBackground",
+    "title": "透明背景页",
+    "menuType": 0
+  },
+  {
+    "id": "4-3",
+    "parentId": "4",
+    "url": "/examplePage/pageMultilevel",
+    "title": "多级页面",
+    "menuType": 0
+  },
+  {
+    "id": "4-3-1",
+    "parentId": "4-3",
+    "url": "/examplePage/pageMultilevel/child",
+    "title": "子页面",
+    "menuType": 1
   }
 ]

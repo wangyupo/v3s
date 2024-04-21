@@ -13,7 +13,7 @@ const router = useRouter();
 
 const toChildPage = () => {
   router.push({
-    path: "/example/page/child",
+    path: "/examplePage/pageMultilevel/child",
     query: {
       id: "1",
       type: "2",

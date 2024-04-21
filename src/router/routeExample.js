@@ -1,14 +1,17 @@
-const exampleDialog = () => import("@/views/aExample/dialog/index.vue");
-const exampleTable = () => import("@/views/aExample/table/index.vue");
-const exampleNumCountUp = () => import("@/views/aExample/numCountUp.vue");
-const examplePage = () => import("@/views/aExample/pageMultilevel/index.vue");
-const examplePageChild = () => import("@/views/aExample/pageMultilevel/pageChild.vue");
-const exampleNestMenu1Sub = () => import("@/views/aExample/menuNest/nestMenu1Sub.vue");
-const exampleNestMenu2 = () => import("@/views/aExample/menuNest/nestMenu2.vue");
-const exampleTreeFilter = () => import("@/views/aExample/treeFilter.vue");
-const exampleSeamlessScroll = () => import("@/views/aExample/seamlessScroll.vue");
-const transparentBackground = () => import("@/views/aExample/transparentBackground.vue");
-const chartTest = () => import("@/views/aExample/chartTest.vue");
+// 组件示例
+const exampleDialog = () => import("@/views/aExample/exampleComponent/dialog/index.vue");
+const exampleTable = () => import("@/views/aExample/exampleComponent/table/index.vue");
+const exampleNumCountUp = () => import("@/views/aExample/exampleComponent/numCountUp.vue");
+const exampleNestMenu1Sub = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu1Sub.vue");
+const exampleNestMenu2 = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu2.vue");
+const exampleTreeFilter = () => import("@/views/aExample/exampleComponent/treeFilter.vue");
+const exampleSeamlessScroll = () => import("@/views/aExample/exampleComponent/seamlessScroll.vue");
+const chartTest = () => import("@/views/aExample/exampleComponent/chartTest.vue");
+// 页面示例
+const transparentBackground = () => import("@/views/aExample/exampleComponent/transparentBackground.vue");
+const exampleFullScreenShowPage = () => import("@/views/aExample/examplePage/fullScreenShowPage.vue");
+const examplePage = () => import("@/views/aExample/examplePage/pageMultilevel/index.vue");
+const examplePageChild = () => import("@/views/aExample/examplePage/pageMultilevel/pageChild.vue");
 
 const route = [
   // 配置示例：菜单页
@@ -43,22 +46,6 @@ const route = [
     name: "exampleSeamlessScroll",
     component: exampleSeamlessScroll,
   },
-
-  // 配置示例：多级路由，高亮父级菜单
-  {
-    path: "/example/page",
-    name: "examplePage",
-    component: examplePage,
-  },
-  {
-    path: "/example/page/child",
-    name: "examplePageChild",
-    component: examplePageChild,
-    meta: {
-      targetMenuPath: "/example/page",
-    },
-  },
-
   // 配置示例：业务区域全屏
   {
     path: "/example/tree",
@@ -68,10 +55,25 @@ const route = [
       wrapperType: "fullPage",
     },
   },
+  {
+    path: "/example/echarts",
+    name: "chartTest",
+    component: chartTest,
+  },
 
+  // 配置示例：背景色透明、全屏展示
+  {
+    path: "/examplePage/fullScreenShowPage",
+    name: "exampleFullScreenShowPage",
+    component: exampleFullScreenShowPage,
+    meta: {
+      wrapperType: "fullPage",
+      transparentBackground: true,
+    },
+  },
   // 配置示例：背景色透明、取消面包屑
   {
-    path: "/example/transparentBackground",
+    path: "/examplePage/transparentBackground",
     name: "transparentBackground",
     component: transparentBackground,
     meta: {
@@ -79,10 +81,19 @@ const route = [
       noBreadcrumb: true,
     },
   },
+  // 配置示例：多级路由，高亮父级菜单
   {
-    path: "/example/echarts",
-    name: "chartTest",
-    component: chartTest,
+    path: "/examplePage/pageMultilevel",
+    name: "examplePage",
+    component: examplePage,
+  },
+  {
+    path: "/examplePage/pageMultilevel/child",
+    name: "examplePageChild",
+    component: examplePageChild,
+    meta: {
+      targetMenuPath: "/examplePage/pageMultilevel",
+    },
   },
 ];
 
