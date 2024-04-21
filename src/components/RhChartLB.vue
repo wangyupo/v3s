@@ -1,6 +1,6 @@
 <template>
   <!-- echarts 折线、柱状图组件（由 option.series 实现折线、柱状图） -->
-  <div ref="chartRef" class="w-full h-full"></div>
+  <div ref="chartRef" class="absolute top-0 bottom-0 left-0 right-0 overflow-hidden w-full h-full"></div>
 </template>
 
 <script setup>
@@ -64,10 +64,7 @@ const setupResizeObserver = () => {
   const debounceResize = debounce(entries => {
     for (let entry of entries) {
       const { width, height } = entry.contentRect;
-      chartInstance?.resize({
-        width: width,
-        height: height,
-      });
+      chartInstance?.resize();
     }
   }, 300);
 
