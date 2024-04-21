@@ -40,15 +40,7 @@ const router = createRouter({
       },
       children: [
         /* 页面路由 START */
-        {
-          path: "/home",
-          name: "home",
-          component: home,
-          meta: {
-            wrapperType: "fullPage",
-            transparentBackground: true,
-          },
-        },
+        { path: "/home", name: "home", component: home },
         ...routeExample,
         /* 页面路由 END */
 
