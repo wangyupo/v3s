@@ -15,9 +15,12 @@
     ]"
   >
     <div
-      :class="['rh-wrapper-head flex justify-between items-center overflow-hidden', noBorder ? 'border-b-0' : 'p-3 h-default border-b']"
+      :class="[
+        'rh-wrapper-head flex justify-between items-center overflow-hidden',
+        noBorder ? 'border-b-0' : 'px-3 border-b',
+      ]"
     >
-      <RhTitle :title="title" :lineColor="lineColor" nomb />
+      <RhTitle :title="title" :lineColor="lineColor" :media="media" nomb />
       <div>
         <slot name="title-right"></slot>
       </div>
@@ -38,6 +41,11 @@ const props = defineProps({
   title: String,
   // 竖线颜色
   lineColor: String,
+  // 是否媒体响应
+  media: {
+    type: Boolean,
+    default: false,
+  },
   // 取消圆角
   noRound: {
     type: Boolean,
@@ -103,9 +111,6 @@ defineExpose({
   border-radius: 4px;
   &-head {
     border-bottom-color: var(--el-border-color-light);
-    &.h-default {
-      height: 46px;
-    }
   }
   &.noRound {
     border-radius: 0;
