@@ -32,8 +32,8 @@
             <el-button type="primary" @click="handleConfirm(tableData)" v-else-if="rowEditIdx == scope.$index">
               保存
             </el-button>
-            <el-button :icon="Plus" circle title="添加行" @click="handleAddRow(tableData, scope.$index)" />
-            <el-button :icon="Minus" circle title="删除行" @click="handleDelRow(tableData, scope.$index)" />
+            <el-button icon="Plus" circle title="添加行" @click="handleAddRow(tableData, scope.$index)" />
+            <el-button icon="Minus" circle title="删除行" @click="handleDelRow(tableData, scope.$index)" />
           </div>
         </template>
       </RhTable>
@@ -44,7 +44,6 @@
 <script setup>
 import { onMounted, reactive, computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import { Plus, Minus } from "@element-plus/icons-vue";
 
 const tableData = reactive({
   showOverflowTooltip: true,

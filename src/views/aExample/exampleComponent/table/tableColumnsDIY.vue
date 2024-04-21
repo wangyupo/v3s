@@ -3,7 +3,7 @@
   <div>
     <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
     <div class="flex justify-end mb-3">
-      <el-button type="default" :icon="Download" circle class="mr-3" @click="handleDownload"></el-button>
+      <el-button type="default" icon="Download" circle class="mr-3" @click="handleDownload"></el-button>
       <RhTableColumnDIY :columns="tableData.columns" @update-columns="updateColumns"></RhTableColumnDIY>
     </div>
     <RhTable
@@ -24,7 +24,6 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 // import { getList } from "@/api/api.js";
-import { Download } from "@element-plus/icons-vue";
 import { exportToExcel, initSearchData } from "@/utils/index.js";
 import { cloneDeep } from "lodash-es";
 

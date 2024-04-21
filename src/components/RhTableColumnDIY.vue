@@ -4,7 +4,7 @@
     <slot name="right-slot"></slot>
     <el-popover placement="bottom" title="自定义列" popper-style="width: auto;min-width: 150px" trigger="click">
       <template #reference>
-        <el-button type="default" :icon="Setting" circle title="自定义列" />
+        <el-button type="default" icon="Setting" circle title="自定义列" />
       </template>
       <draggable
         :list="_columns"
@@ -33,7 +33,6 @@
 <script setup>
 import { ref, watch } from "vue";
 import draggable from "vuedraggable";
-import { Setting } from "@element-plus/icons-vue";
 import { cloneDeep, isEqual } from "lodash-es";
 
 /* 自定义列 START */

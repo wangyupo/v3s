@@ -23,7 +23,7 @@ const app = createApp(App);
 
 /**
  * 全局引入ElementPlusIcon
- * 注意：仅在以 <el-icon><Xxx /></el-icon> 组件方式使用时无需单独引入，如果以 :icon="" 内嵌图标传参的方式使用，仍需在组件内引入该 icon。
+ * 注意：在以 <el-icon><Xxx /></el-icon>、icon="" 的方式使用时无需单独引入，如果以 :icon="" 内嵌图标传参的方式使用，仍需在组件内引入该 icon。
  */
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

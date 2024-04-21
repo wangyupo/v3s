@@ -2,7 +2,7 @@
   <!-- 个人信息 -->
   <el-dropdown trigger="click" class="h-full">
     <div class="avatar flex items-center cursor-pointer flex-shrink-0 px-3 h-full" :class="headerToolHoverClasses">
-      <el-avatar :size="30" :icon="UserFilled" />
+      <el-avatar :size="30" icon="UserFilled" />
       <div class="ml-2">管理员</div>
     </div>
     <template #dropdown>
@@ -25,7 +25,6 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { removeAllLoginInfo } from "@/utils/index";
 import { useLayout } from "@/hooks/useLayout.js";
-import { UserFilled } from "@element-plus/icons-vue";
 
 const router = useRouter();
 const { headerToolHoverClasses } = useLayout();
