@@ -4,15 +4,16 @@ import NProgress from "@/utils/nProgress.js";
 import { menuKey } from "@/router/menuConfig.js";
 import { useLayoutStore } from "@/stores/layout.js";
 
-const login = () => import("@/views/login.vue");
-const main = () => import("@/views/main.vue");
-const refreshPage = () => import("@/views/refreshPage.vue");
-const notFound = () => import("@/views/404.vue");
-const largeScreen = () => import("@/views/largeScreen.vue");
-const home = () => import("@/views/home.vue");
+const login = () => import("@/views/login.vue"); // 登录页
+const main = () => import("@/views/main.vue"); // 业务主框架
+const refreshPage = () => import("@/views/refreshPage.vue"); // tab刷新中专页面
+const notFound = () => import("@/views/404.vue"); // 404页
 
-// 示例页面路由（拆分示例）
-import routeExample from "./routeExample";
+/* 页面路由 START */
+const largeScreen = () => import("@/views/largeScreen.vue");
+const home = () => import("@/views/home.vue"); // 首页
+import routeExample from "./routeExample"; // 示例页面路由（拆分示例）
+/* 页面路由 END */
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -24,6 +25,7 @@ const router = createRouter({
       name: "主体框架",
       component: main,
       redirect: to => {
+        // 校验未登录，则返回登录页
         if (!getLocalStorage("user")) return "/login";
         // 成功登录且权限完整，默认重定向到用户权限路由的第一个
         const menuList = tree2arr(JSON.parse(getLocalStorage("user")).menu);
@@ -37,6 +39,11 @@ const router = createRouter({
         return defaultPage[menuKey.url];
       },
       children: [
+        /* 页面路由 START */
+        { path: "/home", name: "home", component: home },
+        ...routeExample,
+        /* 页面路由 END */
+
         {
           path: "/refresh",
           name: "refreshPage",
@@ -49,10 +56,6 @@ const router = createRouter({
             }
           },
         },
-
-        { path: "/home", name: "home", component: home },
-        ...routeExample,
-
         { path: "/404", name: "notFound", component: notFound },
         { path: "/:pathMatch(.*)*", redirect: "/404" },
       ],
