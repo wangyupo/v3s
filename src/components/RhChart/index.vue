@@ -10,6 +10,8 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import { debounce, merge, cloneDeep } from "lodash-es";
 import config from "./config.js";
+import { useLayout } from "@/hooks/useLayout.js";
+const { isDark } = useLayout();
 
 const props = defineProps({
   // 图表配置项
@@ -25,6 +27,7 @@ const chartRef = ref(); // echarts图表 dom 对象
 let chartInstance = null; // echarts实例
 let resizeObserver = null; // 用于监听父级 div 大小变化的 ResizeObserver 实例
 const name = ref(); // echarts选中的数据项的 name（通常用于点击地图外部取消选中）
+const theme = ref("light");
 
 // 在 props.option 变化时，重新初始化图表
 watch(
@@ -34,6 +37,13 @@ watch(
     initLineChart();
   }, 150)
 );
+// 浅色/深色切换后重置 echarts 实例
+watch(isDark, () => {
+  // 销毁旧的图表实例
+  chartInstance.dispose();
+  chartInstance = null;
+  initLineChart();
+});
 
 // 组件挂载完成后执行
 onMounted(() => {
@@ -49,7 +59,7 @@ const initLineChart = debounce(() => {
 
   if (!chartInstance) {
     const chartDom = chartRef.value;
-    chartInstance = echarts.init(chartDom);
+    chartInstance = echarts.init(chartDom, isDark.value ? "dark" : "light");
   }
 
   // 合并组件内部的option与外部传入的option
@@ -100,6 +110,7 @@ const setupResizeObserver = () => {
 onUnmounted(() => {
   resizeObserver?.disconnect(); // 取消监听父元素的大小变化
   chartInstance?.dispose(); // 销毁 echarts 实例
+  chartInstance = null;
 });
 
 defineExpose({ chartInstance });
