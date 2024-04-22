@@ -2,9 +2,7 @@
  * 生成随机字符串（默认范围：5-50位）
  * @returns String
  */
-export function generateRandomString() {
-  const minLength = 5;
-  const maxLength = 50;
+export function generateRandomString(minLength = 5, maxLength = 50) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
@@ -22,13 +20,21 @@ export function generateRandomString() {
  * 生成随机数字（默认范围：1-50000）
  * @returns Number
  */
-export function generateRandomNumber() {
-  const minNumber = 1;
-  const maxNumber = 50000;
-
+export function generateRandomNumber(minNumber = 1, maxNumber = 50000) {
   const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
-
   return randomNumber;
+}
+
+/**
+ * 生成指定长度和范围的随机数数组。
+ * @param {number} length - 数组的长度。
+ * @param {number} min - 随机数范围的最小值（包含）。
+ * @param {number} max - 随机数范围的最大值（不包含）。
+ * @returns {number[]} 包含随机数的数组。
+ */
+export function generateRandomArray(length = 7, min = 130, max = 550) {
+  const randomArray = Array.from({ length }, () => Math.floor(Math.random() * (max - min) + min));
+  return randomArray;
 }
 
 /**
