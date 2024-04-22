@@ -41,8 +41,8 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { generateRandomArray, generateRandomString } from "@/utils/index.js";
-import chinaGeoJson from "@/assets/map/china.json";
+import { generateRandomArray, generateRandomString, generateRandomNumber } from "@/utils/index.js";
+import chinaGeoJson from "@/assets/geo/china.json";
 import * as echarts from "echarts";
 
 import RhChartLB from "@/components/RhChart/index.vue";
@@ -59,19 +59,85 @@ const mapRef = ref();
 const optionMap = ref({});
 
 onMounted(() => {
-  createMap();
   fn_api();
 });
 
 // 创建地图
 const createMap = () => {
   echarts.registerMap("china", chinaGeoJson);
+  const mockMapData = chinaGeoJson.features
+    .filter(i => !["十段线", "南海诸岛"].includes(i.properties.name) && i.properties.center)
+    .map(i => {
+      return { name: i.properties.name, value: i.properties.center.concat(generateRandomNumber(1, 100)) };
+    });
   optionMap.value = {
-    series: [{ type: "map", map: "china", label: { show: true } }],
+    tooltip: {
+      trigger: "item",
+    },
+    geo: { map: "china", label: { show: true }, selectedMode: true },
+    series: [
+      {
+        name: "pm2.5",
+        type: "scatter",
+        coordinateSystem: "geo",
+        data: mockMapData,
+        symbolSize: function (val) {
+          return val[2] / 5;
+        },
+        encode: {
+          value: 2,
+        },
+        label: {
+          formatter: "{b}",
+          position: "right",
+          show: false,
+        },
+        emphasis: {
+          label: {
+            show: true,
+          },
+        },
+      },
+      {
+        name: "Top 5",
+        type: "effectScatter",
+        coordinateSystem: "geo",
+        data: mockMapData
+          .sort(function (a, b) {
+            return b.value[2] - a.value[2];
+          })
+          .slice(0, 6),
+        symbolSize: function (val) {
+          return val[2] / 5;
+        },
+        encode: {
+          value: 2,
+        },
+        showEffectOn: "render",
+        rippleEffect: {
+          brushType: "stroke",
+        },
+        label: {
+          formatter: "{b}",
+          position: "right",
+          show: true,
+        },
+        itemStyle: {
+          shadowBlur: 10,
+          shadowColor: "#333",
+        },
+        emphasis: {
+          scale: true,
+        },
+        zlevel: 1,
+      },
+    ],
   };
 };
 
 const fn_api = () => {
+  createMap();
+
   const categories = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const seriesData = generateRandomArray(7);
   const seriesData1 = generateRandomArray(7);

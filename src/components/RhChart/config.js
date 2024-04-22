@@ -1,6 +1,7 @@
 // 折线/柱状图配置
 const config = {
   lb: {
+    grid: { bottom: 30 },
     tooltip: {},
     legend: {},
     xAxis: { type: "category" },
@@ -8,6 +9,7 @@ const config = {
     series: [],
   },
   lb_row: {
+    grid: { bottom: 30 },
     tooltip: {},
     legend: {},
     yAxis: { type: "category" },

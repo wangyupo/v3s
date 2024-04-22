@@ -24,7 +24,7 @@ const props = defineProps({
 const chartRef = ref(); // echarts图表 dom 对象
 let chartInstance = null; // echarts实例
 let resizeObserver = null; // 用于监听父级 div 大小变化的 ResizeObserver 实例
-const dataIndex = ref(); // echarts选中的数据项的 index（通常用于点击地图外部取消选中）
+const name = ref(); // echarts选中的数据项的 name（通常用于点击地图外部取消选中）
 
 // 在 props.option 变化时，重新初始化图表
 watch(
@@ -62,7 +62,7 @@ const initLineChart = debounce(() => {
     chartInstance.on(
       "click",
       debounce(params => {
-        dataIndex.value = params.dataIndex; // 记录当前点击数据项的 index
+        name.value = params.name; // 记录当前点击数据项的 name
       }, 200)
     );
     // 获取 ECharts 底层的渲染器 ZRender 实例，并添加事件监听
@@ -70,7 +70,8 @@ const initLineChart = debounce(() => {
       "click",
       debounce(params => {
         if (params.target) return;
-        chartInstance.dispatchAction({ type: "unselect", dataIndex: dataIndex.value });
+        chartInstance.dispatchAction({ type: "unselect", name: name.value });
+        chartInstance.dispatchAction({ type: "geoUnSelect", name: name.value });
       }, 200)
     );
   }
