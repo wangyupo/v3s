@@ -27,7 +27,6 @@ const chartRef = ref(); // echarts图表 dom 对象
 let chartInstance = null; // echarts实例
 let resizeObserver = null; // 用于监听父级 div 大小变化的 ResizeObserver 实例
 const name = ref(); // echarts选中的数据项的 name（通常用于点击地图外部取消选中）
-const theme = ref("light");
 
 // 在 props.option 变化时，重新初始化图表
 watch(
