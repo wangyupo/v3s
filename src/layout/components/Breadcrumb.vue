@@ -18,7 +18,6 @@ import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
 import { useLayout } from "@/hooks/useLayout.js";
 import { storeToRefs } from "pinia";
-import { tree2arr } from "@/utils/index";
 import { cloneDeep } from "lodash-es";
 import { menuKey } from "@/router/menuConfig.js";
 
@@ -50,6 +49,7 @@ watch(
       getParentRoute(currentRoute);
       breadcrumb.value = cloneDeep(result).map((i, idx) => {
         if (idx === result.length - 1) i[menuKey.url] = "";
+        if (i.alias) i[menuKey.title] = i.alias; // 有别名显示别名
         return i;
       });
     }

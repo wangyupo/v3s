@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
-import { tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/index";
+import { arr2tree, tree2arr, getLocalStorage, removeAllLoginInfo } from "@/utils/index";
 import NProgress from "@/utils/nProgress.js";
 import { menuKey } from "@/router/menuConfig.js";
 import { useLayoutStore } from "@/stores/layout.js";
+import { useUserStore } from "@/stores/user.js";
 
 const login = () => import("@/views/login.vue"); // 登录页
 const main = () => import("@/views/main.vue"); // 业务主框架
@@ -100,6 +101,14 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(to => {
+  /* 设置路由别名 START */
+  if (to.meta.alias) {
+    const userStore = useUserStore();
+    userStore.menuArr.find(i => {
+      if (i.url == to.path) i.alias = to.meta.alias;
+    });
+  }
+  /* 设置路由别名 END */
   NProgress.done();
   const layoutStore = useLayoutStore();
   layoutStore.$patch(state => {

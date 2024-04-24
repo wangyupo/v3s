@@ -12,6 +12,8 @@ const transparentBackground = () => import("@/views/aExample/exampleComponent/tr
 const exampleFullScreenShowPage = () => import("@/views/aExample/examplePage/fullScreenShowPage.vue");
 const examplePage = () => import("@/views/aExample/examplePage/pageMultilevel/index.vue");
 const examplePageChild = () => import("@/views/aExample/examplePage/pageMultilevel/pageChild.vue");
+const examplePageAlias = () => import("@/views/aExample/examplePage/pageAlias/index.vue");
+const examplePageAliasAdd = () => import("@/views/aExample/examplePage/pageAlias/add.vue");
 
 const route = [
   // 配置示例：菜单页
@@ -93,6 +95,19 @@ const route = [
     component: examplePageChild,
     meta: {
       targetMenuPath: "/examplePage/pageMultilevel",
+    },
+  },
+  {
+    path: "/examplePage/pageAlias",
+    name: "examplePageAlias",
+    component: examplePageAlias,
+  },
+  {
+    path: "/examplePage/pageAlias/add",
+    name: "examplePageAliasAdd",
+    component: examplePageAliasAdd,
+    meta: {
+      targetMenuPath: "/examplePage/pageAlias",
     },
   },
 ];
