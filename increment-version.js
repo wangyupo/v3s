@@ -46,5 +46,5 @@ versionData.version = newVersion;
 // 将新版本号写入文件
 fs.writeFileSync(versionFilePath, JSON.stringify(versionData, null, 2), "utf8");
 
-console.log('Version updated to:', newVersion);
-console.log('Build time updated to:', versionData.buildTime);
+console.log("Version updated to:", newVersion);
+console.log("Build time updated to:", versionData.buildTime);
