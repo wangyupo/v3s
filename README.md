@@ -48,6 +48,8 @@ v3s 采用非常简单直观的项目目录结构
     │   └── no-data.png
     ├──components        # 公共组件目录
     │   └── RhTable
+    ├──enums             # 枚举、示例数据目录
+    │   └── index.js
     ├──layout            # 布局目录
     │   └── index.vue
     ├──router            # 路由目录
@@ -66,7 +68,7 @@ v3s 采用非常简单直观的项目目录结构
 
 ## 快速启用
 
-**Node版本：20.10.0**
+**Node 版本：20.10.0**
 
 ```
 # 拉取代码
@@ -82,7 +84,7 @@ npm install
 npm run dev
 ```
 
-*推荐使用nvm管理node版本（[nvm安装配置教程](https://github.com/wangyupo/FE-Guide?tab=readme-ov-file#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E5%AE%89%E8%A3%85-nvm)）*
+_推荐使用 nvm 管理 node 版本（[nvm 安装配置教程](https://github.com/wangyupo/FE-Guide?tab=readme-ov-file#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E5%AE%89%E8%A3%85-nvm)）_
 
 ## 详细文档
 
