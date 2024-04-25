@@ -15,7 +15,7 @@ import { useRouter, onBeforeRouteLeave } from "vue-router";
 const router = useRouter();
 
 onBeforeRouteLeave((to, from) => {
-  to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加别名）";
+  to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加的别名）";
 });
 
 // 添加页面
