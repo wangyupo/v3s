@@ -162,7 +162,7 @@ watch(
   }
 );
 
-const emit = defineEmits([
+const emits = defineEmits([
   // 分页器事件
   "page-change",
   "page-size-change",
@@ -171,10 +171,10 @@ const emit = defineEmits([
 
 // 分页事件 START
 const handlePageChange = pageNumber => {
-  emit("page-change", pageNumber);
+  emits("page-change", pageNumber);
 };
 const handleSizeChange = pageSize => {
-  emit("page-size-change", pageSize);
+  emits("page-size-change", pageSize);
 };
 // 分页事件 END
 
@@ -218,7 +218,7 @@ const rowDrop = function () {
       let data = cloneDeep(_tableData.value.data);
       const currRow = data.splice(oldIndex, 1)[0];
       data.splice(newIndex, 0, currRow);
-      emit("drag-end", data);
+      emits("drag-end", data);
     },
   });
 };

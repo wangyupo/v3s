@@ -43,7 +43,7 @@ const props = defineProps({
 
 const columnCheckList = ref([]);
 const _columns = ref([]);
-const emit = defineEmits(["updateColumns"]);
+const emits = defineEmits(["updateColumns"]);
 
 watch(
   () => props.columns,
@@ -62,7 +62,7 @@ watch(
 watch(
   _columns,
   newColumns => {
-    emit("updateColumns", newColumns);
+    emits("updateColumns", newColumns);
   },
   { deep: true }
 );
