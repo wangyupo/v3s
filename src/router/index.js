@@ -104,8 +104,12 @@ router.afterEach(to => {
   /* 设置路由别名 START */
   if (to.meta.alias) {
     const userStore = useUserStore();
-    userStore.menuArr.find(i => {
+    const menuArr = userStore.menuArr.map(i => {
       if (i.url == to.path) i.alias = to.meta.alias;
+      return i;
+    });
+    userStore.$patch(state => {
+      state.menu = arr2tree(menuArr);
     });
   }
   /* 设置路由别名 END */
