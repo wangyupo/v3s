@@ -15,7 +15,10 @@ import { useRouter, onBeforeRouteLeave } from "vue-router";
 const router = useRouter();
 
 onBeforeRouteLeave((to, from) => {
-  to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加的别名）";
+  // 必须判断下级页面，否则会导致跳转别的页面，别名赋值错误的问题
+  if (to.path == "/examplePage/pageAlias/add") {
+    to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加的别名）";
+  }
 });
 
 // 添加页面
