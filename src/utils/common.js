@@ -261,8 +261,15 @@ export const initSearchData = searchInfo => {
   return removeEmptyInObj(data);
 };
 
-// 比较版本号，版本号格式：0.0.0
+/**
+ * 比较版本号
+ * @param {String} v1 版本号格式：0.0.0
+ * @param {String} v2 版本号格式：0.0.0
+ * @returns 1（v1大于v2）；-1（v1小于v2）；0（v1等于v2）
+ */
 export const compareVersions = (v1, v2) => {
+  if (!v1 || !v2) return 1; // 缺少版本号，默认返回1
+
   const parts1 = v1.split(".").map(Number);
   const parts2 = v2.split(".").map(Number);
 
