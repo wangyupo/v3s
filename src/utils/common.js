@@ -255,7 +255,12 @@ export const numberFormat = num => {
 // 通过 searchInfo 初始化搜索数据
 export const initSearchData = searchInfo => {
   const data = searchInfo.reduce((accumulator, current) => {
-    accumulator[current.key] = current.defaultValue;
+    if (current.type == "daterange" && current.startKey && current.endKey) {
+      accumulator[current.startKey] = current.defaultValue[0];
+      accumulator[current.endKey] = current.defaultValue[1];
+    } else {
+      accumulator[current.key] = current.defaultValue;
+    }
     return accumulator;
   }, {});
   return removeEmptyInObj(data);
