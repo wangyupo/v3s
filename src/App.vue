@@ -16,6 +16,7 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 import { ref, computed, onMounted, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
+import { setLocalStorage, getLocalStorage, removeAllLoginInfo, compareVersions } from "@/utils/index.js";
 
 // 遮罩
 const isReloadMask = ref(true);
@@ -38,6 +39,17 @@ watch(
   },
   { immediate: true }
 );
+
+/* 检测版本号 START */
+const version = getLocalStorage("version"); // 获取当前缓存版本号
+const isVersionExpired = compareVersions(__APP_VERSION__, version) == 1 ? true : false; // 当前缓存版本号是否过期
+// 当前缓存版本号过期时，则删除缓存，重新登录
+if (!version || isVersionExpired) {
+  removeAllLoginInfo();
+  setLocalStorage("version", __APP_VERSION__);
+}
+console.log(`%cv${getLocalStorage("version")}`, "color:#0f0;"); // 控制台打印当前版本号
+/* 检测版本号 END */
 </script>
 
 <style lang="scss"></style>

@@ -48,4 +48,7 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    __APP_VERSION__: JSON.stringify(versionData.version), // 版本号全局常量
+  },
 });
