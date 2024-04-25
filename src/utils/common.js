@@ -8,6 +8,7 @@ import { ElMessage } from "element-plus";
 export function removeAllLoginInfo() {
   cookies.remove("Authorization");
   removeLocalStorage("user");
+  removeLocalStorage("version");
 }
 
 // 删除所有cookie
@@ -258,4 +259,20 @@ export const initSearchData = searchInfo => {
     return accumulator;
   }, {});
   return removeEmptyInObj(data);
+};
+
+// 比较版本号，版本号格式：0.0.0
+export const compareVersions = (v1, v2) => {
+  const parts1 = v1.split(".").map(Number);
+  const parts2 = v2.split(".").map(Number);
+
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const part1 = parts1[i] || 0;
+    const part2 = parts2[i] || 0;
+
+    if (part1 > part2) return 1; // v1 大于 v2
+    if (part1 < part2) return -1; // v1 小于 v2
+  }
+
+  return 0; // 版本相同
 };
