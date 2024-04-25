@@ -100,7 +100,7 @@
           </el-col>
 
           <!-- 行内搜索（搜索条件小于等于2个） -->
-          <el-col class="mb-3" :span="4" v-if="searchInfo.length <= 2">
+          <el-col class="mb-3" :span="8" v-if="searchInfo.length <= 2">
             <el-button icon="Search" type="primary" @click="handleSearch">搜索</el-button>
             <el-button icon="RefreshRight" @click="handleReset">重置</el-button>
           </el-col>
@@ -134,7 +134,7 @@ import { debounce, cloneDeep } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
 import { shortcuts } from "@/enums/index.js";
 
-const emit = defineEmits(["search"]); // 对外暴露 search 事件
+const emits = defineEmits(["search"]); // 对外暴露 search 事件
 const props = defineProps({
   // 搜索配置
   searchInfo: {
@@ -200,7 +200,7 @@ const handleSearch = debounce(searchConfig => {
       }
     }
   }
-  emit("search", params);
+  emits("search", params);
   if (searchConfig && searchConfig.isEnterSearch) canSearch.value = false;
 }, 200);
 
