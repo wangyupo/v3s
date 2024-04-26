@@ -51,9 +51,9 @@ const version = getLocalStorage("version"); // 获取当前缓存版本号
 const isVersionExpired = compareVersions(__APP_VERSION__, version) == 1 ? true : false; // 当前缓存版本号是否过期
 // 当前缓存版本号过期时，则删除缓存，重新登录
 if (!version || isVersionExpired) {
-  removeAllLoginInfo();
-  removeLocalStorage("layout");
-  removeLocalStorage("version");
+  sessionStorage.clear();
+  localStorage.clear();
+  deleteAllCookies();
   setLocalStorage("version", __APP_VERSION__);
 }
 console.log(`%cv${getLocalStorage("version")}`, "color:#0f0;"); // 控制台打印当前版本号
