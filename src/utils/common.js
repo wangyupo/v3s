@@ -10,6 +10,15 @@ export function removeAllLoginInfo() {
   removeLocalStorage("user");
 }
 
+// 清除所有的localStorage, sessionStorage以及cookies
+export function clearStorageAndCookies() {
+  // 清除localStorage
+  if (window.localStorage) localStorage.clear();
+  // 清除sessionStorage
+  if (window.sessionStorage) sessionStorage.clear();
+  deleteAllCookies();
+}
+
 // 删除所有cookie
 export function deleteAllCookies() {
   var cookies = document.cookie.split(";");
