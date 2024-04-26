@@ -53,6 +53,7 @@ const isVersionExpired = compareVersions(__APP_VERSION__, version) == 1 ? true :
 if (!version || isVersionExpired) {
   removeAllLoginInfo();
   removeLocalStorage("layout");
+  removeLocalStorage("version");
   setLocalStorage("version", __APP_VERSION__);
 }
 console.log(`%cv${getLocalStorage("version")}`, "color:#0f0;"); // 控制台打印当前版本号

@@ -8,7 +8,6 @@ import { ElMessage } from "element-plus";
 export function removeAllLoginInfo() {
   cookies.remove("Authorization");
   removeLocalStorage("user");
-  removeLocalStorage("version");
 }
 
 // 删除所有cookie
