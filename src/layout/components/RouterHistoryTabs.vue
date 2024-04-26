@@ -2,7 +2,7 @@
   <!-- 路由访问历史&标签右键菜单（注意事项：实际开发请依据定义的字段配置 /src/router/menuConfig.js 中的 key） -->
   <div class="router-tabs flex flex-shrink-0 items-center px-3 overflow-x-auto" ref="tabsWrapperRef">
     <div
-      class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer rounded"
+      class="router-tabs-item flex items-center flex-shrink-0 ml-3 first:ml-0 px-2 h-[30px] cursor-pointer text-[14px] rounded"
       :class="[tabActive(routeItem) ? 'active' : '', isDark ? 'dark text-[--el-text-color-primary]' : 'text-gray-600']"
       v-for="(routeItem, idx) in routeHistory"
       :key="routeItem[menuKey.url]"
@@ -28,7 +28,7 @@
       v-show="rightMenuVisible"
     >
       <div
-        class="rightClickMenu-item py-2 px-4 select-none"
+        class="rightClickMenu-item py-2 px-4 text-[14px] select-none"
         :class="[item.disabled ? 'disabled cursor-not-allowed' : 'cursor-pointer']"
         v-for="item in rightClickMenus"
         :key="item.value"
