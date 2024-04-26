@@ -16,13 +16,8 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 import { ref, computed, onMounted, watch } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
-import {
-  setLocalStorage,
-  removeLocalStorage,
-  getLocalStorage,
-  removeAllLoginInfo,
-  compareVersions,
-} from "@/utils/index.js";
+import { setLocalStorage, getLocalStorage, clearStorageAndCookies, compareVersions } from "@/utils/index.js";
+import { ElMessage } from "element-plus";
 
 // 遮罩
 const isReloadMask = ref(true);
@@ -51,9 +46,8 @@ const version = getLocalStorage("version"); // 获取当前缓存版本号
 const isVersionExpired = compareVersions(__APP_VERSION__, version) == 1 ? true : false; // 当前缓存版本号是否过期
 // 当前缓存版本号过期时，则删除缓存，重新登录
 if (!version || isVersionExpired) {
-  sessionStorage.clear();
-  localStorage.clear();
-  deleteAllCookies();
+  ElMessage({ type: "info", message: `检测到新版本，请重新登录！` });
+  clearStorageAndCookies();
   setLocalStorage("version", __APP_VERSION__);
 }
 console.log(`%cv${getLocalStorage("version")}`, "color:#0f0;"); // 控制台打印当前版本号

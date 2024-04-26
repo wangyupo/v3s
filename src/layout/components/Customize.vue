@@ -59,7 +59,7 @@
 <script setup>
 import { ref } from "vue";
 import { useLayout } from "@/hooks/useLayout.js";
-import { deleteAllCookies } from "@/utils/index.js";
+import { clearStorageAndCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
@@ -86,9 +86,7 @@ const handleClearStorage = () => {
   })
     .then(() => {
       ElMessage({ type: "success", message: "缓存清空成功！" });
-      sessionStorage.clear();
-      localStorage.clear();
-      deleteAllCookies();
+      clearStorageAndCookies();
       window.location.reload();
     })
     .catch(() => {});
