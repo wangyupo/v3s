@@ -129,18 +129,39 @@ const chinese2Pinyin = chinese => {
   const RES = _PY_NORMAL.concat(_PY_FIRST_LETTER);
   return RES;
 };
+const isChineseOrPinyin = input => {
+  const chineseReg = /[^\u4e00-\u9fa5]/; //匹配所有非汉字字符
+  const pinyinReg = /[a-zA-Z]/; //匹配所有拼音字符
+  if (!chineseReg.test(input)) {
+    return "中文"; //输入只包含汉字字符
+  } else if (!pinyinReg.test(input)) {
+    return "拼音"; //输入只包含拼音字符
+  } else {
+    return "混合输入"; //输入包含汉字字符和拼音字符
+  }
+};
+
 watch(searchVal, val => {
   setTimeout(() => {
     scrollbarRef.value.setScrollTop(0);
   });
   listSelectIdx.value = 0;
   const valPinyinArr = chinese2Pinyin(val);
+  const isChinese = isChineseOrPinyin(val) == "中文" ? true : false;
+  if (!val) {
+    filterMenuList.value = [];
+    return;
+  }
   filterMenuList.value = userStore.menuArrWithoutEmptyUrl.filter(i => {
     if (i[menuKey.menuType] != menuKey.menuValue) return false;
-    let filterRes = chinese2Pinyin(i[menuKey.title]).filter(p => {
-      return valPinyinArr.find(o => p.indexOf(o) !== -1);
-    });
-    if (filterRes.length) return i;
+    if (!isChinese) {
+      let filterRes = chinese2Pinyin(i[menuKey.title]).filter(p => {
+        return valPinyinArr.find(o => p.indexOf(o) !== -1);
+      });
+      if (filterRes.length) return i;
+    } else if (i[menuKey.title].includes(val)) {
+      return i;
+    }
   });
 });
 
