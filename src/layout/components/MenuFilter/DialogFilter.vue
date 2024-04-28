@@ -146,12 +146,12 @@ watch(searchVal, val => {
     scrollbarRef.value.setScrollTop(0);
   });
   listSelectIdx.value = 0;
-  const valPinyinArr = chinese2Pinyin(val);
-  const isChinese = isChineseOrPinyin(val) == "中文" ? true : false;
   if (!val) {
     filterMenuList.value = [];
     return;
   }
+  const valPinyinArr = chinese2Pinyin(val);
+  const isChinese = isChineseOrPinyin(val) == "中文" ? true : false;
   filterMenuList.value = userStore.menuArrWithoutEmptyUrl.filter(i => {
     if (i[menuKey.menuType] != menuKey.menuValue) return false;
     if (!isChinese) {
