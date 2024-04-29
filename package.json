@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "node increment-version.js && vite build",
+    "build": "node increment-version.js && vite build --mode production",
+    "build:dev": "node increment-version.js && vite build --mode development",
     "preview": "vite preview"
   },
   "dependencies": {
