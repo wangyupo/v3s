@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd()); // 获取当前环境下的变量
 
   return {
-    base: env.VITE_BASE,
+    base: env.VITE_BASE || "/",
     plugins: [
       vue(),
       visualizer({
