@@ -4,8 +4,8 @@
 import { defineStore } from "pinia";
 import { cloneDeep } from "lodash-es";
 import { tree2arr } from "@/utils/index";
-
 import { menuKey } from "@/router/menuConfig.js";
+
 export const useUserStore = defineStore("user", {
   state: () => ({
     userInfo: null, // 用户信息
