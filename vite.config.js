@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     server: {
+      port: 5173,
       proxy: {
         "/api": {
           target: PROXY_TARGET,
@@ -52,7 +53,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      __APP_VERSION__: JSON.stringify(versionData.version), // 版本号全局常量
+      __APP_VERSION__: JSON.stringify(versionData.version), // 版本号全局常量，可以直接使用，如：console.log(__APP_VERSION__)
     },
   };
 });
