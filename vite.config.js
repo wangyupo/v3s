@@ -4,7 +4,6 @@ import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 
 const versionData = require("./version.json"); // 引入版本号
-const PROXY_TARGET = ""; // 后端服务地址
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd()); // 获取当前环境下的变量
@@ -25,11 +24,11 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       proxy: {
         "/api": {
-          target: PROXY_TARGET,
+          target: env.VITE_PROXY_TARGET,
           changeOrigin: true,
           configure: (proxy, options) => {
             proxy.on("proxyRes", (proxyRes, req, res) => {
-              proxyRes.headers["x-proxy-url"] = PROXY_TARGET + req.originalUrl;
+              proxyRes.headers["x-proxy-url"] = env.VITE_PROXY_TARGET + req.originalUrl;
             });
           },
         },
