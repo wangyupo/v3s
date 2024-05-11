@@ -175,8 +175,8 @@ export function uuid() {
 
 /**
  * 手机号格式化
- * @param {String} phone
- * @returns {String} 183 1114 3263
+ * @param {String} phone 183xxxxxxxx
+ * @returns {String} 183 xxxx xxxx
  */
 export const formatPhone = phone => {
   phone = phone.toString();
