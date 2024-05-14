@@ -16,7 +16,7 @@ const router = useRouter();
 
 onBeforeRouteLeave((to, from) => {
   // 必须判断下级页面，否则会导致跳转别的页面，别名赋值错误的问题
-  if (to.path == "/examplePage/pageAlias/add") {
+  if (to.path == "/examplePage/pageAlias/operate") {
     to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加的别名）";
   }
 });
@@ -24,14 +24,14 @@ onBeforeRouteLeave((to, from) => {
 // 添加页面
 const handleAdd = () => {
   router.push({
-    path: "/examplePage/pageAlias/add",
+    path: "/examplePage/pageAlias/operate",
   });
 };
 
 // 编辑页面
 const handleEdit = () => {
   router.push({
-    path: "/examplePage/pageAlias/add",
+    path: "/examplePage/pageAlias/operate",
     query: { id: 1 },
   });
 };

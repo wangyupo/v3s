@@ -13,7 +13,7 @@ const exampleFullScreenShowPage = () => import("@/views/aExample/examplePage/ful
 const examplePage = () => import("@/views/aExample/examplePage/pageMultilevel/index.vue");
 const examplePageChild = () => import("@/views/aExample/examplePage/pageMultilevel/pageChild.vue");
 const examplePageAlias = () => import("@/views/aExample/examplePage/pageAlias/index.vue");
-const examplePageAliasAdd = () => import("@/views/aExample/examplePage/pageAlias/add.vue");
+const examplePageAliasOperate = () => import("@/views/aExample/examplePage/pageAlias/operate.vue");
 
 const route = [
   // 配置示例：菜单页
@@ -103,9 +103,9 @@ const route = [
     component: examplePageAlias,
   },
   {
-    path: "/examplePage/pageAlias/add",
-    name: "examplePageAliasAdd",
-    component: examplePageAliasAdd,
+    path: "/examplePage/pageAlias/operate",
+    name: "examplePageAliasOperate",
+    component: examplePageAliasOperate,
     meta: {
       targetMenuPath: "/examplePage/pageAlias",
     },
