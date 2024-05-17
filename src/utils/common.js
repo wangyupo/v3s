@@ -1,11 +1,18 @@
 import cookies from "js-cookie";
 import { ElMessage } from "element-plus";
+import { useUser } from "@/hooks/useUser.js";
 
 /**
  * 去掉所有的登录信息（菜单、用户信息、cookie等）
  * 登出业务需要
  */
 export function removeAllLoginInfo() {
+  try {
+    const { userStore } = useUser();
+    userStore.$reset();
+  } catch (error) {
+    console.log(error);
+  }
   cookies.remove("Authorization");
   removeLocalStorage("user");
 }

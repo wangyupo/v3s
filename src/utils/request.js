@@ -1,12 +1,21 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import { debounce } from "lodash-es";
-import { removeEmptyInObj } from "@/utils/index";
+import { removeAllLoginInfo } from "@/utils/index";
+import router from "@/router";
 
+// 登出逻辑（接口返回 401 时调用这个函数，用于清空登录信息，然后跳转登录页）
+function loginOut() {
+  if (window.location.href.indexOf("/login") !== -1) return;
+  router.replace({ path: "/login" });
+  removeAllLoginInfo();
+}
+// 报错提示（接口返回非 2xx 时使用该函数显示错误）
 const debounceErr = debounce(msg => {
   ElMessage.error(msg);
 }, 200);
 
+/* Axios配置 START */
 const request = axios.create({
   timeout: 60 * 1000, // 请求超时秒数
 });
@@ -15,7 +24,6 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
-    config.params = removeEmptyInObj(config.params);
     return config;
   },
   function (error) {
@@ -37,5 +45,6 @@ request.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+/* Axios配置 END */
 
 export default request;

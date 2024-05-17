@@ -34,14 +34,9 @@ const handleLoginOut = params => {
   ElMessageBox.confirm("确认退出系统吗?", "提示", {
     type: "warning",
   }).then(() => {
-    ElMessage({
-      type: "success",
-      message: "登出成功！",
-    });
-    router.replace({
-      path: "/login",
-    });
+    router.replace({ path: "/login" });
     removeAllLoginInfo();
+    ElMessage({ type: "success", message: "登出成功！" });
   });
 };
 </script>
