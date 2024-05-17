@@ -13,7 +13,9 @@
     </div>
     <div class="col-span-6 grid grid-rows-12 gap-y-3">
       <div class="row-span-8 border border-gray-300 relative">
-        <el-button type="primary" class="absolute left-0 top-0 z-10" @click="fn_api">更新数据</el-button>
+        <el-checkbox v-model="autoUpdate" class="absolute left-3 top-1 z-10" @change="toggleAutoUpdate">
+          自动更新数据{{ autoUpdate ? `（${countup}s）` : "" }}
+        </el-checkbox>
         <RhChartLB ref="mapRef" :option="optionMap" type="map"></RhChartLB>
       </div>
       <div class="row-span-4 grid grid-cols-12 gap-3">
@@ -40,13 +42,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { generateRandomArray, generateRandomString, generateRandomNumber } from "@/utils/index.js";
 import chinaGeoJson from "@/assets/geo/china.json";
 import * as echarts from "echarts";
-
 import RhChartLB from "@/components/RhChart/index.vue";
 
+const autoUpdate = ref(true);
+const countup = ref(5);
+const intervalId = ref(null);
 const option = ref({});
 const option1 = ref({});
 const option2 = ref({});
@@ -60,11 +64,32 @@ const optionMap = ref({});
 
 onMounted(() => {
   fn_api();
+  toggleAutoUpdate(autoUpdate.value);
 });
 
+onUnmounted(() => {
+  clearInterval(intervalId.value);
+});
+
+// 启用/取消数据自动更新
+const toggleAutoUpdate = val => {
+  if (!val) {
+    clearInterval(intervalId.value);
+    countup.value = 5;
+  } else {
+    intervalId.value = setInterval(() => {
+      countup.value--;
+      if (countup.value == 0) {
+        fn_api();
+        countup.value = 5;
+      }
+    }, 1000);
+  }
+};
+
 // 创建地图
+echarts.registerMap("china", chinaGeoJson);
 const createMap = () => {
-  echarts.registerMap("china", chinaGeoJson);
   const mockMapData = chinaGeoJson.features
     .filter(i => !["十段线", "南海诸岛"].includes(i.properties.name) && i.properties.center)
     .map(i => {
