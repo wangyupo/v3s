@@ -1,15 +1,15 @@
 <template>
-  <!-- echarts 组件（由 props.option.series 实现） -->
+  <!-- echarts 基座组件（由 props.option.series 外部传参方式实现变化，默认配置在 ./config.js 中） -->
   <div class="relative w-full h-full overflow-hidden">
     <div ref="chartRef" class="absolute top-0 bottom-0 left-0 right-0"></div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
 import * as echarts from "echarts";
+import config from "./defaultConfig.js";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { debounce, merge, cloneDeep } from "lodash-es";
-import config from "./config.js";
 import { useLayout } from "@/hooks/useLayout.js";
 const { isDark } = useLayout();
 
@@ -93,7 +93,7 @@ const setupResizeObserver = () => {
 
   const debounceResize = debounce(entries => {
     for (let entry of entries) {
-      const { width, height } = entry.contentRect;
+      // const { width, height } = entry.contentRect; // 获取变化后的父元素的宽、高（需要时打开注释使用即可）
       chartInstance?.resize();
     }
   }, 300);

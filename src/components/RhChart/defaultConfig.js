@@ -1,5 +1,10 @@
-// 折线/柱状图配置
+/**
+ * Echarts 默认配置
+ * 在组件使用时传入 type 字段，以应用默认配置，如：<RhChart type="lb" />
+ * 示例代码见 /src/views/aExample/exampleComponent/chartBar.vue
+ */
 const config = {
+  // Line（折线图） 或 Bar （柱状图） 竖向 默认配置
   lb: {
     grid: { bottom: 30 },
     tooltip: {},
@@ -8,6 +13,7 @@ const config = {
     yAxis: { type: "value" },
     series: [],
   },
+  // Line（折线图） 或 Bar （柱状图） 横向 默认配置
   lb_row: {
     grid: { bottom: 30 },
     tooltip: {},
@@ -16,6 +22,7 @@ const config = {
     xAxis: { type: "value" },
     series: [],
   },
+  // Pie（饼图） 默认配置
   pie: {
     tooltip: { trigger: "item" },
     legend: { top: "5%", left: "center" },

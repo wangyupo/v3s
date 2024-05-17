@@ -1,7 +1,7 @@
 <template>
   <div class="resizable p-4" style="width: var(--resize-width); height: var(--resize-height)" @mousedown="initDrag">
     <RhWrapper class="w-full h-full">
-      <RhChartLB ref="chartComponent" :option="option" type="lb"></RhChartLB>
+      <RhChart ref="chartComponent" :option="option" type="lb" />
     </RhWrapper>
     <div class="handle z-40"></div>
   </div>
@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import RhChartLB from "@/components/RhChart/index.vue";
+import RhChart from "@/components/RhChart/index.vue";
 
 const option = ref({});
 

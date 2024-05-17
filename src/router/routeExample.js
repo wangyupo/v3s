@@ -6,7 +6,7 @@ const exampleNestMenu1Sub = () => import("@/views/aExample/exampleComponent/menu
 const exampleNestMenu2 = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu2.vue");
 const exampleTreeFilter = () => import("@/views/aExample/exampleComponent/treeFilter.vue");
 const exampleSeamlessScroll = () => import("@/views/aExample/exampleComponent/seamlessScroll.vue");
-const chartTest = () => import("@/views/aExample/exampleComponent/chartTest.vue");
+const chartBar = () => import("@/views/aExample/exampleComponent/chartBar.vue");
 // 页面示例
 const transparentBackground = () => import("@/views/aExample/exampleComponent/transparentBackground.vue");
 const exampleFullScreenShowPage = () => import("@/views/aExample/examplePage/fullScreenShowPage.vue");
@@ -59,8 +59,8 @@ const route = [
   },
   {
     path: "/example/echarts",
-    name: "chartTest",
-    component: chartTest,
+    name: "chartBar",
+    component: chartBar,
   },
 
   // 配置示例：背景色透明、全屏展示
