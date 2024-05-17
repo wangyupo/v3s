@@ -10,6 +10,7 @@ meta: {
   wrapperType: "",                  // 最小高度100%，溢出后自动撑开，适合大部分业务，默认为此，默认无需配置，wrapperType也无需出现在meta中。
   wrapperType: "fullPage",          // 高度固定100%，适合添加/编辑业务。
   wrapperType: "flowPage",          // 不设置高度，遵循默认文档流，适合展示业务。
+  alias: "",                        // 路由别名，需要动态设置面包屑名称时修改它即可
 }
 ```
 

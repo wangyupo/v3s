@@ -21,7 +21,7 @@
 
 ## 项目介绍
 
-基于 [Vue3.0](https://cn.vuejs.org/)、[Vite](https://cn.vitejs.dev/)、[ElementPlus](http://element-plus.org/zh-CN/)、[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 的后台解决方案，为项目提供开箱即用的解决方案。包括`常用组件（列表/搜索/无缝滚动）`、`函数`、`动态菜单`、`权限校验`等功能。
+基于 [Vue3.0](https://cn.vuejs.org/)、[Vite](https://cn.vitejs.dev/)、[ElementPlus](http://element-plus.org/zh-CN/)、[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 的后台解决方案，为项目提供开箱即用的解决方案。包括`常用组件（列表/搜索/无缝滚动）`、`函数`、`动态菜单`、`权限校验`、`版本管理`等功能。
 
 > 项目组件化程度较高，搭配 VSCode 定制插件 [V3S Snippets](https://github.com/wangyupo/V3S-Snippets)，可以快速、便捷的搭建企业级中后台产品。同时，项目有复制粘贴用的 [aExample](https://github.com/wangyupo/v3s/tree/main/src/views/aExample) 目录，常用业务功能即粘即用，也非常适合想入门 Vue3 的朋友作为案例代码学习（没用 TypeScript，上手难度低，新手友好）。
 
@@ -68,7 +68,7 @@ v3s 采用非常简单直观的项目目录结构
 
 ## 快速启用
 
-**Node 版本：20.10.0**
+**Node 版本：20.10.0 或以上**
 
 ```
 # 拉取代码
@@ -98,7 +98,7 @@ _推荐使用 nvm 管理 node 版本（[nvm 安装配置教程](https://github.c
 
 4、如后端给我配置的服务是 `https://xxx.com/admin` ，我该如何配置开发或生产环境服务的公共基础路径（打包路径）？
 
-你需要在 [vite.config.js](https://github.com/wangyupo/v3s/blob/main/vite.config.js) 中将 `base` 的内容替换成 admin，然后执行 `npm run build`，重新打包，静态资源基础路径就都指向 `https://xxx.com/admin` 了。关于 base 的更多解释，可以查阅 [vite 官网文档](https://cn.vitejs.dev/config/shared-options.html#base)
+你需要在根据不同环境修改 .env.development、.env.production 中的 `VITE_BASE`，然后执行 `npm run build`，重新打包，静态资源基础路径就都指向 `https://xxx.com/admin` 了。关于 vite.config.js 中 base 的更多解释，可以查阅 [vite 官网文档](https://cn.vitejs.dev/config/shared-options.html#base)。
 
 ## License
 
