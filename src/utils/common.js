@@ -267,6 +267,13 @@ export const numberFormat = num => {
   });
 };
 
+// 通过值反显label
+export const getLabel = (options, value) => {
+  const obj = options.find(i => i.value == value);
+  if (!obj) return "--";
+  return obj.label;
+};
+
 // 通过 searchInfo 初始化搜索数据
 export const initSearchData = searchInfo => {
   const data = searchInfo.reduce((accumulator, current) => {
