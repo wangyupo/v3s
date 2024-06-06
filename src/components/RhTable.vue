@@ -23,6 +23,7 @@
             :key="`col_${index}`"
             fixed="left"
             type="selection"
+            reserve-selection
             width="50"
             :selectable="column.selectable"
             v-if="column.type === 'selection'"
