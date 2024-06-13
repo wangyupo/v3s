@@ -86,10 +86,11 @@ export const getAllDay = (starDay, endDay) => {
 /**
  * 返回当天日期
  * @param {*} format 日期格式
- * @param {*} seperator 分隔符
+ * @param {*} dateSeperator 日期分隔符
+ * @param {*} timeSeperator 时间分隔符
  * @returns
  */
-export const getTodayDate = (format = "yyyymmdd", seperator = "-") => {
+export const getTodayDate = (format = "YYYY-MM-DD", dateSeperator = "-", timeSeperator = ":") => {
   // 获取当前日期
   let today = new Date();
   // 获取当前年份
@@ -114,15 +115,25 @@ export const getTodayDate = (format = "yyyymmdd", seperator = "-") => {
   if (seconds >= 0 && seconds < 10) seconds = "0" + seconds;
   // 最后拼接字符串，得到一个对应格式的日期
   let nowDate = "";
-  if (format == "yyyymmdd") {
-    nowDate = year + seperator + nowMonth + seperator + strDate;
-  } else if (format == "yyyymm") {
-    nowDate = year + seperator + nowMonth;
-  } else if (format == "yyyymmddhhmm") {
-    nowDate = year + seperator + nowMonth + seperator + strDate + seperator + hours + seperator + minutes;
-  } else if (format == "yyyymmddhhmmss") {
+  if (format == "YYYY-MM-DD") {
+    nowDate = year + dateSeperator + nowMonth + dateSeperator + strDate;
+  } else if (format == "YYYY-MM") {
+    nowDate = year + dateSeperator + nowMonth;
+  } else if (format == "YYYY-MM-DD HH:mm") {
+    nowDate = year + dateSeperator + nowMonth + dateSeperator + strDate + " " + hours + timeSeperator + minutes;
+  } else if (format == "YYYY-MM-DD HH:mm:ss") {
     nowDate =
-      year + seperator + nowMonth + seperator + strDate + seperator + hours + seperator + minutes + seperator + seconds;
+      year +
+      dateSeperator +
+      nowMonth +
+      dateSeperator +
+      strDate +
+      " " +
+      hours +
+      timeSeperator +
+      minutes +
+      timeSeperator +
+      seconds;
   }
   return nowDate;
 };
