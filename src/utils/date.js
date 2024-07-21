@@ -134,6 +134,22 @@ export const getTodayDate = (format = "YYYY-MM-DD", dateSeperator = "-", timeSep
       minutes +
       timeSeperator +
       seconds;
+  } else if (format == "yyyymmddhhmm") {
+    nowDate =
+      year + dateSeperator + nowMonth + dateSeperator + strDate + dateSeperator + hours + timeSeperator + minutes;
+  } else if (format == "yyyymmddhhmmss") {
+    nowDate =
+      year +
+      dateSeperator +
+      nowMonth +
+      dateSeperator +
+      strDate +
+      dateSeperator +
+      hours +
+      timeSeperator +
+      minutes +
+      timeSeperator +
+      seconds;
   }
   return nowDate;
 };
