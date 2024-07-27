@@ -7,6 +7,7 @@ import RhTableColumnDIY from "./RhTableColumnDIY.vue";
 import RhSearch from "./RhSearch.vue";
 import RhCountUp from "./RhCountUp.vue";
 import RhTree from "./RhTree.vue";
+import RhDatePicker from "./RhDatePicker/index.vue";
 
 const plugins = {
   //注册
@@ -19,6 +20,7 @@ const plugins = {
     app.component("RhSearch", RhSearch);
     app.component("RhCountUp", RhCountUp);
     app.component("RhTree", RhTree);
+    app.component("RhDatePicker", RhDatePicker);
   },
 };
 
