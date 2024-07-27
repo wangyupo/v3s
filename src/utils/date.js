@@ -204,3 +204,127 @@ export const getWeekTime = date => {
   }
   return arr;
 };
+
+// 格式化日期
+export const formatDate = (dateInput, format) => {
+  let date;
+
+  // 如果 dateInput 是字符串，则尝试解析为 Date 对象
+  if (typeof dateInput === "string") {
+    date = new Date(dateInput);
+    if (isNaN(date)) {
+      // 如果解析失败，返回空字符串或其他合适的默认值
+      return "";
+    }
+  } else if (dateInput instanceof Date) {
+    date = dateInput;
+  } else {
+    // 如果传入的既不是字符串也不是 Date 对象，返回空字符串或其他合适的默认值
+    return "";
+  }
+
+  const YYYY = date.getFullYear();
+  const MM = String(date.getMonth() + 1).padStart(2, "0");
+  const DD = String(date.getDate()).padStart(2, "0");
+  const HH = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  const ss = String(date.getSeconds()).padStart(2, "0");
+
+  // 使用对象映射来简化格式选择
+  const formatMapping = {
+    "YYYY-MM-DD": `${YYYY}-${MM}-${DD}`,
+    "MM-DD": `${MM}-${DD}`,
+    "HH:mm:ss": `${HH}:${mm}:${ss}`,
+    "HH:mm": `${HH}:${mm}`,
+  };
+
+  // 默认格式为 'YYYY-MM-DD HH:mm:ss'
+  return formatMapping[format] || `${YYYY}-${MM}-${DD} ${HH}:${mm}:${ss}`;
+};
+
+// 获取从当天起，过去 N 天的时间
+export const getPastNDaysRange = days => {
+  const currentTime = new Date();
+  const endOfDay = new Date(currentTime);
+  // endOfDay.setHours(23, 59, 59);
+
+  const startOfDay = new Date(currentTime);
+  // startOfDay.setHours(23, 59, 59);
+  const startTime = new Date(startOfDay.getTime() - days * 24 * 60 * 60 * 1000);
+
+  return [formatDate(startTime), formatDate(endOfDay)];
+};
+
+// 获取上一天开始、结束时间
+export const getPreviousDayRange = () => {
+  const today = new Date();
+
+  const startOfDay = new Date(today);
+  startOfDay.setDate(today.getDate() - 1);
+  startOfDay.setHours(0, 0, 0);
+
+  const endOfDay = new Date(startOfDay);
+  endOfDay.setHours(23, 59, 59);
+
+  return [formatDate(startOfDay), formatDate(endOfDay)];
+};
+
+// 获取上一周开始、结束时间
+export const getPreviousWeekRange = () => {
+  const today = new Date();
+
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay() - 7);
+  startOfWeek.setHours(0, 0, 0);
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59);
+
+  return [formatDate(startOfWeek), formatDate(endOfWeek)];
+};
+
+// 获取上一月开始、结束时间
+export const getPreviousMonthRange = () => {
+  const today = new Date();
+
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+  startOfMonth.setHours(0, 0, 0);
+
+  const endOfMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+  endOfMonth.setHours(23, 59, 59);
+
+  return [formatDate(startOfMonth), formatDate(endOfMonth)];
+};
+
+// 获取上一年开始、结束时间
+export const getPreviousYearRange = () => {
+  const today = new Date();
+
+  const startOfYear = new Date(today.getFullYear() - 1, 0, 1);
+  startOfYear.setHours(0, 0, 0);
+
+  const endOfYear = new Date(today.getFullYear() - 1, 11, 31);
+  endOfYear.setHours(23, 59, 59);
+
+  return [formatDate(startOfYear), formatDate(endOfYear)];
+};
+
+// 获取两个日期相差天数
+export const getDaysBetweenDates = (date1, date2) => {
+  // 创建日期对象
+  const startDate = new Date(date1);
+  const endDate = new Date(date2);
+
+  // 获取两个日期的时间戳
+  const startTime = startDate.getTime();
+  const endTime = endDate.getTime();
+
+  // 计算时间差，单位为毫秒
+  const timeDiff = Math.abs(endTime - startTime);
+
+  // 将时间差转换为天数
+  const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  return dayDiff;
+};
