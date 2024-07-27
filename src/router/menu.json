@@ -88,6 +88,13 @@
     "title": "echarts",
     "menuType": 0
   },
+  {
+    "id": "3-7",
+    "parentId": "3",
+    "url": "/example/dateRange",
+    "title": "时间范围选择",
+    "menuType": 0
+  },
 
   {
     "id": "4",

@@ -6,6 +6,7 @@ const exampleNestMenu1Sub = () => import("@/views/aExample/exampleComponent/menu
 const exampleNestMenu2 = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu2.vue");
 const exampleTreeFilter = () => import("@/views/aExample/exampleComponent/treeFilter.vue");
 const exampleSeamlessScroll = () => import("@/views/aExample/exampleComponent/seamlessScroll.vue");
+const exampleDateRange = () => import("@/views/aExample/exampleComponent/dateRange.vue");
 const chartBar = () => import("@/views/aExample/exampleComponent/chartBar.vue");
 // 页面示例
 const transparentBackground = () => import("@/views/aExample/exampleComponent/transparentBackground.vue");
@@ -47,6 +48,11 @@ const route = [
     path: "/example/seamlessScroll",
     name: "exampleSeamlessScroll",
     component: exampleSeamlessScroll,
+  },
+  {
+    path: "/example/dateRange",
+    name: "exampleDateRange",
+    component: exampleDateRange,
   },
   // 配置示例：业务区域全屏
   {
