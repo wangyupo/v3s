@@ -1,6 +1,6 @@
 <template>
   <!-- 日期选择组件 -->
-  <div class="m-rhdp">
+  <div>
     <el-popover placement="bottom" :width="400" trigger="click" ref="popoverRef">
       <template #reference>
         <!-- 外界显示 -->
@@ -9,7 +9,7 @@
 
       <div>
         <!-- 快速选择时间 START -->
-        <div class="mb-2 font-bold">选择时间：</div>
+        <div class="mb-2 font-bold">快捷时间：</div>
         <div class="flex flex-wrap justify-between">
           <div
             class="w-[69px] h-[30px] leading-[30px] border rounded cursor-pointer text-center"
@@ -32,22 +32,20 @@
         <div class="mt-4 mb-2 font-bold">指定时间：</div>
         <div class="flex items-center justify-between">
           <el-date-picker
-            class="m-rhdp-picker"
-            v-model="beginTime"
+            v-model="startTime"
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="2000-00-00 00:00:00"
+            placeholder="请选择开始时间"
             style="width: calc(49% - 11px)"
             :teleported="false"
             @change="handleChangeTime"
           />
           至
           <el-date-picker
-            class="m-rhdp-picker"
             v-model="endTime"
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="2000-00-00 00:00:00"
+            placeholder="请选择结束时间"
             style="width: calc(49% - 11px)"
             :teleported="false"
             @change="handleChangeTime"
@@ -77,13 +75,10 @@ import {
 } from "@/utils/index.js";
 
 const emits = defineEmits(["confirm"]);
-const popoverRef = ref();
-const dateRange = ref({
-  beginTime: "",
-  endTime: "",
-});
-const beginTime = ref("");
-const endTime = ref("");
+const popoverRef = ref(); // el-popover 的 DOM 对象
+const startTime = ref(""); // 开始时间
+const endTime = ref(""); // 结束时间
+const dateRange = ref({ startTime: "", endTime: "" }); // 最终返回的日期范围
 const easyTime = ref([
   { label: "近一小时" },
   { label: "近一天" },
@@ -96,31 +91,33 @@ const easyTime = ref([
   { label: "上一月" },
   { label: "上一年" },
 ]);
-const easyTimeActiveIdx = ref(1);
+const easyTimeActiveDefaultIdx = 1; // 默认选中的快捷时间的下标（默认选中“近一天”）
+const easyTimeActiveIdx = ref(easyTimeActiveDefaultIdx); // 当前选中的快捷时间的下标
 
-onMounted(() => {
-  handleEasyTime(1);
-});
-
-// 修改时间
-const handleChangeTime = time => {
-  if (beginTime.value || endTime.value) {
-    easyTimeActiveIdx.value = null;
-    return;
-  }
-  easyTimeActiveIdx.value = 1;
-};
-
-// 显示标题
+// 组件显示的标题
 const title = computed(() => {
   let title = "";
-  if (beginTime.value || endTime.value) {
+  if (startTime.value || endTime.value) {
     title = "自定义";
   } else {
     title = easyTime.value[easyTimeActiveIdx.value].label;
   }
   return title;
 });
+
+// 组件挂载完成后执行
+onMounted(() => {
+  handleEasyTime(easyTimeActiveDefaultIdx);
+});
+
+// 修改时间
+const handleChangeTime = time => {
+  if (startTime.value || endTime.value) {
+    easyTimeActiveIdx.value = null;
+    return;
+  }
+  easyTimeActiveIdx.value = easyTimeActiveDefaultIdx;
+};
 
 // 点击快速时间
 const handleEasyTime = index => {
@@ -148,17 +145,14 @@ const handleEasyTime = index => {
   } else if (label == "上一年") {
     timeRange = getPreviousYearRange();
   }
-  dateRange.value = {
-    beginTime: timeRange[0],
-    endTime: timeRange[1],
-  };
+  dateRange.value = { startTime: timeRange[0], endTime: timeRange[1] };
   handleClosePopover();
 };
 
 // 确定
 const handleConfirm = () => {
-  if (beginTime.value || endTime.value) {
-    dateRange.value.beginTime = beginTime.value ? beginTime.value : "";
+  if (startTime.value || endTime.value) {
+    dateRange.value.startTime = startTime.value ? startTime.value : "";
     dateRange.value.endTime = endTime.value ? endTime.value : "";
     handleClosePopover();
     return;
@@ -168,10 +162,10 @@ const handleConfirm = () => {
 
 // 重置
 const handleReset = () => {
-  beginTime.value = "";
+  startTime.value = "";
   endTime.value = "";
-  easyTimeActiveIdx.value = 1;
-  handleEasyTime(1);
+  easyTimeActiveIdx.value = easyTimeActiveDefaultIdx;
+  handleEasyTime(easyTimeActiveDefaultIdx);
   handleClosePopover();
 };
 
@@ -182,8 +176,4 @@ const handleClosePopover = () => {
 };
 </script>
 
-<style lang="scss">
-.m-rhdp-picker .el-input__prefix {
-  display: none; // 去掉 datepicker 的 icon
-}
-</style>
+<style lang="scss"></style>
