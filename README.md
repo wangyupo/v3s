@@ -100,6 +100,17 @@ _推荐使用 nvm 管理 node 版本（[nvm 安装配置教程](https://github.c
 
 你需要在根据不同环境修改 .env.development、.env.production 中的 `VITE_BASE`，然后执行 `npm run build`，重新打包，静态资源基础路径就都指向 `https://xxx.com/admin` 了。关于 vite.config.js 中 base 的更多解释，可以查阅 [vite 官网文档](https://cn.vitejs.dev/config/shared-options.html#base)。
 
+5、如何在 VSCode 中使用 V3S-Snippets ，并快速开发中后台项目？
+
+```
+1、打开 VSCode
+2、键入 Ctrl + Shift + X 进入扩展
+3、搜索 V3S Snippets 安装，然后重启 VSCode
+4、创建 .vue 文件，键入 v3s-table ，出现提示，选中回车即可
+```
+
+具体文档参照 [V3S-Snippets](https://github.com/wangyupo/V3S-Snippets)
+
 ## License
 
 [MIT © Richard McRichface.](https://github.com/wangyupo/v3s/blob/master/LICENSE)
