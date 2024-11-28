@@ -108,3 +108,69 @@ export function treeAddLevel(array, levelName = "level", childrenName = "childre
   };
   return recursive(array);
 }
+
+/**
+ * 树结构增加level[层级]、reverseLevel[反向层级]
+ * @param {Array} array 树结构
+ * @param {String} idField id字段
+ * @param {String} parentIdField parentId字段
+ * @param {String} childrenField children字段
+ * @param {String} valueField id字段对应key
+ * @returns {Array} 增加level[层级]、reverseLevel[反向层级]后的树结构
+ */
+function transformTree({
+  tree,
+  idField = "id",
+  parentIdField = "parentId",
+  childrenField = "children",
+  valueField = "value",
+}) {
+  let currentId = 1;
+
+  // 辅助函数，用于递归转换树节点
+  function processNode(node, parentId = null, level = 1, parentPath = []) {
+    // 如果指定的 value 字段不存在，则自动生成
+    const id = node[valueField] || currentId++;
+    const parentIdValue = parentId;
+
+    // 构造路径：父路径加当前节点的 ID
+    const path = [...parentPath, id];
+
+    // 新节点
+    const newNode = {
+      ...node,
+      [idField]: id,
+      [parentIdField]: parentIdValue,
+      level,
+      path,
+    };
+
+    // 如果有子节点，递归处理
+    if (Array.isArray(node[childrenField]) && node[childrenField].length > 0) {
+      newNode[childrenField] = node[childrenField].map(child => processNode(child, id, level + 1, path));
+    } else {
+      // 如果没有子节点，确保 children 是一个空数组
+      newNode[childrenField] = [];
+    }
+
+    return newNode;
+  }
+
+  // 第二步：计算 reverseLevel
+  function calculateReverseLevel(node) {
+    if (!node[childrenField] || node[childrenField].length === 0) {
+      node.reverseLevel = 1; // 叶子节点的 reverseLevel 为 1
+    } else {
+      node.reverseLevel = Math.max(...node[childrenField].map(calculateReverseLevel)) + 1;
+    }
+    return node.reverseLevel;
+  }
+
+  // 第一步：先构建树并计算普通字段
+  const transformedTree = tree.map(root => processNode(root));
+
+  // 第二步：递归计算 reverseLevel
+  transformedTree.forEach(calculateReverseLevel);
+
+  return transformedTree;
+}
