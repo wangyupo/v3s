@@ -121,7 +121,7 @@ const handleHeaderMenu = index => {
 </script>
 
 <style lang="scss" scoped>
-@import "./common.scss";
+@use "./common.scss" as *;
 
 .header-menu {
   width: 100%;

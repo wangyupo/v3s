@@ -56,7 +56,7 @@ const mode = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/layout/types/common.scss";
+@use "@/layout/types/common.scss" as *;
 
 .menu {
   &.horizontal {

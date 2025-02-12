@@ -59,7 +59,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-@import "../types/common.scss";
+@use "../types/common.scss" as *;
 
 .breadcrumb {
   display: flex;

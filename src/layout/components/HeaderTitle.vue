@@ -47,7 +47,7 @@ const toHomePage = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../types/common.scss";
+@use "../types/common.scss" as *;
 
 .title-height {
   height: $headerHeight;
