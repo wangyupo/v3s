@@ -4,6 +4,7 @@ import NProgress from "@/utils/nProgress.js";
 import { menuKey } from "@/router/menuConfig.js";
 import { useLayoutStore } from "@/stores/layout.js";
 import { useUserStore } from "@/stores/user.js";
+import { useCommonStore } from "@/stores/common.js";
 
 const login = () => import("@/views/login.vue"); // 登录页
 const main = () => import("@/views/main.vue"); // 业务主框架
@@ -67,8 +68,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   NProgress.start();
   const layoutStore = useLayoutStore();
+  const commonStore = useCommonStore();
   layoutStore.$patch(state => {
     state.isNavigating = true;
+  });
+  commonStore.$patch(state => {
+    delete state.routeParams[from.name];
   });
   // next();
   // 如果你想跳过登录，去调试一些东西或者绘制页面（这通常是在单机情况下）。那么，注释下面

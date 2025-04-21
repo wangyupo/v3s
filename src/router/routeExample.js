@@ -1,6 +1,7 @@
 // 组件示例
 const exampleDialog = () => import("@/views/aExample/exampleComponent/dialog/index.vue");
 const exampleTable = () => import("@/views/aExample/exampleComponent/table/index.vue");
+const exampleTableFullPage = () => import("@/views/aExample/exampleComponent/table/tableFullPage.vue");
 const exampleNumCountUp = () => import("@/views/aExample/exampleComponent/numCountUp.vue");
 const exampleNestMenu1Sub = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu1Sub.vue");
 const exampleNestMenu2 = () => import("@/views/aExample/exampleComponent/menuNest/nestMenu2.vue");
@@ -38,6 +39,14 @@ const route = [
     path: "/example/table",
     name: "exampleTable",
     component: exampleTable,
+  },
+  {
+    path: "/example/tableFullPage",
+    name: "exampleTableFullPage",
+    component: exampleTableFullPage,
+    meta: {
+      wrapperType: "fullPage",
+    },
   },
   {
     path: "/example/numCountUp",

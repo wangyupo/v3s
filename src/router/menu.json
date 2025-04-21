@@ -63,33 +63,40 @@
   {
     "id": "3-3",
     "parentId": "3",
+    "url": "/example/tableFullPage",
+    "title": "table高度撑满",
+    "menuType": 0
+  },
+  {
+    "id": "3-4",
+    "parentId": "3",
     "url": "/example/numCountUp",
     "title": "数字滚动",
     "menuType": 0
   },
   {
-    "id": "3-4",
+    "id": "3-5",
     "parentId": "3",
     "url": "/example/tree",
     "title": "树形筛选器",
     "menuType": 0
   },
   {
-    "id": "3-5",
+    "id": "3-6",
     "parentId": "3",
     "url": "/example/seamlessScroll",
     "title": "无缝滚动",
     "menuType": 0
   },
   {
-    "id": "3-6",
+    "id": "3-7",
     "parentId": "3",
     "url": "/example/echarts",
     "title": "echarts",
     "menuType": 0
   },
   {
-    "id": "3-7",
+    "id": "3-8",
     "parentId": "3",
     "url": "/example/dateRange",
     "title": "时间范围选择",
