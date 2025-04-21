@@ -1,5 +1,5 @@
 <template>
-  <!-- 报告上传 -->
+  <!-- 示例-高度撑满页面的table -->
   <div class="h-full overflow-hidden">
     <RhSearch ref="rhSearchRef" :searchInfo="searchInfo" @search="handleSearch" @toggle="toggle" />
     <div ref="formActionButtonsRef" class="flex justify-end mb-3">
