@@ -8,6 +8,7 @@ import RhSearch from "./RhSearch.vue";
 import RhCountUp from "./RhCountUp.vue";
 import RhTree from "./RhTree.vue";
 import RhDatePicker from "./RhDatePicker/index.vue";
+import RhImg from "./RhImg.vue";
 
 const plugins = {
   //注册
@@ -21,6 +22,7 @@ const plugins = {
     app.component("RhCountUp", RhCountUp);
     app.component("RhTree", RhTree);
     app.component("RhDatePicker", RhDatePicker);
+    app.component("RhImg", RhImg);
   },
 };
 
