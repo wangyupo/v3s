@@ -1,9 +1,9 @@
 <template>
   <!-- 搜索组件-支持传参配置搜索项、自动换行、插槽 -->
-  <div class="rh-search-wrapper mb-3" :class="[noBorder ? 'noBorder' : '']">
+  <div ref="rhSearchRef" class="rh-search-wrapper mb-3" :class="[noBorder ? 'noBorder' : '']">
     <div
       class="rh-search-content flex items-center flex-wrap overflow-hidden"
-      :class="[!toggle && searchInfo.length > 6 ? 'h-[88px]' : '']"
+      :class="[!toggle && searchInfo.length > toogleLength ? 'h-[88px]' : '']"
     >
       <el-form label-width="auto" class="w-full">
         <el-row :gutter="16" class="w-full">
@@ -113,7 +113,7 @@
       <el-button type="primary" icon="Search" @click="handleSearch">查询</el-button>
       <el-button icon="RefreshRight" @click="handleReset">重置</el-button>
       <!-- 展开/收起（搜索条件大于6个） -->
-      <el-button type="primary" link @click="handleToggle" v-if="searchInfo.length > 6">
+      <el-button type="primary" link @click="handleToggle" v-if="searchInfo.length > toogleLength">
         <template v-if="!toggle">
           展开
           <el-icon><ArrowDown /></el-icon>
@@ -134,7 +134,9 @@ import { debounce, cloneDeep } from "lodash-es";
 import { useLayout } from "@/hooks/useLayout.js";
 import { shortcuts } from "@/enums/index.js";
 
-const emits = defineEmits(["search"]); // 对外暴露 search 事件
+const rhSearchRef = ref();
+const toogleLength = 6; // 搜索项超出显示“展开/收起”
+const emits = defineEmits(["search", "toggle"]); // 对外暴露 search 事件
 const props = defineProps({
   // 搜索配置
   searchInfo: {
@@ -193,8 +195,12 @@ const handleSearch = debounce(searchConfig => {
       const searchCfg = props.searchInfo.find(i => i.key === key);
       // 组装日期范围。由“数组”组装成“startKey”、“endKey”两个值。
       if (searchCfg.type === "daterange" && searchCfg.startKey && searchCfg.endKey) {
-        params[searchCfg.startKey] = searchData.value[key][0];
-        params[searchCfg.endKey] = searchData.value[key][1];
+        params[searchCfg.startKey] = searchCfg.withTime
+          ? searchData.value[key][0] + " 00:00:00"
+          : searchData.value[key][0];
+        params[searchCfg.endKey] = searchCfg.withTime
+          ? searchData.value[key][1] + " 23:59:59"
+          : searchData.value[key][1];
       } else {
         params[key] = searchData.value[key];
       }
@@ -213,6 +219,7 @@ const handleReset = debounce(() => {
 // 展开/收起
 const handleToggle = () => {
   toggle.value = !toggle.value;
+  emits("toggle");
 };
 
 /* 回车触发搜索事件 START */
@@ -244,6 +251,11 @@ const handleEnterSearch = () => {
   });
 };
 /* 回车触发搜索事件 END */
+
+defineExpose({
+  rhSearchRef,
+  handleReset,
+});
 </script>
 
 <style lang="scss" scoped>
