@@ -1,127 +1,129 @@
 <template>
   <!-- 表格 -->
-  <div>
-    <el-table
-      ref="elTableRef"
-      class="rh-table"
-      v-bind="$attrs"
-      v-loading="loading"
-      :class="[border ? '' : '_border']"
-      :border="border"
-      :data="_tableData.data"
-    >
-      <template v-for="(column, index) in _tableData.columns">
-        <template v-if="column.type">
-          <!-- 展开&收起 -->
-          <el-table-column :key="`col_${index}`" fixed="left" type="expand" v-if="column.type === 'expand'">
-            <template #default="scope">
-              <slot name="expand" :scope="scope"></slot>
-            </template>
-          </el-table-column>
-          <!-- 多选 -->
-          <el-table-column
-            :key="`col_${index}`"
-            fixed="left"
-            type="selection"
-            reserve-selection
-            width="50"
-            :selectable="column.selectable"
-            v-if="column.type === 'selection'"
-          />
-          <!-- 序号 -->
-          <el-table-column
-            :label="column.label"
-            :key="`col_${index}`"
-            fixed="left"
-            type="index"
-            width="60"
-            align="center"
-            v-if="column.type === 'index'"
-          >
-            <template #default="scope">
-              <div class="flex items-center">
-                <el-icon class="rh-table-dragcursor mr-2 hover:cursor-grab" v-if="_tableData.draggable">
-                  <Rank />
-                </el-icon>
-                {{ column.index ? column.index : indexMethod(scope.$index) }}
-              </div>
-            </template>
-          </el-table-column>
-        </template>
-
-        <!-- 数据列 -->
-        <el-table-column
-          :prop="column.prop"
-          :label="column.label"
-          :width="column.width"
-          :min-width="column.minWidth"
-          :fixed="column.fixed"
-          :sortable="column.sortable"
-          :key="`col_${index}`"
-          :show-overflow-tooltip="
-            _tableData.showOverflowTooltip === undefined
-              ? true
-              : column.showOverflowTooltip === false || column.showOverflowTooltip === true
-              ? column.showOverflowTooltip
-              : _tableData.showOverflowTooltip
-          "
-          :align="column.align"
-          v-else-if="column.hasOwnProperty('show') ? column.show : true"
-        >
-          <!-- 自定义表头 -->
-          <template #header="scope">
-            <slot name="RhTableHeader" :scope="scope" v-if="!column.diyHeader">
-              {{ scope.column.label }}
-            </slot>
-            <slot :name="column.prop + 'Header'" :scope="scope" v-else></slot>
-          </template>
-          <!-- 自定义列 -->
+  <el-table
+    ref="elTableRef"
+    class="rh-table"
+    v-bind="$attrs"
+    v-loading="loading"
+    :class="[border ? '' : '_border']"
+    :border="border"
+    :data="_tableData.data"
+  >
+    <template v-for="(column, index) in _tableData.columns">
+      <template v-if="column.type">
+        <!-- 展开&收起 -->
+        <el-table-column :key="`col_${index}`" fixed="left" type="expand" v-if="column.type === 'expand'">
           <template #default="scope">
-            <div class="inline" @click="handleCopy(scope.$index, scope.row, column)">
-              <slot :name="column.prop" :scope="scope" :table-data="_tableData.data">
-                <template v-if="column.prop != 'operate'">
-                  <!-- 自定义前缀 -->
-                  <span v-html="column.prefix" v-if="scope.row[column.prop] && column.prefix"></span>
-                  <!-- 识别并格式化手机号 -->
-                  <span v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
-                    {{ formatPhone(scope.row[column.prop]) }}
-                  </span>
-                  <!-- 空值默认返回 -- -->
-                  <span v-else>{{ epyReturn(scope.row[column.prop]) }}</span>
-                  <!-- 自定义后缀 -->
-                  <span v-html="column.suffix" v-if="scope.row[column.prop] && column.suffix"></span>
-                </template>
-              </slot>
+            <slot name="expand" :scope="scope"></slot>
+          </template>
+        </el-table-column>
+        <!-- 多选 -->
+        <el-table-column
+          :key="`col_${index}`"
+          fixed="left"
+          type="selection"
+          reserve-selection
+          width="50"
+          :selectable="column.selectable"
+          v-if="column.type === 'selection'"
+        />
+        <!-- 序号 -->
+        <el-table-column
+          :label="column.label"
+          :key="`col_${index}`"
+          fixed="left"
+          type="index"
+          width="60"
+          align="center"
+          v-if="column.type === 'index'"
+        >
+          <template #default="scope">
+            <div class="flex items-center">
+              <el-icon class="rh-table-dragcursor mr-2 hover:cursor-grab" v-if="_tableData.draggable">
+                <Rank />
+              </el-icon>
+              {{ column.index ? column.index : indexMethod(scope.$index) }}
             </div>
           </template>
         </el-table-column>
       </template>
 
-      <!-- 当数据为空时自定义的内容 -->
-      <template #empty>
-        <RhNoData v-if="!$slots.empty" />
-        <slot name="empty"></slot>
-      </template>
-    </el-table>
+      <!-- 数据列 -->
+      <el-table-column
+        :prop="column.prop"
+        :label="column.label"
+        :width="column.width"
+        :min-width="column.minWidth"
+        :fixed="column.fixed"
+        :sortable="column.sortable"
+        :key="`col_${index}`"
+        :show-overflow-tooltip="
+          _tableData.showOverflowTooltip === undefined
+            ? true
+            : column.showOverflowTooltip === false || column.showOverflowTooltip === true
+            ? column.showOverflowTooltip
+            : _tableData.showOverflowTooltip
+        "
+        :align="column.align"
+        v-else-if="column.hasOwnProperty('show') ? column.show : true"
+      >
+        <!-- 自定义表头 -->
+        <template #header="scope">
+          <slot name="RhTableHeader" :scope="scope" v-if="!column.diyHeader">
+            {{ scope.column.label }}
+          </slot>
+          <slot :name="column.prop + 'Header'" :scope="scope" v-else></slot>
+        </template>
+        <!-- 自定义列 -->
+        <template #default="scope">
+          <div class="inline" @click="handleCopy(scope.$index, scope.row, column)">
+            <slot :name="column.prop" :scope="scope" :table-data="_tableData.data">
+              <template v-if="column.prop != 'operate'">
+                <!-- 自定义前缀 -->
+                <span v-html="column.prefix" v-if="scope.row[column.prop] && column.prefix"></span>
+                <!-- 识别并格式化手机号 -->
+                <span v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
+                  {{ formatPhone(scope.row[column.prop]) }}
+                </span>
+                <!-- 枚举value映射label -->
+                <span v-else-if="column.enum && column.enum.length">
+                  {{ getLabel(column.enum, scope.row[column.prop]) }}
+                </span>
+                <!-- 空值默认返回 -- -->
+                <span v-else>{{ epyReturn(scope.row[column.prop]) }}</span>
+                <!-- 自定义后缀 -->
+                <span v-html="column.suffix" v-if="scope.row[column.prop] && column.suffix"></span>
+              </template>
+            </slot>
+          </div>
+        </template>
+      </el-table-column>
+    </template>
 
-    <!-- 分页器 -->
-    <el-pagination
-      class="mt-3 flex justify-end"
-      layout="total, sizes, prev, pager, next, jumper"
-      :current-page="_tableData.pages.pageNumber"
-      :page-size="_tableData.pages.pageSize"
-      :page-sizes="[10, 20, 30]"
-      :total="_tableData.pages.total"
-      @size-change="handleSizeChange"
-      @current-change="handlePageChange"
-      v-if="_tableData.pages"
-    />
-  </div>
+    <!-- 当数据为空时自定义的内容 -->
+    <template #empty>
+      <RhNoData v-if="!$slots.empty" />
+      <slot name="empty"></slot>
+    </template>
+  </el-table>
+
+  <!-- 分页器 -->
+  <el-pagination
+    class="mt-3 flex justify-end"
+    :layout="_tableData.pages.layout || 'total, sizes, prev, pager, next, jumper'"
+    :current-page="_tableData.pages.pageNumber"
+    :page-size="_tableData.pages.pageSize"
+    :page-sizes="[10, 20, 30]"
+    :total="_tableData.pages.total"
+    @size-change="handleSizeChange"
+    @current-change="handlePageChange"
+    v-if="_tableData.pages"
+  />
 </template>
 
 <script setup>
-import { formatPhone, copy, epyReturn } from "@/utils/index";
-import { onMounted, onUpdated, reactive, ref, useAttrs, watch } from "vue";
+import { formatPhone, copy, epyReturn, getLabel } from "@/utils/index";
+import { onMounted, onUpdated, reactive, ref, useAttrs, useTemplateRef, watch } from "vue";
 import { debounce, cloneDeep } from "lodash-es";
 import Sortable from "sortablejs";
 
@@ -149,7 +151,7 @@ const props = defineProps({
     },
   },
 });
-const elTableRef = ref();
+const elTableRef = useTemplateRef("elTableRef");
 let _tableData = ref({});
 
 watch(
@@ -224,6 +226,10 @@ const rowDrop = function () {
   });
 };
 // el-table事件 END
+
+defineExpose({
+  elTableRef,
+});
 </script>
 
 <style lang="scss" scoped>
