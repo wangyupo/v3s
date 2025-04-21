@@ -16,7 +16,6 @@ dist-ssr
 coverage
 *.local
 test.html
-increment-version.js
 
 /cypress/videos/
 /cypress/screenshots/
