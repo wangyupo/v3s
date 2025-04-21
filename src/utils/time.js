@@ -69,3 +69,30 @@ export const formatSecondsToDuration = (seconds, minUnit) => {
       return result;
   }
 };
+
+/**
+ * 获取当前时间
+ * @returns {string} - 格式化后的时间字符串。
+ */
+export function getCurrentTime() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  // 格式化时间，确保始终为两位数
+  function formatTime(time) {
+    return time < 10 ? "0" + time : time;
+  }
+
+  const formattedMonth = formatTime(month);
+  const formattedDay = formatTime(day);
+  const formattedHours = formatTime(hours);
+  const formattedMinutes = formatTime(minutes);
+  const formattedSeconds = formatTime(seconds);
+
+  return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}

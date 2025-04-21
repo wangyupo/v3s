@@ -169,3 +169,20 @@ export function setStyle(element, styleName, value) {
     element.style[styleName] = value;
   }
 }
+
+/**
+ * 获取元素的总高度，包括元素本身高度、padding和margin
+ * @param {Element} element - 目标元素
+ * @returns {number} - 元素的总高度
+ */
+export function getTotalHeight(element) {
+  if (!element) return 0;
+
+  const computedStyle = getComputedStyle(element);
+
+  const height = element.offsetHeight;
+  const marginTop = parseInt(computedStyle.marginTop);
+  const marginBottom = parseInt(computedStyle.marginBottom);
+
+  return height + marginTop + marginBottom;
+}
