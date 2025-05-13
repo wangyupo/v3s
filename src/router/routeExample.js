@@ -9,6 +9,7 @@ const exampleTreeFilter = () => import("@/views/aExample/exampleComponent/treeFi
 const exampleSeamlessScroll = () => import("@/views/aExample/exampleComponent/seamlessScroll.vue");
 const exampleDateRange = () => import("@/views/aExample/exampleComponent/dateRange.vue");
 const chartBar = () => import("@/views/aExample/exampleComponent/chartBar.vue");
+const ImageSelect = () => import("@/views/aExample/exampleComponent/imageSelect/index.vue");
 // 页面示例
 const transparentBackground = () => import("@/views/aExample/exampleComponent/transparentBackground.vue");
 const exampleFullScreenShowPage = () => import("@/views/aExample/examplePage/fullScreenShowPage.vue");
@@ -62,6 +63,11 @@ const route = [
     path: "/example/dateRange",
     name: "exampleDateRange",
     component: exampleDateRange,
+  },
+  {
+    path: "/example/imageSelect",
+    name: "ImageSelect",
+    component: ImageSelect,
   },
   // 配置示例：业务区域全屏
   {

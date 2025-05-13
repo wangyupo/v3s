@@ -102,6 +102,13 @@
     "title": "时间范围选择",
     "menuType": 0
   },
+  {
+    "id": "3-9",
+    "parentId": "3",
+    "url": "/example/imageSelect",
+    "title": "图片展示",
+    "menuType": 0
+  },
 
   {
     "id": "4",
