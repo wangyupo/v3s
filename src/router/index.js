@@ -72,9 +72,11 @@ router.beforeEach((to, from, next) => {
   layoutStore.$patch(state => {
     state.isNavigating = true;
   });
-  commonStore.$patch(state => {
-    delete state.routeParams[from.name];
-  });
+  if (to.name !== "refreshPage") {
+    commonStore.$patch(state => {
+      delete state.routeParams[from.name];
+    });
+  }
   // next();
   // 如果你想跳过登录，去调试一些东西或者绘制页面（这通常是在单机情况下）。那么，注释下面
   // 的内容，然后打开上面的 next(); 注释。即可在不登录的情况下，访问任一路径。切记！不要提交
