@@ -7,7 +7,7 @@ export function useCommon() {
   const route = useRoute();
   const router = useRouter();
   const commonStore = useCommonStore();
-  const { allChannels, routeParams } = storeToRefs(commonStore);
+  const { routeParams } = storeToRefs(commonStore);
 
   const setRouteParams = (name, params) => {
     commonStore.$patch(state => {
@@ -39,7 +39,6 @@ export function useCommon() {
     router,
     toPage,
     commonStore,
-    allChannels,
     routeParams,
     setRouteParams,
     getRouteParams,
