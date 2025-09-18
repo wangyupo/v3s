@@ -8,7 +8,7 @@ const config = {
   lb: {
     grid: { bottom: 30 },
     tooltip: {},
-    legend: {},
+    legend: { top: 10 },
     xAxis: { type: "category" },
     yAxis: { type: "value" },
     series: [],
@@ -17,7 +17,7 @@ const config = {
   lb_row: {
     grid: { bottom: 30 },
     tooltip: {},
-    legend: {},
+    legend: { top: 10 },
     yAxis: { type: "category" },
     xAxis: { type: "value" },
     series: [],
