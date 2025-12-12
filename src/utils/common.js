@@ -257,6 +257,24 @@ export const epyReturn = obj => {
 };
 
 /**
+ * @description 从对象中根据路径安全地取值
+ * 支持嵌套路径（如 "a.b.c"），防止中间层为 undefined 报错
+ * @param {Object} obj - 要取值的对象
+ * @param {string} path - 属性路径，例如 "user.info.name"
+ * @returns {*} 对应路径的值，若不存在则返回 undefined
+ */
+export const getValueByPath = (obj, path) => {
+  // 如果对象或路径为空，直接返回 undefined
+  if (!obj || !path) return undefined
+
+  // 使用 "." 分割路径，逐层取值
+  return path.split('.').reduce((o, key) => {
+    // 每一层都判断对象是否存在，避免 "Cannot read property ..." 错误
+    return o ? o[key] : undefined
+  }, obj)
+}
+
+/**
  * 数字格式化
  * @param {*} num 金额
  * @returns {String} 千分位逗号格式 20000->20,000

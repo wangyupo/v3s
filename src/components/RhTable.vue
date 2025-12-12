@@ -76,21 +76,37 @@
         </template>
         <!-- 自定义列 -->
         <template #default="scope">
-          <div class="inline" @click="handleCopy(scope.$index, scope.row, column)">
+          <div class="inline">
             <slot :name="column.prop" :scope="scope" :table-data="_tableData.data">
               <template v-if="column.prop != 'operate'">
                 <!-- 自定义前缀 -->
                 <span v-html="column.prefix" v-if="scope.row[column.prop] && column.prefix"></span>
                 <!-- 识别并格式化手机号 -->
-                <span v-if="/^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
+                <span v-if="column.phoneFormat && /^1[3-9][0-9]{9}$/.test(scope.row[column.prop])">
                   {{ formatPhone(scope.row[column.prop]) }}
+                </span>
+                <!-- 数字格式化千分位符 -->
+                <span v-if="column.numberFormat">
+                  {{ numberFormat(scope.row[column.prop]) }}
                 </span>
                 <!-- 枚举value映射label -->
                 <span v-else-if="column.enum && column.enum.length">
                   {{ getLabel(column.enum, scope.row[column.prop]) }}
                 </span>
+                <!-- 复制 -->
+                <span class="flex items-center" v-else-if="column.copy">
+                  {{ epyReturn(scope.row[column.prop]) }}
+                  <el-icon
+                    class="ml-2 cursor-pointer"
+                    title="复制"
+                    @click="handleCopy(scope.$index, scope.row, column)"
+                    v-show="column.copyCB ? column.copyCB(scope.row) : true"
+                  >
+                    <CopyDocument />
+                  </el-icon>
+                </span>
                 <!-- 空值默认返回 -- -->
-                <span v-else>{{ epyReturn(scope.row[column.prop]) }}</span>
+                <span v-else>{{ epyReturn(getValueByPath(scope.row, column.prop)) }}</span>
                 <!-- 自定义后缀 -->
                 <span v-html="column.suffix" v-if="scope.row[column.prop] && column.suffix"></span>
               </template>
@@ -122,7 +138,7 @@
 </template>
 
 <script setup>
-import { formatPhone, copy, epyReturn, getLabel } from "@/utils/index";
+import { formatPhone, copy, epyReturn, getValueByPath, getLabel, numberFormat } from "@/utils/index";
 import { onMounted, onUpdated, reactive, ref, useAttrs, useTemplateRef, watch } from "vue";
 import { debounce, cloneDeep } from "lodash-es";
 import Sortable from "sortablejs";
@@ -201,7 +217,8 @@ const indexMethod = idx => {
 const handleCopy = debounce(
   (index, row, column) => {
     if (!column.copy) return;
-    copy(row[column.prop], column.label);
+    const { copyPrefix = "", copySuffix = "" } = column;
+    copy(copyPrefix + row[column.prop] + copySuffix);
   },
   1000,
   {
