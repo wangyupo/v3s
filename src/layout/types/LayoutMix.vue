@@ -5,7 +5,7 @@
       <div class="flex items-center flex-1">
         <HeaderTitle />
         <el-menu :default-active="headerMenuActiveIdx" class="header-menu" mode="horizontal" @select="handleHeaderMenu">
-          <el-menu-item v-for="(menuItem, index) in headerMenu" :index="index">
+          <el-menu-item v-for="(menuItem, index) in headerMenu" :index="index" :key="index">
             <i
               :class="['iconfont text-base mr-2 menuItem-ew-icon', menuItem[menuKey.icon]]"
               v-if="menuItem[menuKey.icon]"
@@ -27,8 +27,7 @@
         <div class="-mb-3 px-3"><Breadcrumb /></div>
         <el-main class="layout-main-content" :class="[isTransparent ? 'transparent' : '']">
           <div
-            class="main-wrapper"
-            :style="wrapStyle"
+            :class="['main-wrapper', wrapExtraClass]"
             v-loading="isNavigating"
             :element-loading-text="contentAreaLoadingText"
             :element-loading-spinner="contentAreaLoadingSvg"
@@ -59,7 +58,7 @@ const {
   menuFold,
   isDark,
   isTransparent,
-  wrapStyle,
+  wrapExtraClass,
   isNavigating,
   contentAreaLoadingText,
   contentAreaLoadingSvg,

@@ -9,3 +9,10 @@
 html.gray {
   filter: grayscale(100%);
 }
+
+.table-auto-fill {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 138px); // 138px = header高度 + historyTabs高度 + 内容区域上下margin + 内容区域内部上下pading
+  overflow-y: auto;
+}

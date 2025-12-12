@@ -1,34 +1,30 @@
 <template>
-  <!-- 示例-高度撑满页面的table -->
-  <div class="h-full overflow-hidden">
-    <RhSearch ref="rhSearchRef" :searchInfo="searchInfo" @search="handleSearch" @toggle="toggle" />
-    <div ref="formActionButtonsRef" class="flex justify-end mb-3">
+  <!-- 示例-高度撑满页面的table-使用全局样式 table-auto-fill -->
+  <div class="table-auto-fill">
+    <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
+    <div class="flex justify-end mb-3">
       <el-button type="primary">新增</el-button>
     </div>
-    <div :style="tableStyleObject">
-      <RhTable
-        height="100%"
-        border
-        stripe
-        row-key="id"
-        :loading="loading"
-        :table-data="tableData"
-        @pageChange="fn_getList"
-        @pageSizeChange="pageSizeChange"
-        @selection-change="handleSelectionChange"
-      >
-        <template #operate="{ scope }">
-          <el-button type="primary" link>查看</el-button>
-        </template>
-      </RhTable>
-    </div>
+    <RhTable
+      border
+      stripe
+      row-key="id"
+      :loading="loading"
+      :table-data="tableData"
+      @pageChange="fn_getList"
+      @pageSizeChange="pageSizeChange"
+      @selection-change="handleSelectionChange"
+    >
+      <template #operate="{ scope }">
+        <el-button type="primary" link>查看</el-button>
+      </template>
+    </RhTable>
   </div>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref, useTemplateRef, nextTick } from "vue";
 import { initSearchData } from "@/utils/index.js";
-import { useDynamicTableHeight } from "@/hooks/useDynamicTableHeight.js";
 import { selectData_example } from "@/enums/index.js";
 
 // 条件配置
@@ -122,7 +118,7 @@ const tableData = reactive({
     { label: "日期", prop: "date" },
     { label: "操作", prop: "operate", fixed: "right", width: "200px" },
   ],
-  data: [{ name: "测试名称", type: "Option3", date: "2025-03-18 22:56:19" }],
+  data: Array.from({ length: 20 }).fill({ name: "测试名称", type: "Option3", date: "2025-03-18 22:56:19" }),
   pages: { total: 0, pageNumber: 1, pageSize: 20 },
 });
 const multipleSelection = ref([]);
@@ -173,14 +169,6 @@ const pageSizeChange = pageSize => {
 const handleSelectionChange = val => {
   multipleSelection.value = val;
 };
-
-/** table 固定表头 START */
-const rhSearchRef = useTemplateRef("rhSearchRef");
-const formActionButtonsRef = useTemplateRef("formActionButtonsRef");
-const componentDomRef = ref([{ ref: rhSearchRef, innerRef: "rhSearchRef" }]);
-const domRefs = ref([formActionButtonsRef]);
-const { tableStyleObject, toggle } = useDynamicTableHeight({ domRefs, componentDomRef });
-/** table 固定表头 END */
 </script>
 
 <style lang="scss" scoped></style>

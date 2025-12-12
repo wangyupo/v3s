@@ -81,13 +81,13 @@ export function useLayout() {
   // 流体布局（适用于大篇幅页面，如：分析页） flowPage
   // 固定全屏布局，超出部分溢出（适用于简单的IO业务页面，如：添加、编辑） fullPage
   // 延展全屏布局，超出部分包裹随之拉伸（适用于大多数页面，如：列表页）
-  const wrapStyle = computed(() => {
+  const wrapExtraClass = computed(() => {
     if (wrapperType.value == "flowPage") {
-      return "height: auto";
+      return "h-auto";
     } else if (wrapperType.value == "fullPage") {
-      return "height: 100%";
+      return "h-full";
     } else {
-      return "min-height: 100%";
+      return "min-h-full";
     }
   });
 
@@ -167,7 +167,7 @@ export function useLayout() {
     isTransparent,
     isNoBreadcrumb,
     isNavigating,
-    wrapStyle,
+    wrapExtraClass,
     menuFilterDialogVisible,
     contentAreaLoadingText,
     contentAreaLoadingSvg,

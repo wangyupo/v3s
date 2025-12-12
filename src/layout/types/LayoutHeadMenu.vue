@@ -15,8 +15,7 @@
         :class="[isTransparent ? 'transparent' : '', isNoBreadcrumb ? 'noBreadcrumb' : '']"
       >
         <div
-          class="main-wrapper"
-          :style="wrapStyle"
+          :class="['main-wrapper', wrapExtraClass]"
           v-loading="isNavigating"
           :element-loading-text="contentAreaLoadingText"
           :element-loading-spinner="contentAreaLoadingSvg"
@@ -45,7 +44,7 @@ const {
   isDark,
   isTransparent,
   isNoBreadcrumb,
-  wrapStyle,
+  wrapExtraClass,
   isNavigating,
   contentAreaLoadingText,
   contentAreaLoadingSvg,

@@ -17,8 +17,7 @@
         <RouterHistoryTabs />
         <el-main class="layout-main-content" :class="[isTransparent ? 'transparent' : '']">
           <div
-            class="main-wrapper"
-            :style="wrapStyle"
+            :class="['main-wrapper', wrapExtraClass]"
             v-loading="isNavigating"
             :element-loading-text="contentAreaLoadingText"
             :element-loading-spinner="contentAreaLoadingSvg"
@@ -47,7 +46,7 @@ const {
   isDark,
   isTransparent,
   isNoBreadcrumb,
-  wrapStyle,
+  wrapExtraClass,
   isNavigating,
   contentAreaLoadingText,
   contentAreaLoadingSvg,

@@ -45,9 +45,6 @@ const route = [
     path: "/example/tableFullPage",
     name: "exampleTableFullPage",
     component: exampleTableFullPage,
-    meta: {
-      wrapperType: "fullPage",
-    },
   },
   {
     path: "/example/numCountUp",
