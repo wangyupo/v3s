@@ -1,44 +1,49 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
 import App from "./App.vue";
 import router from "./router";
 
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate"; // pinia持久化存储
-import globalComponents from "@/components/index.js"; // 项目自身封装的全局组件
-
+// Element Plus
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import "./styles/element-theme.scss";
 import "element-plus/theme-chalk/dark/css-vars.css";
-import "./styles/dark.scss";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
-import "./styles/iconfont/iconfont.css"; // 直接替换iconfont文件夹内容即可完成更新
-import "./styles/common.scss"; // 影响全局的公共样式都在这里配置
-import "./styles/tailwind.css"; // 引入tailwindcss
-import "./styles/tailwind-reset.scss"; // 单独引入reset文件，防止 tailwindcss 对 ElementPlus组件 的样式覆盖
+// 样式
+import "./styles/element-theme.scss"; // Element Plus 主题定制
+import "./styles/dark.scss"; // 暗黑模式样式
+import "./styles/iconfont/iconfont.css"; // Iconfont 图标（直接替换文件夹内容即可更新）
+import "./styles/tailwind.css"; // Tailwind CSS
+import "./styles/tailwind-reset.scss"; // Tailwind 重置（防止覆盖 Element Plus 样式）
+import "./styles/common.scss"; // 全局公共样式
 
-import directives from "./directives"; // 导入所有指令
+// 项目模块
+import globalComponents from "@/components/index.js"; // 全局组件
+import directives from "./directives"; // 全局指令
 
-const pinia = createPinia().use(piniaPluginPersistedstate);
+// 创建应用
 const app = createApp(App);
+const pinia = createPinia().use(piniaPluginPersistedstate);
 
-/**
- * 全局引入ElementPlusIcon
- * 注意：在以 <el-icon><Xxx /></el-icon>、icon="" 的方式使用时无需单独引入，如果以 :icon="" 内嵌图标传参的方式使用，仍需在组件内引入该 icon。
- */
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component);
-}
-
-// 注册所有全局指令
-Object.keys(directives).forEach(key => {
-  app.directive(key, directives[key]);
-});
-
+// 注册插件
 app.use(pinia);
 app.use(router);
 app.use(ElementPlus);
 app.use(globalComponents);
 
+// 注册 Element Plus Icons
+// 使用方式：<el-icon><Xxx /></el-icon> 或 icon="Xxx"
+// 注意：:icon="Xxx" 动态绑定方式仍需在组件内单独引入
+Object.entries(ElementPlusIconsVue).forEach(([name, component]) => {
+  app.component(name, component);
+});
+
+// 注册全局指令
+Object.entries(directives).forEach(([name, directive]) => {
+  app.directive(name, directive);
+});
+
+// 挂载应用
 app.mount("#app");

@@ -1,57 +1,61 @@
 <template>
   <el-config-provider :locale="locale">
-    <router-view></router-view>
+    <router-view />
   </el-config-provider>
 
-  <!-- 刷新页面遮罩 -->
+  <!-- 页面刷新遮罩 -->
   <teleport to="#topSlot">
-    <div class="fixed top-0 bottom-0 w-full h-full bg-white z-10" v-if="isReloadMask">
+    <div v-if="isReloadMask" class="reload-mask">
       <div id="top-loader"></div>
     </div>
   </teleport>
 </template>
 
 <script setup>
-import zhCn from "element-plus/dist/locale/zh-cn.mjs";
-import en from "element-plus/dist/locale/en.mjs";
 import { ref, computed, onMounted, watch } from "vue";
+import { ElMessage } from "element-plus";
 import { useLayout } from "@/hooks/useLayout.js";
 import { setLocalStorage, getLocalStorage, clearStorageAndCookies, compareVersions } from "@/utils/index.js";
-import { ElMessage } from "element-plus";
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import en from "element-plus/dist/locale/en.mjs";
 
-// 遮罩
-const isReloadMask = ref(true);
+const MASK_DELAY = 1000; // 遮罩延迟隐藏时间（ms）
+const { isZh, isGray, toggleGray } = useLayout();
+const locale = computed(() => (isZh.value ? zhCn : en)); // 国际化
+const isReloadMask = ref(true); // 页面刷新遮罩
+
+// 全站置灰
+watch(isGray, toggleGray, { immediate: true });
+
 onMounted(() => {
   setTimeout(() => {
     isReloadMask.value = false;
-  }, 1000);
+  }, MASK_DELAY);
 });
 
-const { isZh, isGray, toggleGray } = useLayout();
+// 版本检测
+checkVersion();
 
-// 国际化
-const locale = computed(() => (isZh.value ? zhCn : en));
+function checkVersion() {
+  const cachedVersion = getLocalStorage("version");
+  const isExpired = compareVersions(__APP_VERSION__, cachedVersion) === 1;
 
-// 全站置灰
-watch(
-  isGray,
-  () => {
-    toggleGray();
-  },
-  { immediate: true }
-);
+  if (!cachedVersion || isExpired) {
+    ElMessage.info("检测到新版本，请重新登录！");
+    clearStorageAndCookies();
+    setLocalStorage("version", __APP_VERSION__);
+  }
 
-/* 检测版本号 START */
-const version = getLocalStorage("version"); // 获取当前缓存版本号
-const isVersionExpired = compareVersions(__APP_VERSION__, version) == 1 ? true : false; // 当前缓存版本号是否过期
-// 当前缓存版本号过期时，则删除缓存，重新登录
-if (!version || isVersionExpired) {
-  ElMessage({ type: "info", message: `检测到新版本，请重新登录！` });
-  clearStorageAndCookies();
-  setLocalStorage("version", __APP_VERSION__);
+  // 控制台打印当前版本号
+  console.log(`%c v${__APP_VERSION__} `, "background:#409eff;color:#fff;border-radius:3px;");
 }
-console.log(`%cv${getLocalStorage("version")}`, "color:#0f0;"); // 控制台打印当前版本号
-/* 检测版本号 END */
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.reload-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background-color: var(--el-bg-color);
+}
+</style>
