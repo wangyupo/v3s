@@ -8,7 +8,7 @@ import { useCommonStore } from "@/stores/common.js";
 
 const login = () => import("@/views/login.vue"); // 登录页
 const main = () => import("@/views/main.vue"); // 业务主框架
-const refreshPage = () => import("@/views/refreshPage.vue"); // tab刷新中专页面
+const refreshPage = () => import("@/views/refreshPage.vue"); // tab刷新中转页面
 const notFound = () => import("@/views/404.vue"); // 404页
 
 /* 页面路由 START */
@@ -42,7 +42,7 @@ const router = createRouter({
       },
       children: [
         /* 页面路由 START */
-        { path: "/home", name: "home", component: home },
+        { path: "/home", name: "home", component: home, meta: { wrapperType: "fullPage" } },
         ...routeExample,
         /* 页面路由 END */
 
