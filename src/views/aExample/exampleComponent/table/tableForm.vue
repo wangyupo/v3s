@@ -25,7 +25,7 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import { selectData_example } from "@/enums/index.js";
+import { selectDataExample } from "@/enums/index.js";
 import { initSearchData } from "@/utils/index.js";
 
 const loading = ref(false);
@@ -45,7 +45,7 @@ const searchInfo = ref([
     placeholder: "请选择地址",
     key: "address",
     defaultValue: "",
-    options: selectData_example,
+    options: selectDataExample,
     colSpan: 8,
   },
   {

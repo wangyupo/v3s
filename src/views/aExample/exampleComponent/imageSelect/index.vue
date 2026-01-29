@@ -1,16 +1,14 @@
 <template>
   <!-- 示例-图片展示 -->
-  <div>
-    <RhTitle title="图片展示（支持预览、删除、追加、弹框保留已选项）" />
-    <div class="flex mt-3">
-      <el-button type="primary" @click="showDialog">添加图片</el-button>
+  <div class="flex gap-4">
+    <!-- 左侧：图片操作区 -->
+    <div class="flex-1">
+      <el-button type="primary" class="mt-3" @click="showDialog">添加图片</el-button>
+      <RhImg class="mt-3" :srcList="imageUrls" @delete="handleDelete" />
     </div>
-    <RhImg class="mt-3" :srcList="imageUrls" @delete="handleDelete" />
-    <div class="mt-3 whitespace-pre">
-      <code>
-        {{ imageUrls }}
-      </code>
-    </div>
+
+    <!-- 右侧：数据预览 -->
+    <RhPreviewJSON :data="imageUrls" title="已选图片" />
 
     <!-- 弹窗-选择图片 -->
     <DialogImages

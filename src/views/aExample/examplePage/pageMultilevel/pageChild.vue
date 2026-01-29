@@ -1,29 +1,28 @@
 <template>
-  <div>
-    <div>
-      <div>主页面的二级页面。你可以刷新页面，或者通过历史标签刷新，主要验证以下功能：</div>
-      <div>1、左侧菜单、历史标签仍保持父级菜单的激活状态。</div>
-      <div>
-        2、左侧菜单不会出现子页面名称的菜单，例如：编辑页、内容页，这些页面涉及特定页面的特定业务，不应该在菜单中出现。
-      </div>
-      <div>3、刷新后，浏览器地址栏仍然保持当前子页面路由及url参数。</div>
-      <div>4、关闭tab，页面关闭并跳转到最近一个页面。</div>
-      <div v-if="detail">
-        5、
-        <span class="text-red-500">{{ detail }}</span>
-        如果上级页面使用common的hook中的toPage方法跳转，并携带参数，在子页面就可以使用common的hook中的getRouteParams方法获取到该参数，
-        这个参数是存储在commonStore中的，以子页面的name为key，不会随着页面的刷新消失（注：router每次跳转会清除该key下的store内容）。
-      </div>
-    </div>
+  <div class="text-[14px] text-gray-600 leading-7">
+    <p class="mb-3">这是主页面的二级页面，刷新页面或通过历史标签刷新，验证以下功能：</p>
+    <ul class="list-disc pl-5 space-y-2">
+      <li>左侧菜单、历史标签保持父级菜单激活状态</li>
+      <li>左侧菜单不显示子页面（如编辑页、详情页等业务页面）</li>
+      <li>刷新后浏览器地址栏保持当前路由及参数</li>
+      <li>关闭 Tab 后跳转到最近访问的页面</li>
+      <li v-if="detail">
+        <span>跨页面传参：</span>
+        <span class="text-red-500 font-medium">{{ detail }}</span>
+        <p class="text-gray-400 mt-1">
+          使用 toPage() 跳转并携带参数，子页面通过 getRouteParams() 获取，参数以页面 name 为 key 存储在 commonStore 中
+        </p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
-import { useCommon } from "@/hooks/useCommon.js";
 import { onMounted, ref } from "vue";
+import { useCommon } from "@/hooks/useCommon.js";
 
 const { getRouteParams } = useCommon();
-const detail = ref({}); // 跨页面传参
+const detail = ref(null);
 
 onMounted(() => {
   detail.value = getRouteParams();

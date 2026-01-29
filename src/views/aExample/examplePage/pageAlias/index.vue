@@ -1,11 +1,12 @@
 <template>
-  <!-- 页面别名 -->
   <div>
-    <div>
+    <div class="flex gap-3">
       <el-button type="primary" @click="handleAdd">添加</el-button>
       <el-button type="primary" @click="handleEdit">编辑</el-button>
     </div>
-    <p class="mt-3 font-bold">通常用在“新增”、“编辑”跳转同一个页面，但需要显示不同面包屑名称的情况。</p>
+    <p class="mt-4 text-[14px] text-gray-500">
+      适用场景：新增/编辑跳转同一页面，但需显示不同的面包屑名称
+    </p>
   </div>
 </template>
 
@@ -14,26 +15,19 @@ import { useRouter, onBeforeRouteLeave } from "vue-router";
 
 const router = useRouter();
 
+// 离开页面时设置下级页面别名
 onBeforeRouteLeave((to, from) => {
-  // 必须判断下级页面，否则会导致跳转别的页面，别名赋值错误的问题
-  if (to.path == "/examplePage/pageAlias/operate") {
-    to.meta.alias = to.query.id ? "编辑页面（这是编辑的别名）" : "添加页面（这是添加的别名）";
+  if (to.path === "/examplePage/pageAlias/operate") {
+    to.meta.alias = to.query.id ? "编辑页面（编辑别名）" : "添加页面（添加别名）";
   }
 });
 
-// 添加页面
 const handleAdd = () => {
-  router.push({
-    path: "/examplePage/pageAlias/operate",
-  });
+  router.push({ path: "/examplePage/pageAlias/operate" });
 };
 
-// 编辑页面
 const handleEdit = () => {
-  router.push({
-    path: "/examplePage/pageAlias/operate",
-    query: { id: 1 },
-  });
+  router.push({ path: "/examplePage/pageAlias/operate", query: { id: 1 } });
 };
 </script>
 

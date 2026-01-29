@@ -1,22 +1,37 @@
 <template>
-  <div class="resizable p-4" style="width: var(--resize-width); height: var(--resize-height)" @mousedown="initDrag">
-    <RhWrapper class="w-full h-full">
-      <RhChart ref="chartComponent" :option="option" type="lb" />
-    </RhWrapper>
-    <div class="handle z-40"></div>
+  <div>
+    <div class="chart-container" :style="containerStyle" @mousedown="initDrag">
+      <RhWrapper class="w-full h-full">
+        <RhChart :option="option" type="lb" />
+      </RhWrapper>
+      <!-- 拖拽手柄 -->
+      <div class="resize-handle">
+        <el-icon><Rank /></el-icon>
+      </div>
+    </div>
+
+    <div class="mt-4 flex items-center gap-3">
+      <el-button type="primary" @click="fn_api">更新数据</el-button>
+      <span class="text-sm text-gray-400">拖拽右下角可调整图表大小</span>
+    </div>
   </div>
-  <el-button type="primary" @click="fn_api">更变数据</el-button>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
+import { Rank } from "@element-plus/icons-vue";
 import RhChart from "@/components/RhChart/index.vue";
 
 const option = ref({});
+const size = reactive({ width: 400, height: 300 });
+const startPos = ref({ x: 0, y: 0 });
 
-onMounted(() => {
-  fn_api();
-});
+const containerStyle = computed(() => ({
+  width: `${size.width}px`,
+  height: `${size.height}px`,
+}));
+
+onMounted(() => fn_api());
 
 const fn_api = () => {
   const categories = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -27,16 +42,10 @@ const fn_api = () => {
   };
 };
 
-/* div缩放 START */
-const size = reactive({
-  width: 300,
-  height: 300,
-});
-const startPos = ref({ x: 0, y: 0 });
-
+// 拖拽调整大小
 const initDrag = event => {
+  if (!event.target.closest(".resize-handle")) return;
   startPos.value = { x: event.clientX, y: event.clientY };
-
   document.addEventListener("mousemove", doDrag);
   document.addEventListener("mouseup", stopDrag);
 };
@@ -44,41 +53,56 @@ const initDrag = event => {
 const doDrag = event => {
   const dx = event.clientX - startPos.value.x;
   const dy = event.clientY - startPos.value.y;
-
-  size.width = Math.max(size.width + dx, 50); // 添加最小宽度限制
-  size.height = Math.max(size.height + dy, 50); // 添加最小高度限制
-
+  size.width = Math.max(size.width + dx, 200);
+  size.height = Math.max(size.height + dy, 150);
   startPos.value = { x: event.clientX, y: event.clientY };
-
-  event.target.style.setProperty("--resize-width", `${size.width}px`);
-  event.target.style.setProperty("--resize-height", `${size.height}px`);
 };
 
 const stopDrag = () => {
   document.removeEventListener("mousemove", doDrag);
   document.removeEventListener("mouseup", stopDrag);
 };
-/* div缩放 END */
 </script>
 
 <style lang="scss" scoped>
-.resizable {
-  background-color: #f0f0f0;
+.chart-container {
   position: relative;
-  overflow: hidden;
-  margin: 5px;
-  border: 1px solid #ddd;
-  --resize-width: 300px;
-  --resize-height: 300px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--el-border-color-lighter);
+  background: var(--el-fill-color-lighter);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .resize-handle {
+      opacity: 1;
+    }
+  }
 }
 
-.handle {
-  width: 20px;
-  height: 20px;
-  background-color: #333;
+.resize-handle {
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 8px;
+  bottom: 8px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--el-color-primary-light-9);
+  color: var(--el-color-primary);
   cursor: nwse-resize;
+  opacity: 0.6;
+  transition: all 0.2s;
+  transform: rotate(90deg);
+
+  &:hover {
+    background: var(--el-color-primary);
+    color: #fff;
+    transform: rotate(90deg) scale(1.1);
+  }
 }
 </style>

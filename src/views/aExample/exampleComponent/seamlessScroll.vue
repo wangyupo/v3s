@@ -1,12 +1,12 @@
 <template>
   <div>
     <RhTitle title="纵向" divider class="mb-3" />
-    <RhSeamlessScroll class="border border-black overflow-hidden" :data="listVertical" :options="optionsVertical">
-      <div class="h-[60px]" v-for="item in listVertical" :key="item">{{ item }}</div>
+    <RhSeamlessScroll class="scroll-box" :data="listVertical" :options="optionsVertical">
+      <div class="scroll-item" v-for="item in listVertical" :key="item">{{ item }}</div>
     </RhSeamlessScroll>
     <RhTitle title="横向" divider class="my-3" />
-    <RhSeamlessScroll class="border border-black overflow-hidden" :data="listVertical" :options="optionsHorizontal">
-      <div class="h-[60px] leading-[60px]" v-for="item in listHorizontal" :key="item">{{ item }}</div>
+    <RhSeamlessScroll class="scroll-box" :data="listVertical" :options="optionsHorizontal" width="100%">
+      <div class="scroll-item scroll-item--horizontal" v-for="item in listHorizontal" :key="item">{{ item }}</div>
     </RhSeamlessScroll>
   </div>
 </template>
@@ -39,4 +39,33 @@ const optionsHorizontal = ref({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.scroll-box {
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--el-border-color-lighter);
+  background: var(--el-fill-color-lighter);
+}
+
+.scroll-item {
+  height: 60px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--el-text-color-regular);
+  border-bottom: 1px solid var(--el-border-color-extra-light);
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--el-fill-color-light);
+    color: var(--el-color-primary);
+  }
+
+  &--horizontal {
+    border-bottom: none;
+    border-right: 1px solid var(--el-border-color-extra-light);
+    white-space: nowrap;
+  }
+}
+</style>

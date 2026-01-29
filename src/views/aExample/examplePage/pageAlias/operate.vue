@@ -1,15 +1,14 @@
 <template>
-  <!-- 添加页面 -->
-  <div>
-    <p class="flex items-center">
-      添加页面
-      <span class="flex items-center italic font-bold">
-        （注意看面包屑导航名称的变化
-        <el-icon class="arrow ml-1" size="20"><Top /></el-icon>
+  <div class="text-[14px] text-gray-600 leading-7">
+    <div class="flex items-center gap-2 mb-2">
+      <span>页面别名示例</span>
+      <span class="flex items-center text-gray-400">
+        （注意看面包屑名称变化
+        <el-icon class="arrow mx-1" size="18"><Top /></el-icon>
         ）
       </span>
-    </p>
-    <p>也可以刷新页面，别名是可以留存的。</p>
+    </div>
+    <p class="text-gray-400">刷新页面后别名仍然保留</p>
   </div>
 </template>
 
@@ -17,23 +16,15 @@
 
 <style lang="scss" scoped>
 .arrow {
-  animation: arrow 1.6s infinite linear;
+  animation: bounce 1s ease-in-out infinite;
 }
-@keyframes arrow {
-  0% {
+
+@keyframes bounce {
+  0%, 100% {
     transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-5px);
   }
   50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(5px);
-  }
-  100% {
-    transform: translateY(0);
+    transform: translateY(-6px);
   }
 }
 </style>

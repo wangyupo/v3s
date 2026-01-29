@@ -1,12 +1,8 @@
 <template>
   <!-- 业务说明 -->
   <div class="flex">
-    <div class="w-[300px] text-sm">
-      <code>
-        <pre>{{ dataJson }}</pre>
-      </code>
-    </div>
-    <div class="flex-1">
+    <RhPreviewJSON :data="tableData.data" />
+    <div class="flex-1 ml-3">
       <RhSearch :searchInfo="searchInfo" @search="handleSearch" />
       <RhTable
         border
@@ -27,7 +23,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, computed } from "vue";
+import { onMounted, reactive, ref } from "vue";
 // import { getList } from "@/api/api.js";
 import { initSearchData } from "@/utils/index.js";
 
@@ -66,16 +62,13 @@ const tableData = reactive({
     { label: "操作", prop: "operate", width: "200px" },
   ],
   data: [
-    { date: "2016-05-01", name: "home 示例数据1" },
-    { date: "2016-05-02", name: "home 示例数据2" },
-    { date: "2016-05-03", name: "home 示例数据3" },
+    { date: "2016-05-01", name: "A - 第一行" },
+    { date: "2016-05-02", name: "B - 第二行" },
+    { date: "2016-05-03", name: "C - 第三行" },
   ],
   pages: { total: 0, pageNumber: 1, pageSize: 10 },
 });
 const loading = ref(false);
-const dataJson = computed(() => {
-  return tableData.data;
-});
 
 onMounted(() => {
   // searchForm.value = initSearchData(searchInfo.value);

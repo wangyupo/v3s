@@ -25,7 +25,7 @@
 <script setup>
 import { onMounted, reactive, ref, useTemplateRef, nextTick } from "vue";
 import { initSearchData } from "@/utils/index.js";
-import { selectData_example } from "@/enums/index.js";
+import { selectDataExample } from "@/enums/index.js";
 
 // 条件配置
 const searchForm = ref({});
@@ -44,7 +44,7 @@ const searchInfo = ref([
     placeholder: "请选择状态",
     key: "type",
     defaultValue: "",
-    options: selectData_example,
+    options: selectDataExample,
     colSpan: 8,
   },
   {
@@ -114,7 +114,7 @@ const tableData = reactive({
     { type: "selection" },
     { label: "序号", type: "index" },
     { label: "名称", prop: "name" },
-    { label: "类型", prop: "type", enum: selectData_example },
+    { label: "类型", prop: "type", enum: selectDataExample },
     { label: "日期", prop: "date" },
     { label: "操作", prop: "operate", fixed: "right", width: "200px" },
   ],

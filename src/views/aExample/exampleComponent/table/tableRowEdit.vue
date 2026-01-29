@@ -1,12 +1,8 @@
 <template>
   <!-- 示例-行编辑的表格 -->
   <div class="flex">
-    <div class="w-[300px] text-sm">
-      <code>
-        <pre>{{ dataJson }}</pre>
-      </code>
-    </div>
-    <RhWrapper class="flex-1">
+    <RhPreviewJSON :data="tableData.data" />
+    <RhWrapper class="flex-1 ml-3">
       <template #title-right>
         <el-button type="primary" @click="handleAddRow()" v-if="!tableData.data.length">新增</el-button>
         <el-button type="primary" :disabled="!tableData.data.length">保存</el-button>
@@ -42,8 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, computed, ref } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, ref } from "vue";
 
 const tableData = reactive({
   showOverflowTooltip: true,
@@ -84,9 +79,6 @@ const tableData = reactive({
   },
 });
 const rowEditIdx = ref(null);
-const dataJson = computed(() => {
-  return tableData.data;
-});
 
 // 保存编辑
 const handleConfirm = data => {

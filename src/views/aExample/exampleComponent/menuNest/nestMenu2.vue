@@ -1,17 +1,9 @@
 <template>
-  <div>
-    路由菜单2
+  <div class="text-[14px] text-gray-600">
+    嵌套菜单示例页面 2
   </div>
 </template>
 
-<script setup>
-import { useLayoutStore } from "@/stores/layout.js";
-
-const layoutStore = useLayoutStore();
-
-const changeLayoutStyle = type => {
-  layoutStore.changeLayoutType(type);
-};
-</script>
+<script setup></script>
 
 <style lang="scss" scoped></style>

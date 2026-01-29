@@ -1,42 +1,93 @@
 <template>
   <!-- tab刷新中转页 -->
-  <div
-    v-loading="loading"
-    :element-loading-text="contentAreaLoadingText"
-    :element-loading-spinner="contentAreaLoadingSvg"
-    class="absolute left-0 right-0 bottom-0 top-0"
-  ></div>
+  <div class="refresh-page">
+    <div class="refresh-content">
+      <div class="refresh-spinner">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="refresh-text">页面刷新中...</p>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useLayout } from "@/hooks/useLayout.js";
 
-const { contentAreaLoadingText, contentAreaLoadingSvg } = useLayout();
-const loading = ref(true);
 const router = useRouter();
 const route = useRoute();
 
-/* 页面中转功能 START */
-// 1、拆分 url 携带参数，并赋值 query ，拱 router 的 query 传参使用
-let query = {};
-const pathArr = route.query.refreshPath.split("?");
-if (pathArr.length > 1) {
-  const queryArr = pathArr[1].split("&");
-  queryArr.forEach(i => {
-    let iArr = i.split("=");
-    query[iArr[0]] = iArr[1];
-  });
-}
-// 2、等待一秒钟后重新跳转回原页面，并携带参数 query
+// 解析 URL 参数
+const parseQuery = path => {
+  const query = {};
+  const pathArr = path.split("?");
+  if (pathArr.length > 1) {
+    pathArr[1].split("&").forEach(param => {
+      const [key, value] = param.split("=");
+      query[key] = value;
+    });
+  }
+  return query;
+};
+
+// 延迟跳转回原页面
 setTimeout(() => {
   router.replace({
     path: route.query.refreshPath,
-    query,
+    query: parseQuery(route.query.refreshPath),
   });
-}, 1000);
-/* 页面中转功能 END */
+}, 800);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.refresh-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--el-bg-color);
+}
+
+.refresh-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.refresh-spinner {
+  display: flex;
+  gap: 6px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--el-color-primary);
+    animation: bounce 1.4s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.16s; }
+    &:nth-child(3) { animation-delay: 0.32s; }
+  }
+}
+
+.refresh-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--el-text-color-secondary);
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+</style>

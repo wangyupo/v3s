@@ -1,16 +1,23 @@
 <template>
-  <div class="flex h-full">
-    <RhWrapper title="单选" class="w-[300px]">
+  <div class="flex gap-3">
+    <!-- 单选树 -->
+    <RhWrapper title="单选模式" class="w-[280px]">
       <RhTree default-expand-all fixSearch :data="data" @node-click="handleNodeClick" />
     </RhWrapper>
-    <RhWrapper title="多选" class="ml-3 w-[300px]">
+
+    <!-- 多选树 -->
+    <RhWrapper title="多选模式" class="w-[280px]">
       <RhTree default-expand-all show-checkbox :data="data" @check="handleCheck" />
     </RhWrapper>
-    <RhWrapper title="自定义节点内容" class="ml-3 w-[300px]">
+
+    <!-- 自定义节点 -->
+    <RhWrapper title="自定义节点" class="w-[280px]">
       <RhTree default-expand-all show-checkbox :data="data" @check="handleCheck">
-        <template #default="{ node, data }">
-          {{ node.label }}
-          <el-icon class="ml-2"><Link /></el-icon>
+        <template #default="{ node }">
+          <span class="flex items-center">
+            {{ node.label }}
+            <el-icon class="ml-1 text-gray-400"><Link /></el-icon>
+          </span>
         </template>
       </RhTree>
     </RhWrapper>
@@ -30,59 +37,22 @@ const handleCheck = params => {
 
 const data = ref([
   {
-    label: "Level one 1",
+    label: "研发部",
     children: [
-      {
-        label: "Level two 1-1",
-        children: [
-          {
-            label: "Level three 1-1-1",
-          },
-        ],
-      },
+      { label: "前端组", children: [{ label: "张三" }, { label: "李四" }] },
+      { label: "后端组", children: [{ label: "王五" }] },
     ],
   },
   {
-    label: "Level one 2",
+    label: "产品部",
     children: [
-      {
-        label: "Level two 2-1",
-        children: [
-          {
-            label: "Level three 2-1-1",
-          },
-        ],
-      },
-      {
-        label: "Level two 2-2",
-        children: [
-          {
-            label: "Level three 2-2-1",
-          },
-        ],
-      },
+      { label: "设计组", children: [{ label: "赵六" }] },
+      { label: "运营组", children: [{ label: "钱七" }, { label: "孙八" }] },
     ],
   },
   {
-    label: "Level one 3",
-    children: [
-      {
-        label: "Level two 3-1",
-        children: [
-          {
-            label: "Level three 3-1-1",
-          },
-        ],
-      },
-      {
-        label: "Level two 3-2",
-        children: [
-          {
-            label: "Level three 3-2-1",
-          },
-        ],
-      },
-    ],
+    label: "市场部",
+    children: [{ label: "销售组", children: [{ label: "周九" }] }],
   },
 ]);
 </script>
