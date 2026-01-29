@@ -1,10 +1,10 @@
 // 专门用来管理 ElementPlus 样式的文件，推荐通过 css变量 来从顶层覆盖其原有样式。
 // 可以从这里看到 ElementPlus 对 css变量 的支持：http://element-plus.org/zh-CN/guide/theming.html#通过-css-变量设置
 :root {
-  --el-menu-bg-color: #324057;
+  --el-menu-bg-color: #4a5568;
   --el-menu-border-color: transparent;
 
-  --el-color-primary: #427bff;
+  --el-color-primary: #667eea;
   --el-color-primary-dark-2: #3966d0;
   --el-color-primary-light-3: #6895ff;
   --el-color-primary-light-4: #8eb0ff;
