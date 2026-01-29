@@ -1,66 +1,58 @@
 <template>
   <!-- 日期选择组件 -->
-  <div>
-    <el-popover placement="bottom" :width="400" trigger="click" ref="popoverRef">
-      <template #reference>
-        <!-- 外界显示 -->
-        <el-button icon="Calendar">{{ title }}</el-button>
-      </template>
+  <el-popover placement="bottom" :width="400" trigger="click" ref="popoverRef">
+    <template #reference>
+      <el-button icon="Calendar">{{ title }}</el-button>
+    </template>
 
-      <div>
-        <!-- 快速选择时间 START -->
-        <div class="mb-2 font-bold">快捷时间：</div>
-        <div class="flex flex-wrap justify-between">
+    <div class="date-picker">
+      <!-- 快捷时间 -->
+      <div class="date-picker__section">
+        <div class="date-picker__label">快捷时间</div>
+        <div class="date-picker__shortcuts">
           <div
-            class="w-[69px] h-[30px] leading-[30px] border rounded cursor-pointer text-center"
-            :class="[
-              easyTimeActiveIdx == index
-                ? 'font-bold text-white bg-[var(--el-color-primary-light-3)] border-[var(--el-color-primary-light-3)]'
-                : 'border-[var(--el-border-color)] hover:bg-[var(--el-color-primary-light-9)]',
-              index > 4 ? 'mt-2' : '',
-            ]"
-            v-for="(item, index) in easyTime"
+            class="shortcut-item"
+            :class="{ active: easyTimeActiveIdx === index }"
+            v-for="(item, index) in SHORTCUTS"
             :key="index"
-            @click="handleEasyTime(index)"
+            @click="handleShortcut(index)"
           >
             {{ item.label }}
           </div>
         </div>
-        <!-- 快速选择时间 END -->
+      </div>
 
-        <!-- 详细指定时间 START -->
-        <div class="mt-4 mb-2 font-bold">指定时间：</div>
-        <div class="flex items-center justify-between">
+      <!-- 指定时间 -->
+      <div class="date-picker__section">
+        <div class="date-picker__label">指定时间</div>
+        <div class="date-picker__range">
           <el-date-picker
             v-model="startTime"
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择开始时间"
-            style="width: calc(49% - 11px)"
+            placeholder="开始时间"
             :teleported="false"
             @change="handleChangeTime"
           />
-          至
+          <span class="date-picker__separator">至</span>
           <el-date-picker
             v-model="endTime"
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择结束时间"
-            style="width: calc(49% - 11px)"
+            placeholder="结束时间"
             :teleported="false"
             @change="handleChangeTime"
           />
         </div>
-        <!-- 详细指定时间 END -->
       </div>
 
       <!-- 操作按钮 -->
-      <div class="flex justify-center mt-4">
+      <div class="date-picker__footer">
+        <el-button @click="handleReset">重置</el-button>
         <el-button type="primary" @click="handleConfirm">确定</el-button>
-        <el-button type="default" @click="handleReset">重置</el-button>
       </div>
-    </el-popover>
-  </div>
+    </div>
+  </el-popover>
 </template>
 
 <script setup>
@@ -75,105 +67,147 @@ import {
 } from "@/utils/index.js";
 
 const emits = defineEmits(["confirm"]);
-const popoverRef = ref(); // el-popover 的 DOM 对象
-const startTime = ref(""); // 开始时间
-const endTime = ref(""); // 结束时间
-const dateRange = ref({ startTime: "", endTime: "" }); // 最终返回的日期范围
-const easyTime = ref([
-  { label: "近一小时" },
-  { label: "近一天" },
-  { label: "近一周" },
-  { label: "近一月" },
-  { label: "近一年" },
-  { label: "上一小时" },
-  { label: "上一天" },
-  { label: "上一周" },
-  { label: "上一月" },
-  { label: "上一年" },
-]);
-const easyTimeActiveDefaultIdx = 1; // 默认选中的快捷时间的下标（默认选中“近一天”）
-const easyTimeActiveIdx = ref(easyTimeActiveDefaultIdx); // 当前选中的快捷时间的下标
 
-// 组件显示的标题
+// 快捷时间配置
+const SHORTCUTS = [
+  { label: "近一小时", handler: () => getTimeRange(1) },
+  { label: "近一天", handler: () => getPastNDaysRange(1) },
+  { label: "近一周", handler: () => getPastNDaysRange(7) },
+  { label: "近一月", handler: () => getPastNDaysRange(30) },
+  { label: "近一年", handler: () => getPastNDaysRange(365) },
+  { label: "上一小时", handler: () => [getTimeRange(2)[0], getTimeRange(1)[0]] },
+  { label: "上一天", handler: () => getPreviousDayRange() },
+  { label: "上一周", handler: () => getPreviousWeekRange() },
+  { label: "上一月", handler: () => getPreviousMonthRange() },
+  { label: "上一年", handler: () => getPreviousYearRange() },
+];
+
+const DEFAULT_INDEX = 1; // 默认选中"近一天"
+
+const popoverRef = ref();
+const startTime = ref("");
+const endTime = ref("");
+const dateRange = ref({ startTime: "", endTime: "" });
+const easyTimeActiveIdx = ref(DEFAULT_INDEX);
+
+// 显示标题
 const title = computed(() => {
-  let title = "";
-  if (startTime.value || endTime.value) {
-    title = "自定义";
-  } else {
-    title = easyTime.value[easyTimeActiveIdx.value].label;
-  }
-  return title;
+  if (startTime.value || endTime.value) return "自定义";
+  return SHORTCUTS[easyTimeActiveIdx.value].label;
 });
 
-// 组件挂载完成后执行
-onMounted(() => {
-  handleEasyTime(easyTimeActiveDefaultIdx);
-});
+onMounted(() => handleShortcut(DEFAULT_INDEX));
 
 // 修改时间
-const handleChangeTime = time => {
-  if (startTime.value || endTime.value) {
-    easyTimeActiveIdx.value = null;
-    return;
-  }
-  easyTimeActiveIdx.value = easyTimeActiveDefaultIdx;
+const handleChangeTime = () => {
+  easyTimeActiveIdx.value = startTime.value || endTime.value ? null : DEFAULT_INDEX;
 };
 
-// 点击快速时间
-const handleEasyTime = index => {
+// 点击快捷时间
+const handleShortcut = index => {
+  startTime.value = "";
+  endTime.value = "";
   easyTimeActiveIdx.value = index;
-  const label = easyTime.value[index].label;
-  let timeRange = [];
-  if (label == "近一小时") {
-    timeRange = getTimeRange(1);
-  } else if (label == "近一天") {
-    timeRange = getPastNDaysRange(1);
-  } else if (label == "近一周") {
-    timeRange = getPastNDaysRange(7);
-  } else if (label == "近一月") {
-    timeRange = getPastNDaysRange(30);
-  } else if (label == "近一年") {
-    timeRange = getPastNDaysRange(365);
-  } else if (label == "上一小时") {
-    timeRange = [getTimeRange(2)[0], getTimeRange(1)[0]];
-  } else if (label == "上一天") {
-    timeRange = getPreviousDayRange();
-  } else if (label == "上一周") {
-    timeRange = getPreviousWeekRange();
-  } else if (label == "上一月") {
-    timeRange = getPreviousMonthRange();
-  } else if (label == "上一年") {
-    timeRange = getPreviousYearRange();
-  }
-  dateRange.value = { startTime: timeRange[0], endTime: timeRange[1] };
-  handleClosePopover();
+  const [start, end] = SHORTCUTS[index].handler();
+  dateRange.value = { startTime: start, endTime: end };
+  closeAndEmit();
 };
 
 // 确定
 const handleConfirm = () => {
   if (startTime.value || endTime.value) {
-    dateRange.value.startTime = startTime.value ? startTime.value : "";
-    dateRange.value.endTime = endTime.value ? endTime.value : "";
-    handleClosePopover();
+    dateRange.value = { startTime: startTime.value || "", endTime: endTime.value || "" };
+    closeAndEmit();
     return;
   }
-  handleEasyTime(easyTimeActiveIdx.value);
+  handleShortcut(easyTimeActiveIdx.value);
 };
 
 // 重置
 const handleReset = () => {
   startTime.value = "";
   endTime.value = "";
-  easyTimeActiveIdx.value = easyTimeActiveDefaultIdx;
-  handleEasyTime(easyTimeActiveDefaultIdx);
-  handleClosePopover();
+  easyTimeActiveIdx.value = DEFAULT_INDEX;
+  handleShortcut(DEFAULT_INDEX);
 };
 
-// 关闭 popover
-const handleClosePopover = () => {
+// 关闭并触发事件
+const closeAndEmit = () => {
   emits("confirm", dateRange.value);
   popoverRef.value.hide();
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.date-picker {
+  &__section {
+    margin-bottom: 16px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+    margin-bottom: 10px;
+  }
+
+  &__shortcuts {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  &__range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .el-date-editor {
+      flex: 1;
+    }
+  }
+
+  &__separator {
+    color: var(--el-text-color-secondary);
+    flex-shrink: 0;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--el-border-color-lighter);
+  }
+}
+
+.shortcut-item {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--el-text-color-regular);
+  border: 1px solid var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--el-color-primary);
+    border-color: var(--el-color-primary-light-5);
+    background: var(--el-color-primary-light-9);
+  }
+
+  &.active {
+    color: #fff;
+    background: var(--el-color-primary);
+    border-color: var(--el-color-primary);
+  }
+}
+</style>
