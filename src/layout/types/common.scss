@@ -3,7 +3,7 @@ $headerHeight: 48px; // Header高度
 $breadHeight: 40px; // 面包屑高度
 $menuFoldWidth: 64px; // 菜单宽度-折叠后
 $menuExpandWidth: 208px; // 菜单宽度-展开后
-$menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
+$menuTransitionDuration: 200ms; // 菜单展开/折叠动画时长
 
 .layout {
   width: 100%;
@@ -41,7 +41,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
       font-weight: bold;
       transition-property: all;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: $menuTranstionDuration;
+      transition-duration: $menuTransitionDuration;
       overflow: hidden;
       white-space: nowrap;
       cursor: pointer;
@@ -61,7 +61,7 @@ $menuTranstionDuration: 200ms; // 菜单展开/折叠动画时长
     overflow: hidden;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: $menuTranstionDuration;
+    transition-duration: $menuTransitionDuration;
     background-color: var(--el-menu-bg-color);
     &.dark {
       border-right: 1px solid var(--el-border-color);

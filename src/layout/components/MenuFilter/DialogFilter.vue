@@ -28,18 +28,17 @@
       >
         <div
           ref="resultRef"
-          class="flex items-center justify-between mt-2 last:mb-1 mx-[14px] p-3 h-[56px] rounded text-base cursor-pointer hover:bg-blue-500 hover:text-white"
-          :class="[listSelectIdx === idx ? 'bg-blue-500 text-white' : '']"
-          style="box-shadow: 0 1px 3px #d4d9e1"
+          class="result-item"
+          :class="{ active: listSelectIdx === idx }"
           v-for="(item, idx) in filterMenuList"
           :key="item[menuKey.id]"
           @click="nav2Menu(item[menuKey.url])"
         >
-          <div class="flex items-center">
-            <el-icon class="mr-2"><Document /></el-icon>
-            {{ item[menuKey.title] }}
+          <div class="result-item-left">
+            <el-icon><Document /></el-icon>
+            <span>{{ item[menuKey.title] }}</span>
           </div>
-          <i class="iconfont icon-enter text-xl"></i>
+          <i class="iconfont icon-enter"></i>
         </div>
       </el-scrollbar>
       <RhNoData description="暂无搜索结果" v-show="!searchVal || !filterMenuList.length" />
@@ -279,6 +278,48 @@ const resetData = () => {
     height: 50px;
     font-size: 16px;
   }
+
+  .result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background: var(--el-fill-color-lighter);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--el-color-primary-light-9);
+      border-color: var(--el-color-primary-light-7);
+    }
+
+    &.active {
+      color: #fff;
+      background: var(--el-color-primary);
+      border-color: var(--el-color-primary);
+
+      .icon-enter {
+        opacity: 1;
+      }
+    }
+
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-enter {
+      font-size: 18px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+  }
+
   &-board-key {
     font-size: 14px;
     color: var(--el-text-color-primary);

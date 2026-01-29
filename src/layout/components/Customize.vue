@@ -8,6 +8,7 @@
 
   <el-drawer v-model="drawerVisible" title="个性化配置" direction="rtl" append-to-body :size="400">
     <div class="overflow-y-auto h-[calc(100%-65px)]">
+      <!-- 主题模式 -->
       <el-radio-group v-model="isDark">
         <el-radio-button :label="false">
           <div class="flex items-center">
@@ -22,29 +23,33 @@
           </div>
         </el-radio-button>
       </el-radio-group>
+
+      <!-- 导航模式 -->
       <div class="mt-6">
-        <RhTitle title="导航模式"></RhTitle>
+        <RhTitle title="导航模式" />
         <div class="flex">
           <el-radio-group v-model="layoutType">
-            <el-radio v-for="(item, index) in layouts" :key="index" class="layout-item" :label="item.layout">
+            <el-radio v-for="item in LAYOUTS" :key="item.layout" :label="item.layout" class="layout-item">
               <div class="flex flex-col justify-center items-center ml-[30px] mb-3 first:ml-0">
-                <i class="iconfont text-4xl" :class="item.icon"></i>
+                <i class="iconfont text-4xl" :class="item.icon" />
                 <span class="mt-2">{{ item.name }}</span>
               </div>
             </el-radio>
           </el-radio-group>
         </div>
       </div>
+
+      <!-- 主题色 -->
       <div class="mt-6">
-        <RhTitle title="主题色"></RhTitle>
-        <div class="flex items-center">
-          <ThemeColorPicker />
-        </div>
+        <RhTitle title="主题色" />
+        <ThemeColorPicker />
       </div>
+
+      <!-- 界面显示 -->
       <div class="mt-6">
-        <RhTitle title="界面显示"></RhTitle>
+        <RhTitle title="界面显示" />
         <div class="flex items-center justify-between w-full">
-          <div>灰色模式</div>
+          <span>灰色模式</span>
           <el-switch v-model="isGray" inline-prompt active-text="开" inactive-text="关" />
         </div>
       </div>
@@ -58,19 +63,21 @@
 
 <script setup>
 import { ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { useLayout } from "@/hooks/useLayout.js";
 import { clearStorageAndCookies } from "@/utils/index.js";
 import ThemeColorPicker from "./ThemeColorPicker.vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 
 const { layoutType, isDark, isGray, headerToolHoverClasses } = useLayout();
 const drawerVisible = ref(false);
-const layouts = ref([
+
+// 布局配置
+const LAYOUTS = [
   { name: "侧边导航", icon: "icon-layout-cbdh", layout: "LayoutSideMenu" },
   { name: "通栏导航", icon: "icon-layout-tldh", layout: "LayoutClassic" },
   { name: "顶部导航", icon: "icon-layout-dbdh", layout: "LayoutHeadMenu" },
   { name: "混合导航", icon: "icon-layout-hhdh", layout: "LayoutMix" },
-]);
+];
 
 // 展开抽屉
 const openDrawer = () => {
@@ -79,17 +86,15 @@ const openDrawer = () => {
 
 // 清空缓存并刷新页面
 const handleClearStorage = () => {
-  ElMessageBox.confirm(`该操作将清空所有缓存，清空后需要重新登录，确认清空缓存?`, "清空缓存", {
+  ElMessageBox.confirm("该操作将清空所有缓存，清空后需要重新登录，确认清空缓存?", "清空缓存", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning",
-  })
-    .then(() => {
-      ElMessage({ type: "success", message: "缓存清空成功！" });
-      clearStorageAndCookies();
-      window.location.reload();
-    })
-    .catch(() => {});
+  }).then(() => {
+    ElMessage.success("缓存清空成功！");
+    clearStorageAndCookies();
+    window.location.reload();
+  });
 };
 </script>
 
@@ -100,9 +105,11 @@ const handleClearStorage = () => {
   justify-content: center;
   align-items: center;
   height: auto;
+
   :deep(.el-radio__input) {
     order: 2;
   }
+
   :deep(.el-radio__label) {
     order: 1;
     padding-left: 0;
