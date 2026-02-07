@@ -1,0 +1,43 @@
+# 自动构建并部署到 v3s-admin 展示页面
+name: Deploy to v3s-admin
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 拉取源代码
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      # 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 构建项目（production 模式，VITE_BASE 为 /v3s-admin/）
+      - name: Build
+        run: npx vite build --mode production
+        env:
+          NODE_ENV: production
+
+      # 部署到 v3s-admin 仓库
+      - name: Deploy to v3s-admin
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          external_repository: wangyupo/v3s-admin
+          publish_branch: main
+          publish_dir: ./dist
+          force_orphan: true
+          commit_message: "deploy: auto update from v3s"
