@@ -64,6 +64,14 @@ jobs:
     needs: build-and-deploy
     if: always()
     steps:
+      # 格式化触发时间：2026-02-07T18:42:42+08:00 → 2026-02-07 18:42:42
+      - name: Format timestamp
+        id: time
+        run: |
+          RAW="${{ github.event.head_commit.timestamp }}"
+          FORMATTED=$(echo "$RAW" | sed 's/T/ /;s/+.*//')
+          echo "value=$FORMATTED" >> $GITHUB_OUTPUT
+
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -100,7 +108,7 @@ jobs:
                 </div>
                 <div style="padding:10px 0;border-bottom:1px solid #f2f3f5;">
                   <div style="font-size:12px;color:#909399;">触发时间</div>
-                  <div style="font-size:14px;color:#303133;margin-top:4px;">${{ github.event.head_commit.timestamp }}</div>
+                  <div style="font-size:14px;color:#303133;margin-top:4px;">${{ steps.time.outputs.value }}</div>
                 </div>
                 <div style="padding:10px 0;">
                   <div style="font-size:12px;color:#909399;">触发者</div>
