@@ -18,12 +18,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22.14.0
 
       # 安装依赖
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # 构建项目（production 模式，VITE_BASE 为 /v3s-admin/）
       - name: Build
