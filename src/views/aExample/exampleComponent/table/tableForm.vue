@@ -13,7 +13,7 @@
     >
       <template #dateHeader="{ scope }">{{ scope.column.label }}Diy</template>
       <template #expand="{ scope }">
-        {{ scope.row.date }}
+        {{ scope.row.address }}
       </template>
       <template #name="{ scope }">
         <el-link type="primary">{{ scope.row.name }}</el-link>
@@ -24,9 +24,9 @@
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
 import { selectDataExample } from "@/enums/index.js";
 import { initSearchData } from "@/utils/index.js";
+import tableDataJson from "./data.json";
 
 const loading = ref(false);
 const searchData = ref({});
@@ -83,13 +83,8 @@ const tableData = reactive({
     { label: "姓名", prop: "name" },
     { label: "地址", prop: "address", prefix: "<span class='font-bold'>送货地址：</span>", suffix: "(not too spicy)" },
   ],
-  data: [
-    { date: "15311665523", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
-    { date: "2016-05-02", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
-    { date: "2016-05-04", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
-    { date: "2016-05-01", name: "Tom", address: "No. 189, Grove St, Los Angeles" },
-  ],
-  pages: { total: 0, pageNumber: 1, pageSize: 10 },
+  data: tableDataJson,
+  pages: { total: tableDataJson.length, pageNumber: 1, pageSize: 10 },
 });
 
 onMounted(() => {

@@ -39,44 +39,19 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import tableDataJson from "./data.json";
 
 const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
-    {
-      label: "序号",
-      type: "index",
-    },
-    {
-      label: "日期",
-      prop: "date",
-    },
-    {
-      label: "姓名",
-      prop: "name",
-    },
-    {
-      label: "地址",
-      prop: "address",
-    },
-    {
-      label: "操作",
-      prop: "operate",
-      width: "250px",
-    },
+    { label: "序号", type: "index" },
+    { label: "日期", prop: "date" },
+    { label: "姓名", prop: "name" },
+    { label: "地址", prop: "address" },
+    { label: "操作", prop: "operate", width: "250px" },
   ],
-  data: [
-    {
-      date: "2016-05-03",
-      name: "Joe",
-      address: "No. 189, Grove St",
-    },
-  ],
-  pages: {
-    total: 100,
-    pageNumber: 1,
-    pageSize: 10,
-  },
+  data: tableDataJson,
+  pages: { total: tableDataJson.length, pageNumber: 1, pageSize: 10 },
 });
 const rowEditIdx = ref(null);
 

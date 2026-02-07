@@ -24,8 +24,8 @@
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
-// import { getList } from "@/api/api.js";
 import { initSearchData } from "@/utils/index.js";
+import tableDataJson from "./data.json";
 
 // 条件配置
 const searchForm = ref({});
@@ -59,14 +59,11 @@ const tableData = reactive({
     { label: "序号", type: "index" },
     { label: "日期", prop: "date", minWidth: "120px" },
     { label: "姓名", prop: "name" },
+    { label: "地址", prop: "address" },
     { label: "操作", prop: "operate", width: "200px" },
   ],
-  data: [
-    { date: "2016-05-01", name: "A - 第一行" },
-    { date: "2016-05-02", name: "B - 第二行" },
-    { date: "2016-05-03", name: "C - 第三行" },
-  ],
-  pages: { total: 0, pageNumber: 1, pageSize: 10 },
+  data: tableDataJson,
+  pages: { total: tableDataJson.length, pageNumber: 1, pageSize: 10 },
 });
 const loading = ref(false);
 
@@ -89,7 +86,7 @@ const fn_getList = (pageNumber = 1) => {
       pageNumber: pageNumber ? pageNumber : tableData.pages.pageNumber,
       pageSize: tableData.pages.pageSize,
     },
-    searchForm.value
+    searchForm.value,
   );
   getList(params)
     .then(res => {

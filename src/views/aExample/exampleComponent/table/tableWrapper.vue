@@ -13,59 +13,20 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { reactive } from "vue";
 import { Search } from "@element-plus/icons-vue";
+import tableDataJson from "./data.json";
 
 const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
-    {
-      label: "序号",
-      type: "index",
-    },
-    {
-      label: "日期",
-      prop: "date",
-      width: "150px",
-      sortable: true,
-    },
-    {
-      label: "姓名",
-      prop: "name",
-    },
-    {
-      label: "地址",
-      prop: "address",
-    },
+    { label: "序号", type: "index" },
+    { label: "日期", prop: "date", width: "150px", sortable: true },
+    { label: "姓名", prop: "name" },
+    { label: "地址", prop: "address" },
   ],
-  data: [
-    {
-      date: "2016-05-03",
-      name: "",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-02",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-04",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-    {
-      date: "2016-05-01",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    },
-  ],
-  pages: {
-    total: 100,
-    pageNumber: 1,
-    pageSize: 10,
-  },
+  data: tableDataJson,
+  pages: { total: tableDataJson.length, pageNumber: 1, pageSize: 10 },
 });
 </script>
 

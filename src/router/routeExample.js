@@ -20,113 +20,57 @@ const examplePageAliasOperate = () => import("@/views/aExample/examplePage/pageA
 
 const route = [
   // 配置示例：菜单页
-  {
-    path: "/example/menu1/menu1-1",
-    name: "exampleNestMenu1Sub",
-    component: exampleNestMenu1Sub,
-  },
-  {
-    path: "/example/menu2",
-    name: "exampleNestMenu2",
-    component: exampleNestMenu2,
-  },
+  { path: "/example/menu1/menu1-1", name: "exampleNestMenu1Sub", component: exampleNestMenu1Sub },
+  { path: "/example/menu2", name: "exampleNestMenu2", component: exampleNestMenu2 },
 
-  {
-    path: "/example/dialog",
-    name: "exampleDialog",
-    component: exampleDialog,
-  },
-  {
-    path: "/example/table",
-    name: "exampleTable",
-    component: exampleTable,
-  },
-  {
-    path: "/example/tableFullPage",
-    name: "exampleTableFullPage",
-    component: exampleTableFullPage,
-  },
-  {
-    path: "/example/numCountUp",
-    name: "exampleNumCountUp",
-    component: exampleNumCountUp,
-  },
-  {
-    path: "/example/seamlessScroll",
-    name: "exampleSeamlessScroll",
-    component: exampleSeamlessScroll,
-  },
-  {
-    path: "/example/dateRange",
-    name: "exampleDateRange",
-    component: exampleDateRange,
-  },
-  {
-    path: "/example/imageSelect",
-    name: "ImageSelect",
-    component: ImageSelect,
-  },
+  { path: "/example/dialog", name: "exampleDialog", component: exampleDialog },
+  { path: "/example/table", name: "exampleTable", component: exampleTable },
+  { path: "/example/tableFullPage", name: "exampleTableFullPage", component: exampleTableFullPage },
+  { path: "/example/numCountUp", name: "exampleNumCountUp", component: exampleNumCountUp },
+  { path: "/example/seamlessScroll", name: "exampleSeamlessScroll", component: exampleSeamlessScroll },
+  { path: "/example/dateRange", name: "exampleDateRange", component: exampleDateRange },
+  { path: "/example/imageSelect", name: "ImageSelect", component: ImageSelect },
+  { path: "/example/tree", name: "exampleTreeFilter", component: exampleTreeFilter },
+  { path: "/example/echarts", name: "chartBar", component: chartBar },
+  { path: "/example/tree", name: "exampleTreeFilter", component: exampleTreeFilter },
+
   // 配置示例：业务区域全屏
   {
     path: "/example/tree",
     name: "exampleTreeFilter",
     component: exampleTreeFilter,
-    meta: {
-      wrapperType: "fullPage",
-    },
+    meta: { wrapperType: "fullPage" },
   },
-  {
-    path: "/example/echarts",
-    name: "chartBar",
-    component: chartBar,
-  },
+  { path: "/example/echarts", name: "chartBar", component: chartBar },
 
   // 配置示例：背景色透明、全屏展示
   {
     path: "/examplePage/fullScreenShowPage",
     name: "exampleFullScreenShowPage",
     component: exampleFullScreenShowPage,
-    meta: {
-      wrapperType: "fullPage",
-      transparentBackground: true,
-    },
+    meta: { wrapperType: "fullPage", transparentBackground: true },
   },
   // 配置示例：背景色透明、取消面包屑
   {
     path: "/examplePage/transparentBackground",
     name: "transparentBackground",
     component: transparentBackground,
-    meta: {
-      transparentBackground: true,
-      noBreadcrumb: true,
-    },
+    meta: { transparentBackground: true, noBreadcrumb: true },
   },
   // 配置示例：多级路由，高亮父级菜单
-  {
-    path: "/examplePage/pageMultilevel",
-    name: "examplePage",
-    component: examplePage,
-  },
+  { path: "/examplePage/pageMultilevel", name: "examplePage", component: examplePage },
   {
     path: "/examplePage/pageMultilevel/child",
     name: "examplePageChild",
     component: examplePageChild,
-    meta: {
-      targetMenuPath: "/examplePage/pageMultilevel",
-    },
+    meta: { targetMenuPath: "/examplePage/pageMultilevel" },
   },
-  {
-    path: "/examplePage/pageAlias",
-    name: "examplePageAlias",
-    component: examplePageAlias,
-  },
+  { path: "/examplePage/pageAlias", name: "examplePageAlias", component: examplePageAlias },
   {
     path: "/examplePage/pageAlias/operate",
     name: "examplePageAliasOperate",
     component: examplePageAliasOperate,
-    meta: {
-      targetMenuPath: "/examplePage/pageAlias",
-    },
+    meta: { targetMenuPath: "/examplePage/pageAlias" },
   },
 ];
 

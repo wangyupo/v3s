@@ -1,5 +1,5 @@
 <template>
-  <div class="home h-full overflow-y-auto overflow-x-hidden">
+  <div class="home">
     <!-- 欢迎区 -->
     <div class="welcome-section">
       <div class="welcome-icon">👋</div>

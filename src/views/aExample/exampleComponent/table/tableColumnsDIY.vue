@@ -23,9 +23,9 @@
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
-// import { getList } from "@/api/api.js";
 import { exportToExcel, initSearchData } from "@/utils/index.js";
 import { cloneDeep } from "lodash-es";
+import tableDataJson from "./data.json";
 
 // 条件配置
 const searchForm = ref({});
@@ -56,12 +56,13 @@ const tableData = reactive({
   showOverflowTooltip: true,
   columns: [
     { label: "序号", type: "index" },
-    { label: "日期", prop: "date", minWidth: "120px", show: true },
-    { label: "姓名", prop: "name", width: "120px", show: true },
+    { label: "日期", prop: "date", width: "120px", show: true },
+    { label: "姓名", prop: "name", show: true },
+    { label: "地址", prop: "address" },
     { label: "操作", prop: "operate", width: "200px", show: true },
   ],
-  data: [{ date: "2016-05-03", name: "tableColumnsDIY 示例数据" }],
-  pages: { total: 0, pageNumber: 1, pageSize: 10 },
+  data: tableDataJson,
+  pages: { total: tableDataJson.length, pageNumber: 1, pageSize: 10 },
 });
 const loading = ref(false);
 

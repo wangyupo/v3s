@@ -1,6 +1,10 @@
 <template>
   <!-- 示例-弹窗 -->
-  <el-dialog v-model="dialogVisible" v-bind="$attrs" width="30%" @opened="opened" @closed="closed">示例弹窗</el-dialog>
+  <el-dialog v-model="dialogVisible" v-bind="$attrs" width="30%" @opened="opened" @closed="closed">
+    <div class="text-center text-2xl font-bold">基础弹窗</div>
+    <div class="text-center text-sm text-gray-500">这是一个基础弹窗，用于展示一些基础信息。</div>
+    <div class="text-center text-sm text-gray-500">这是一个基础弹窗，用于展示一些基础信息。</div>
+  </el-dialog>
 </template>
 
 <script setup>
