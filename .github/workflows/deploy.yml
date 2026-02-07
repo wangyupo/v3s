@@ -1,9 +1,16 @@
 # 自动构建并部署到 v3s-admin 展示页面
 name: Deploy to v3s-admin
 
+# 触发条件
 on:
   push:
-    branches: [main]
+    branches: [main] # 推送到 main 分支时触发
+  workflow_dispatch: # 支持在 GitHub Actions 页面手动触发
+
+# 并发控制：同一分支只保留最新的部署，取消之前正在运行的
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -11,7 +18,7 @@ jobs:
 
     steps:
       # 拉取源代码
-      - name: Checkout source repo
+      - name: Checkout
         uses: actions/checkout@v4
 
       # 安装 Node.js
@@ -20,6 +27,14 @@ jobs:
         with:
           node-version: 22.14.0
 
+      # 缓存 node_modules，根据 package.json 判断是否需要重新安装，加速后续构建
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: deps-${{ hashFiles('package.json') }}
+          restore-keys: deps-
+
       # 安装依赖
       - name: Install dependencies
         run: npm install
@@ -27,16 +42,15 @@ jobs:
       # 构建项目（production 模式，VITE_BASE 为 /v3s-admin/）
       - name: Build
         run: npx vite build --mode production
-        env:
-          NODE_ENV: production
 
-      # 部署到 v3s-admin 仓库
+      # 部署构建产物到 wangyupo/v3s-admin 仓库的 main 分支
+      # 需要在仓库 Settings → Secrets 中配置 DEPLOY_TOKEN（GitHub Personal Access Token）
       - name: Deploy to v3s-admin
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.DEPLOY_TOKEN }}
-          external_repository: wangyupo/v3s-admin
-          publish_branch: main
-          publish_dir: ./dist
-          force_orphan: true
-          commit_message: "deploy: auto update from v3s"
+          personal_token: ${{ secrets.DEPLOY_TOKEN }} # GitHub Personal Access Token
+          external_repository: wangyupo/v3s-admin # 目标仓库
+          publish_branch: main # 目标分支
+          publish_dir: ./dist # 构建产物目录
+          force_orphan: true # 每次部署只保留一个 commit，保持仓库干净
+          commit_message: "deploy: auto update from v3s (${{ github.sha }})" # 附带源仓库 commit hash，方便溯源
