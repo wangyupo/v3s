@@ -1,176 +1,140 @@
-import { isArray, cloneDeep } from "lodash-es";
-
 /**
  * 数组转树结构
- * @param {Array} list 数组
- * @param {String} id 自定义id字段
- * @param {String} pId 自定义parentId字段
+ * @param {Array} array 扁平数组
+ * @param {Object} config 字段配置
+ * @param {string} config.id id 字段名，默认 "id"
+ * @param {string} config.parentId parentId 字段名，默认 "parentId"
+ * @param {string} config.children children 字段名，默认 "children"
  * @returns {Array} 树结构数据
  */
 export function arr2tree(array, config = {}) {
-  const clonedArray = cloneDeep(array);
+  const { id: idKey = "id", parentId: pidKey = "parentId", children: childKey = "children" } = config;
 
-  const idField = config.id || "id";
-  const parentIdField = config.parentId || "parentId";
-  const childrenField = config.children || "children";
+  // 使用 structuredClone 深拷贝，避免修改原数据（无需依赖 lodash）
+  const list = structuredClone(array);
+  const nodeMap = new Map();
+  const tree = [];
 
-  const nodeMap = {};
-  const resultTree = [];
+  // 第一遍：建立索引
+  list.forEach(item => nodeMap.set(item[idKey], item));
 
-  clonedArray.forEach(item => {
-    const id = item[idField];
-    nodeMap[id] = item;
-  });
+  // 第二遍：组装树
+  list.forEach(item => {
+    const parentId = item[pidKey];
+    const parent = nodeMap.get(parentId);
 
-  clonedArray.forEach(item => {
-    const parentId = item[parentIdField];
-    // 如果 parentId 为 "0"、0 或不存在于 nodeMap 中，则是根节点
-    if (parentId === "0" || parentId === 0 || !(parentId in nodeMap)) {
-      resultTree.push(item);
+    if (parent) {
+      (parent[childKey] ??= []).push(item);
     } else {
-      // 检查是否为当前节点创建了 children 字段，如果没有则创建
-      const parent = nodeMap[parentId];
-      if (!parent[childrenField]) {
-        parent[childrenField] = [];
-      }
-      parent[childrenField].push(item);
+      // parentId 为 "0"、0 或不在 nodeMap 中，视为根节点
+      tree.push(item);
     }
   });
 
-  return resultTree;
+  return tree;
 }
 
 /**
- * 树结构转数组
- * @param {Array} list 树结构数据
- * @param {String} children 指定子树为节点对象的某个属性值
- * @returns {Array} 数组
+ * 树结构转扁平数组
+ * @param {Array} treeData 树结构数据
+ * @param {Object} config 字段配置
+ * @param {string} config.id id 字段名，默认 "id"
+ * @param {string} config.parentId parentId 字段名，默认 "parentId"
+ * @param {string} config.children children 字段名，默认 "children"
+ * @returns {Array} 扁平数组（不含 children 字段）
  */
 export function tree2arr(treeData, config = {}) {
-  // 设置默认配置
-  const idProp = config.id || "id";
-  const parentIdProp = config.parentId || "parentId";
-  const childrenProp = config.children || "children";
+  const { id: idKey = "id", parentId: pidKey = "parentId", children: childKey = "children" } = config;
+  const result = [];
 
-  let result = [];
+  const traverse = (node, parentId = "0") => {
+    if (!node) return;
+    const { [childKey]: children, ...rest } = node;
+    result.push({ ...rest, [pidKey]: parentId });
 
-  // 定义递归函数进行树遍历
-  function traverse(node, parentId = "0") {
-    // 默认parentId设置为"0"
-    if (!node) {
-      return;
+    if (children?.length) {
+      children.forEach(child => traverse(child, node[idKey]));
     }
+  };
 
-    // 在结果数组中添加当前节点，不包含children属性，并始终添加parentId属性
-    const { [childrenProp]: _, ...nodeWithoutChildren } = node;
-    result.push({
-      ...nodeWithoutChildren,
-      [parentIdProp]: parentId, // 即使父 ID 为"0"，也包含parentId
-    });
-
-    // 如果存在children，则对每个子节点递归调用此函数
-    if (node[childrenProp] && node[childrenProp].length > 0) {
-      for (const child of node[childrenProp]) {
-        traverse(child, node[idProp]); // 传递当前节点的id作为子节点的parentId
-      }
-    }
-  }
-
-  // 遍历树数组的每个元素
-  treeData.forEach(rootNode => {
-    traverse(rootNode);
-  });
-
+  treeData.forEach(root => traverse(root));
   return result;
 }
 
 /**
- * 树结构增加level层级
- * @param {Array} array 树结构
- * @param {String} levelName 层级字段
- * @param {String} childrenName 子节点字段
- * @param {Function} fn 自定义函数，默认返回单个节点的对象
- * @returns {Array} 增加level字段后的树结构
+ * 为树结构的每个节点添加层级字段
+ * @param {Array|Object} data 树结构数据（数组或单个节点）
+ * @param {Object} options 配置项
+ * @param {string} options.levelName 层级字段名，默认 "level"
+ * @param {string} options.childrenName 子节点字段名，默认 "children"
+ * @param {Function} options.callback 遍历每个节点时的回调函数
+ * @returns {Array} 添加层级字段后的树结构
  */
-export function treeAddLevel(array, levelName = "level", childrenName = "children", fn = () => {}) {
-  if (!isArray(array)) {
-    array = [array];
-  }
-  const recursive = (array, level = 0) => {
-    level++;
-    return array.map(v => {
-      v[levelName] = level;
-      fn(v);
-      const child = v[childrenName];
-      if (child && child.length) recursive(child, level);
-      return v;
+export function treeAddLevel(data, { levelName = "level", childrenName = "children", callback } = {}) {
+  const list = Array.isArray(data) ? data : [data];
+
+  const traverse = (nodes, level = 1) =>
+    nodes.map(node => {
+      node[levelName] = level;
+      callback?.(node);
+      if (node[childrenName]?.length) {
+        traverse(node[childrenName], level + 1);
+      }
+      return node;
     });
-  };
-  return recursive(array);
+
+  return traverse(list);
 }
 
 /**
- * 树结构增加level[层级]、reverseLevel[反向层级]
- * @param {Array} array 树结构
- * @param {String} idField id字段
- * @param {String} parentIdField parentId字段
- * @param {String} childrenField children字段
- * @param {String} valueField id字段对应key
- * @returns {Array} 增加level[层级]、reverseLevel[反向层级]后的树结构
+ * 增强树结构：添加 level（正向层级）、reverseLevel（反向层级）、path（路径）
+ * @param {Object} options 配置项
+ * @param {Array} options.tree 树结构数据
+ * @param {string} options.idField id 字段名，默认 "id"
+ * @param {string} options.parentIdField parentId 字段名，默认 "parentId"
+ * @param {string} options.childrenField children 字段名，默认 "children"
+ * @param {string} options.valueField 用作 id 值的字段名，默认 "value"
+ * @returns {Array} 增强后的树结构
  */
-function transformTree({
+export function transformTree({
   tree,
   idField = "id",
   parentIdField = "parentId",
   childrenField = "children",
   valueField = "value",
 }) {
-  let currentId = 1;
+  let autoId = 1;
 
-  // 辅助函数，用于递归转换树节点
-  function processNode(node, parentId = null, level = 1, parentPath = []) {
-    // 如果指定的 value 字段不存在，则自动生成
-    const id = node[valueField] || currentId++;
-    const parentIdValue = parentId;
-
-    // 构造路径：父路径加当前节点的 ID
+  // 构建节点：添加 id、parentId、level、path
+  const buildNode = (node, parentId = null, level = 1, parentPath = []) => {
+    const id = node[valueField] || autoId++;
     const path = [...parentPath, id];
 
-    // 新节点
     const newNode = {
       ...node,
       [idField]: id,
-      [parentIdField]: parentIdValue,
+      [parentIdField]: parentId,
       level,
       path,
+      [childrenField]: Array.isArray(node[childrenField]) && node[childrenField].length
+        ? node[childrenField].map(child => buildNode(child, id, level + 1, path))
+        : [],
     };
 
-    // 如果有子节点，递归处理
-    if (Array.isArray(node[childrenField]) && node[childrenField].length > 0) {
-      newNode[childrenField] = node[childrenField].map(child => processNode(child, id, level + 1, path));
-    } else {
-      // 如果没有子节点，确保 children 是一个空数组
-      newNode[childrenField] = [];
-    }
-
     return newNode;
-  }
+  };
 
-  // 第二步：计算 reverseLevel
-  function calculateReverseLevel(node) {
-    if (!node[childrenField] || node[childrenField].length === 0) {
-      node.reverseLevel = 1; // 叶子节点的 reverseLevel 为 1
+  // 计算反向层级：叶子节点为 1，逐层递增
+  const calcReverseLevel = node => {
+    if (!node[childrenField].length) {
+      node.reverseLevel = 1;
     } else {
-      node.reverseLevel = Math.max(...node[childrenField].map(calculateReverseLevel)) + 1;
+      node.reverseLevel = Math.max(...node[childrenField].map(calcReverseLevel)) + 1;
     }
     return node.reverseLevel;
-  }
+  };
 
-  // 第一步：先构建树并计算普通字段
-  const transformedTree = tree.map(root => processNode(root));
-
-  // 第二步：递归计算 reverseLevel
-  transformedTree.forEach(calculateReverseLevel);
-
-  return transformedTree;
+  const result = tree.map(root => buildNode(root));
+  result.forEach(calcReverseLevel);
+  return result;
 }

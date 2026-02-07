@@ -1,87 +1,79 @@
+// ==================== 内部工具 ====================
+
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 /**
- * 生成随机字符串（默认范围：5-50位）
- * @returns String
+ * 生成指定范围内的随机整数（包含 min 和 max）
+ * @param {number} min 最小值
+ * @param {number} max 最大值
+ * @returns {number}
+ */
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+/**
+ * 生成指定长度的随机字符序列
+ * @param {number} length 长度
+ * @param {string} chars 字符集
+ * @returns {string}
+ */
+const randomChars = (length, chars = CHARS) =>
+  Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+
+// ==================== 导出函数 ====================
+
+/**
+ * 生成随机字符串
+ * @param {number} minLength 最小长度，默认 5
+ * @param {number} maxLength 最大长度，默认 50
+ * @returns {string} 随机字符串
  */
 export function generateRandomString(minLength = 5, maxLength = 50) {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
-  let result = "";
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-
-  return result;
+  return randomChars(randomInt(minLength, maxLength));
 }
 
 /**
- * 生成随机数字（默认范围：1-50000）
- * @returns Number
+ * 生成随机整数
+ * @param {number} min 最小值，默认 1
+ * @param {number} max 最大值，默认 50000
+ * @returns {number} 随机整数
  */
-export function generateRandomNumber(minNumber = 1, maxNumber = 50000) {
-  const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
-  return randomNumber;
+export function generateRandomNumber(min = 1, max = 50000) {
+  return randomInt(min, max);
 }
 
 /**
- * 生成指定长度和范围的随机数数组。
- * @param {number} length - 数组的长度。
- * @param {number} min - 随机数范围的最小值（包含）。
- * @param {number} max - 随机数范围的最大值（不包含）。
- * @returns {number[]} 包含随机数的数组。
+ * 生成指定长度的随机数数组
+ * @param {number} length 数组长度，默认 7
+ * @param {number} min 最小值（包含），默认 130
+ * @param {number} max 最大值（包含），默认 550
+ * @returns {number[]} 随机数数组
  */
 export function generateRandomArray(length = 7, min = 130, max = 550) {
-  const randomArray = Array.from({ length }, () => Math.floor(Math.random() * (max - min) + min));
-  return randomArray;
+  return Array.from({ length }, () => randomInt(min, max));
 }
 
 /**
- * 生成随机email地址
- * @returns String email地址
+ * 生成随机 email 地址
+ * @param {string} domain 域名，默认 "example.com"
+ * @returns {string} 如 "aBc123@example.com"
  */
-export function generateRandomEmail() {
-  const emailLength = Math.floor(Math.random() * 10) + 5; // Random length between 5 and 14
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const domain = "example.com";
-
-  let email = "";
-
-  for (let i = 0; i < emailLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    email += characters.charAt(randomIndex);
-  }
-
-  email += "@" + domain;
-
-  return email;
+export function generateRandomEmail(domain = "example.com") {
+  return `${randomChars(randomInt(5, 14))}@${domain}`;
 }
 
 /**
- * 生成随机日期（默认生成：当前年随机日期）
- * @returns String YYYYMMDD
+ * 生成随机日期字符串（YYYYMMDD）
+ * @param {Date} startDate 开始日期，默认当年 1 月 1 日
+ * @param {Date} endDate 结束日期，默认当年 12 月 31 日
+ * @returns {string} 如 "20250815"
  */
 export function getRandomDate(startDate, endDate) {
   if (!startDate || !endDate) {
-    const date = new Date();
-    const year = date.getFullYear();
+    const year = new Date().getFullYear();
     startDate = new Date(`${year}-01-01`);
     endDate = new Date(`${year}-12-31`);
   }
-  // Calculate the range of days
-  const startMillis = startDate.getTime();
-  const endMillis = endDate.getTime();
-  const range = endMillis - startMillis;
 
-  // Generate a random number within the range
-  const randomMillis = Math.floor(Math.random() * range) + startMillis;
-
-  // Create a new Date object using the random milliseconds
-  const randomDate = new Date(randomMillis);
-
-  // Format the date as "YYYYMMDD"
-  const formattedDate = randomDate.toISOString().slice(0, 10).replace(/-/g, "");
-
-  return formattedDate;
+  const randomMs = randomInt(startDate.getTime(), endDate.getTime());
+  return new Date(randomMs).toISOString().slice(0, 10).replace(/-/g, "");
 }

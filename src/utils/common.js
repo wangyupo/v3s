@@ -2,177 +2,224 @@ import cookies from "js-cookie";
 import { ElMessage } from "element-plus";
 import { useUser } from "@/hooks/useUser.js";
 
+// ==================== 登录 & 存储 ====================
+
 /**
- * 去掉所有的登录信息（菜单、用户信息、cookie等）
- * 登出业务需要
+ * 清除所有登录信息（菜单、用户信息、cookie 等）
  */
 export function removeAllLoginInfo() {
   try {
     const { userStore } = useUser();
     userStore.$reset();
   } catch (error) {
-    console.log(error);
+    console.error("[removeAllLoginInfo]", error);
   }
   cookies.remove("Authorization");
   removeLocalStorage("user");
 }
 
-// 清除所有的localStorage, sessionStorage以及cookies
+/**
+ * 清除所有 localStorage、sessionStorage 和 cookies
+ */
 export function clearStorageAndCookies() {
-  // 清除localStorage
-  if (window.localStorage) localStorage.clear();
-  // 清除sessionStorage
-  if (window.sessionStorage) sessionStorage.clear();
+  localStorage.clear();
+  sessionStorage.clear();
   deleteAllCookies();
 }
 
-// 删除所有cookie
+/**
+ * 删除所有 cookie
+ */
 export function deleteAllCookies() {
-  var cookies = document.cookie.split(";");
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i];
-    var eqPos = cookie.indexOf("=");
-    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  }
+  document.cookie.split(";").forEach(cookie => {
+    const name = cookie.split("=")[0].trim();
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  });
 }
 
 /**
- * 存储localStorage
- * @param {String} name 名称
- * @param {*} content 值
+ * 存储 localStorage
+ * @param {string} name 键名
+ * @param {*} content 值（非字符串会自动 JSON.stringify）
  */
 export function setLocalStorage(name, content) {
   if (!name) return;
-  if (typeof content !== "string") {
-    content = JSON.stringify(content);
-  }
-  window.localStorage.setItem(name, content);
+  const value = typeof content === "string" ? content : JSON.stringify(content);
+  localStorage.setItem(name, value);
 }
 
 /**
- * 获取localStorage
- * @param {String} name 名称
- * @returns 值
+ * 获取 localStorage
+ * @param {string} name 键名
+ * @returns {string|null} 值
  */
 export function getLocalStorage(name) {
-  if (!name) return;
-  return window.localStorage.getItem(name);
+  if (!name) return null;
+  return localStorage.getItem(name);
 }
 
 /**
- * 删除localStorage
- * @param {String} name 名称
+ * 删除 localStorage
+ * @param {string} name 键名
  */
 export function removeLocalStorage(name) {
   if (!name) return;
-  window.localStorage.removeItem(name);
+  localStorage.removeItem(name);
 }
 
+// ==================== 数据处理 ====================
+
 /**
- * 去除对象中的空格
+ * 去除对象中所有字符串值的首尾空格（递归处理嵌套对象）
  * @param {Object} data 传入的对象数据
  */
 export function trimData(data) {
-  for (let field in data) {
-    if (typeof data[field] === "string") {
-      data[field] = data[field].trim();
-    }
-    if (typeof data[field] === "object") {
-      trimData(data[field]);
+  if (!data || typeof data !== "object") return;
+  for (const key in data) {
+    if (typeof data[key] === "string") {
+      data[key] = data[key].trim();
+    } else if (typeof data[key] === "object") {
+      trimData(data[key]);
     }
   }
 }
 
 /**
- * 去掉对象中的空字符串、空数组、空对象
- * @param {Object} obj 传入的对象数据 eg: {a:1,b:''}
- * @returns {Object} egBck: {a:1}
+ * 移除对象中的空值（空字符串、null、undefined、空数组、空对象）
+ * 保留 0 和 false
+ * @param {Object} obj 传入的对象
+ * @returns {Object} 移除空值后的新对象
  */
 export function removeEmptyInObj(obj) {
-  let newObj = {};
   if (typeof obj === "string") {
-    obj = JSON.parse(obj);
-  }
-  if (obj instanceof Array) {
-    newObj = [];
-    for (let i = 0; i < obj.length; i++) {
-      newObj.push(removeEmptyInObj(obj[i]));
+    try {
+      obj = JSON.parse(obj);
+    } catch {
+      return obj;
     }
-  } else if (obj instanceof Object) {
-    for (let attr in obj) {
-      if (obj.hasOwnProperty(attr) && obj[attr] !== "" && obj[attr] !== null && obj[attr] !== undefined) {
-        if (obj[attr] === 0 || obj[attr] === false) {
-          // 保留数字0和布尔值false
-          newObj[attr] = obj[attr];
-        } else if (obj[attr] instanceof Object) {
-          if (JSON.stringify(obj[attr]) === "{}" || JSON.stringify(obj[attr]) === "[]") {
-            continue;
-          }
-          newObj[attr] = removeEmptyInObj(obj[attr]);
-        } else if (
-          typeof obj[attr] === "string" &&
-          ((obj[attr].indexOf("{") > -1 && obj[attr].indexOf("}") > -1) ||
-            (obj[attr].indexOf("[") > -1 && obj[attr].indexOf("]") > -1))
-        ) {
-          try {
-            let attrObj = JSON.parse(obj[attr]);
-            if (attrObj instanceof Object) {
-              newObj[attr] = removeEmptyInObj(attrObj);
-            }
-          } catch (e) {
-            newObj[attr] = obj[attr];
-          }
-        } else {
-          newObj[attr] = obj[attr];
-        }
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => removeEmptyInObj(item));
+  }
+
+  if (obj && typeof obj === "object") {
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+      // 保留 0 和 false
+      if (value === 0 || value === false) {
+        acc[key] = value;
+        return acc;
       }
-    }
+      // 过滤空值
+      if (value === "" || value === null || value === undefined) return acc;
+      // 递归处理对象和数组
+      if (typeof value === "object") {
+        const isEmpty = Array.isArray(value) ? !value.length : !Object.keys(value).length;
+        if (isEmpty) return acc;
+        acc[key] = removeEmptyInObj(value);
+        return acc;
+      }
+      acc[key] = value;
+      return acc;
+    }, {});
   }
-  return newObj;
+
+  return obj;
+}
+
+// ==================== 格式化 ====================
+
+/**
+ * 手机号格式化：18312345678 → 183 1234 5678
+ * @param {string|number} phone 手机号
+ * @returns {string} 格式化后的手机号
+ */
+export const formatPhone = phone => {
+  const str = String(phone);
+  return `${str.slice(0, 3)} ${str.slice(3, 7)} ${str.slice(7, 11)}`;
+};
+
+/**
+ * 银行卡号格式化：每4位一空格
+ * @param {string|number} val 银行卡号
+ * @returns {string} 格式化后的卡号，如 4114 0201 5368 4210
+ */
+export const formatBank = val => {
+  if (!val) return "";
+  return String(val).replace(/\s/g, "").replace(/(.{4})/g, "$1 ").trim();
+};
+
+/**
+ * 数字千分位格式化：20000 → 20,000
+ * @param {number|string} num 数字
+ * @returns {string} 千分位格式的字符串
+ */
+export const numberFormat = num => {
+  return String(num).replace(/\d+/, n => n.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,"));
+};
+
+/**
+ * 空值显示占位符
+ * @param {*} val 字段值
+ * @param {string} placeholder 占位符，默认 "--"
+ * @returns {*} 空值返回占位符，否则返回原值
+ */
+export const epyReturn = (val, placeholder = "--") => {
+  if (val === 0 || val === false) return val;
+  if (Array.isArray(val)) return val.length ? val : placeholder;
+  if (val && typeof val === "object") return Object.keys(val).length ? val : placeholder;
+  return val || placeholder;
+};
+
+// ==================== 字符串 & 文本 ====================
+
+/**
+ * 按指定长度截断字符串并插入分隔符
+ * @param {string} str 原始字符串
+ * @param {number} length 截断长度
+ * @param {string} separator 分隔符，默认 "\n"
+ * @returns {string} 处理后的字符串
+ */
+export function breakStringByLength(str, length, separator = "\n") {
+  if (!str || !length) return str;
+  return str.match(new RegExp(`.{1,${length}}`, "g")).join(separator);
 }
 
 /**
- * 根据长度截断字符，并添加换行符\n
- * @param {String} string 原始字符串
- * @param {Number} breakLength 需要截断得长度
- * @param {String} breakSymbol 自定义换行符，默认为\n
+ * 复制文本到剪贴板
+ * @param {string} text 要复制的文本
+ * @param {string} label 提示中的名称标签
  */
-export function breakStringByLength(string, breakLength, breakSymbol = "\n") {
-  let strs = string.split("");
-  let str = "";
-  for (let i = 0, s; (s = strs[i++]); ) {
-    str += s;
-    if (!(i % breakLength) && i !== strs.length) str += breakSymbol;
+export const copy = async (text, label = "") => {
+  try {
+    await navigator.clipboard.writeText(String(text));
+    ElMessage.success((label ? `"${label}" ` : "") + "复制成功");
+  } catch {
+    // 降级方案
+    const input = document.createElement("input");
+    input.value = String(text);
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    input.remove();
+    ElMessage.success((label ? `"${label}" ` : "") + "复制成功");
   }
-  return str;
-}
+};
+
+// ==================== 类型 & 工具 ====================
 
 /**
- * 判断元素类型
- * @param {Dom} obj 元素本身
- * @returns {String} 元素类型
+ * 判断数据类型
+ * @param {*} value 任意值
+ * @returns {string} 类型字符串（小写），如 "string"、"array"、"object"
  */
-export function typeOf(obj) {
-  const toString = Object.prototype.toString;
-  const map = {
-    "[object Boolean]": "boolean",
-    "[object Number]": "number",
-    "[object String]": "string",
-    "[object Function]": "function",
-    "[object Array]": "array",
-    "[object Date]": "date",
-    "[object RegExp]": "regExp",
-    "[object Undefined]": "undefined",
-    "[object Null]": "null",
-    "[object Object]": "object",
-  };
-  return map[toString.call(obj)];
+export function typeOf(value) {
+  return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
 }
 
 /**
- * 生成uuid
- * @returns {String} uuid
+ * 生成 UUID（基于 crypto API）
+ * @returns {string} UUID 字符串
  */
 export function uuid() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -181,150 +228,74 @@ export function uuid() {
 }
 
 /**
- * 手机号格式化
- * @param {String} phone 183xxxxxxxx
- * @returns {String} 183 xxxx xxxx
+ * 从对象中根据路径安全取值（支持 "a.b.c" 嵌套路径）
+ * @param {Object} obj 目标对象
+ * @param {string} path 属性路径，如 "user.info.name"
+ * @returns {*} 对应路径的值，不存在则返回 undefined
  */
-export const formatPhone = phone => {
-  phone = phone.toString();
-  return phone.substring(0, 3) + " " + phone.substring(3, 7) + " " + phone.substring(7, 11);
+export const getValueByPath = (obj, path) => {
+  if (!obj || !path) return undefined;
+  return path.split(".").reduce((o, key) => (o ? o[key] : undefined), obj);
 };
 
 /**
- * 4位一空格（格式化银行卡）
- * @param {String} val
- * @returns {String} 4114 0201 5368 4210 213
- */
-export const formatBank = val => {
-  if (val) {
-    return val
-      .toString()
-      .replace(/\s/g, "")
-      .replace(/(.{4})/g, "$1 ");
-  }
-};
-
-/**
- * 复制文字至剪切板
- * @param {*} data 文字内容
- * @param {*} label 提示内容名称
- */
-export const copy = (data, label = "") => {
-  let url = data;
-  let oInput = document.createElement("input");
-  oInput.value = url;
-  document.body.appendChild(oInput);
-  oInput.select(); // 选择对象;
-  document.execCommand("Copy"); // 执行浏览器复制命令
-  ElMessage({
-    type: "success",
-    message: (label ? `“${label}” ` : "") + `复制成功`,
-  });
-  oInput.remove();
-};
-
-/**
- * 对象转FormData
- * @param {*} obj
- * @returns {formdata}
+ * 对象转 FormData
+ * @param {Object} obj 源对象
+ * @returns {FormData}
  */
 export const toFormData = obj => {
   const formData = new FormData();
-  for (const key in obj) {
-    formData.append(key, obj[key]);
-  }
+  Object.entries(obj).forEach(([key, value]) => formData.append(key, value));
   return formData;
 };
 
-/**
- * 空字段串显示--
- * @param {*} obj 字段
- * @returns {String} 字段为空返回 --，否则返回字段本身
- */
-export const epyReturn = obj => {
-  const emptyStr = "--";
-  let result;
-  if (typeOf(obj) === "array") {
-    result = obj.length ? obj : emptyStr;
-  } else if (typeOf(obj) === "object") {
-    result = Object.keys(obj).length ? obj : emptyStr;
-  } else if (typeOf(obj) === "number") {
-    result = obj;
-  } else {
-    result = obj ? obj : emptyStr;
-  }
-  return result;
-};
+// ==================== 业务工具 ====================
 
 /**
- * @description 从对象中根据路径安全地取值
- * 支持嵌套路径（如 "a.b.c"），防止中间层为 undefined 报错
- * @param {Object} obj - 要取值的对象
- * @param {string} path - 属性路径，例如 "user.info.name"
- * @returns {*} 对应路径的值，若不存在则返回 undefined
+ * 根据 value 从选项列表中获取对应的 label
+ * @param {Array<{label: string, value: *}>} options 选项数组
+ * @param {*} value 要查找的值
+ * @returns {string} 对应的 label，未找到返回 "--"
  */
-export const getValueByPath = (obj, path) => {
-  // 如果对象或路径为空，直接返回 undefined
-  if (!obj || !path) return undefined
-
-  // 使用 "." 分割路径，逐层取值
-  return path.split('.').reduce((o, key) => {
-    // 每一层都判断对象是否存在，避免 "Cannot read property ..." 错误
-    return o ? o[key] : undefined
-  }, obj)
-}
-
-/**
- * 数字格式化
- * @param {*} num 金额
- * @returns {String} 千分位逗号格式 20000->20,000
- */
-export const numberFormat = num => {
-  return num.toString().replace(/\d+/, function (n) {
-    return n.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
-  });
-};
-
-// 通过值反显label
 export const getLabel = (options, value) => {
-  const obj = options.find(i => i.value == value);
-  if (!obj) return "--";
-  return obj.label;
+  return options.find(i => i.value == value)?.label ?? "--";
 };
 
-// 通过 searchInfo 初始化搜索数据
+/**
+ * 通过 searchInfo 配置初始化搜索数据
+ * @param {Array} searchInfo 搜索配置数组
+ * @returns {Object} 初始化后的搜索数据（已移除空值）
+ */
 export const initSearchData = searchInfo => {
-  const data = searchInfo.reduce((accumulator, current) => {
-    if (current.type == "daterange" && current.startKey && current.endKey) {
-      accumulator[current.startKey] = current.defaultValue[0];
-      accumulator[current.endKey] = current.defaultValue[1];
+  const data = searchInfo.reduce((acc, item) => {
+    if (item.type === "daterange" && item.startKey && item.endKey) {
+      acc[item.startKey] = item.defaultValue[0];
+      acc[item.endKey] = item.defaultValue[1];
     } else {
-      accumulator[current.key] = current.defaultValue;
+      acc[item.key] = item.defaultValue;
     }
-    return accumulator;
+    return acc;
   }, {});
   return removeEmptyInObj(data);
 };
 
 /**
  * 比较版本号
- * @param {String} v1 版本号格式：0.0.0
- * @param {String} v2 版本号格式：0.0.0
- * @returns 1（v1大于v2）；-1（v1小于v2）；0（v1等于v2）
+ * @param {string} v1 版本号，如 "1.2.3"
+ * @param {string} v2 版本号，如 "1.2.0"
+ * @returns {number} 1（v1 > v2）；-1（v1 < v2）；0（v1 === v2）
  */
 export const compareVersions = (v1, v2) => {
-  if (!v1 || !v2) return 1; // 缺少版本号，默认返回1
+  if (!v1 || !v2) return 1;
 
   const parts1 = v1.split(".").map(Number);
   const parts2 = v2.split(".").map(Number);
+  const len = Math.max(parts1.length, parts2.length);
 
-  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
-    const part1 = parts1[i] || 0;
-    const part2 = parts2[i] || 0;
-
-    if (part1 > part2) return 1; // v1 大于 v2
-    if (part1 < part2) return -1; // v1 小于 v2
+  for (let i = 0; i < len; i++) {
+    const diff = (parts1[i] || 0) - (parts2[i] || 0);
+    if (diff > 0) return 1;
+    if (diff < 0) return -1;
   }
-
-  return 0; // 版本相同
+  return 0;
 };

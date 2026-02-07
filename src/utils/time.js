@@ -1,98 +1,56 @@
 import { formatDate } from "./date.js";
 
-// 获取近 N 小时时间
+/**
+ * 获取近 N 小时的时间范围
+ * @param {number} hours 小时数，默认 1
+ * @returns {[string, string]} [开始时间, 结束时间]
+ */
 export const getTimeRange = (hours = 1) => {
-  const currentTime = new Date();
-  const onHourAgo = new Date(currentTime.getTime() - hours * 60 * 60 * 1000);
-  return [formatDate(onHourAgo), formatDate(currentTime)];
+  const now = new Date();
+  const start = new Date(now.getTime() - hours * 3600000);
+  return [formatDate(start), formatDate(now)];
 };
 
 /**
- * 将秒数格式化为带有最小单位的可读字符串。
- * @param {number} seconds - 要格式化的持续时间，单位为秒。
- * @param {string} minUnit - 最小时间单位（"year"、"month"、"day"、"hour"、"minute"、"second"）。
- * @returns {string} - 格式化后的持续时间字符串。
+ * 将秒数格式化为可读的时长字符串
+ * @param {number} seconds 秒数
+ * @param {string} minUnit 最小单位（"year" | "month" | "day" | "hour" | "minute" | "second"）
+ * @returns {string} 如 "2天3小时" 或 "1年2月"
  */
-export const formatSecondsToDuration = (seconds, minUnit) => {
-  const timeUnits = {
-    year: "年",
-    month: "月",
-    day: "天",
-    hour: "小时",
-    minute: "分钟",
-    second: "秒",
-  };
+export const formatSecondsToDuration = (seconds, minUnit = "second") => {
+  const units = [
+    { key: "year", label: "年", seconds: 31536000 },
+    { key: "month", label: "月", seconds: 2628000 },
+    { key: "day", label: "天", seconds: 86400 },
+    { key: "hour", label: "小时", seconds: 3600 },
+    { key: "minute", label: "分钟", seconds: 60 },
+    { key: "second", label: "秒", seconds: 1 },
+  ];
+
+  // 找到最小单位的索引
+  const minIndex = units.findIndex(u => u.key === minUnit);
+  const displayUnits = units.slice(0, minIndex + 1);
 
   if (seconds === 0) {
-    return `0${timeUnits[minUnit]}`;
+    return `0${displayUnits[displayUnits.length - 1].label}`;
   }
 
-  const secondsInUnit = {
-    year: 31536000,
-    month: 2628000,
-    day: 86400,
-    hour: 3600,
-    minute: 60,
-  };
+  let remaining = seconds;
+  const parts = displayUnits.reduce((acc, unit) => {
+    const count = Math.floor(remaining / unit.seconds);
+    remaining %= unit.seconds;
+    if (count > 0) acc.push(`${count}${unit.label}`);
+    return acc;
+  }, []);
 
-  // 计算每个时间单位的数量
-  const years = Math.floor(seconds / secondsInUnit.year);
-  const months = Math.floor((seconds % secondsInUnit.year) / secondsInUnit.month);
-  const days = Math.floor((seconds % secondsInUnit.month) / secondsInUnit.day);
-  const hours = Math.floor((seconds % secondsInUnit.day) / secondsInUnit.hour);
-  const minutes = Math.floor((seconds % secondsInUnit.hour) / secondsInUnit.minute);
-  const secs = seconds % secondsInUnit.minute;
-
-  let result = "";
-
-  // 拼接格式化结果
-  if (years > 0) result += `${years}${timeUnits.year}`;
-  if (months > 0) result += `${months}${timeUnits.month}`;
-  if (days > 0) result += `${days}${timeUnits.day}`;
-  if (hours > 0) result += `${hours}${timeUnits.hour}`;
-  if (minutes > 0) result += `${minutes}${timeUnits.minute}`;
-  if (secs > 0 || result === "") result += `${secs}${timeUnits.second}`;
-
-  // 根据最小单位截断输出结果
-  switch (minUnit) {
-    case "year":
-      return years > 0 ? `${years}${timeUnits.year}` : `0${timeUnits.year}`;
-    case "month":
-      return result.split(timeUnits.day)[0] || `0${timeUnits.month}`;
-    case "day":
-      return result.split(timeUnits.hour)[0] || `0${timeUnits.day}`;
-    case "hour":
-      return result.split(timeUnits.minute)[0] || `0${timeUnits.hour}`;
-    case "minute":
-      return result.split(timeUnits.second)[0] || `0${timeUnits.minute}`;
-    default:
-      return result;
-  }
+  return parts.length ? parts.join("") : `0${displayUnits[displayUnits.length - 1].label}`;
 };
 
 /**
- * 获取当前时间
- * @returns {string} - 格式化后的时间字符串。
+ * 获取当前时间字符串
+ * @param {string} format 格式，默认 "YYYY-MM-DD HH:mm:ss"
+ * @returns {string} 格式化后的当前时间
  */
-export function getCurrentTime() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-
-  // 格式化时间，确保始终为两位数
-  function formatTime(time) {
-    return time < 10 ? "0" + time : time;
-  }
-
-  const formattedMonth = formatTime(month);
-  const formattedDay = formatTime(day);
-  const formattedHours = formatTime(hours);
-  const formattedMinutes = formatTime(minutes);
-  const formattedSeconds = formatTime(seconds);
-
-  return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-}
+export const getCurrentTime = (format) => {
+  return formatDate(new Date(), format);
+};
