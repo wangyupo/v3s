@@ -54,3 +54,43 @@ jobs:
           publish_dir: ./dist # 构建产物目录
           force_orphan: true # 每次部署只保留一个 commit，保持仓库干净
           commit_message: "deploy: auto update from v3s (${{ github.sha }})" # 附带源仓库 commit hash，方便溯源
+
+  # 部署完成后发送 QQ 邮箱通知
+  # 需要在仓库 Settings → Secrets 中配置：
+  #   QQ_MAIL —— QQ 邮箱地址（如 123456@qq.com），同时用于收发
+  #   QQ_MAIL_AUTH_CODE —— QQ 邮箱授权码（非登录密码，在 QQ邮箱 → 设置 → 账户 → POP3/SMTP 服务 中生成）
+  notify:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
+    if: always()
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.qq.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.QQ_MAIL }}
+          password: ${{ secrets.QQ_MAIL_AUTH_CODE }}
+          subject: "[${{ needs.build-and-deploy.result == 'success' && '✅ 成功' || '❌ 失败' }}] v3s 部署通知"
+          to: ${{ secrets.QQ_MAIL }}
+          from: ${{ secrets.QQ_MAIL }}
+          html_body: |
+            <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="border-bottom: 2px solid ${{ needs.build-and-deploy.result == 'success' && '#67c23a' || '#f56c6c' }}; padding-bottom: 10px;">
+                v3s 部署${{ needs.build-and-deploy.result == 'success' && '成功' || '失败' }}
+              </h2>
+              <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                <tr><td style="padding: 8px 0; color: #909399;">状态</td><td style="padding: 8px 0; font-weight: bold; color: ${{ needs.build-and-deploy.result == 'success' && '#67c23a' || '#f56c6c' }};">${{ needs.build-and-deploy.result == 'success' && '✅ 成功' || '❌ 失败' }}</td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">项目</td><td style="padding: 8px 0;">wangyupo/v3s → wangyupo/v3s-admin</td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">分支</td><td style="padding: 8px 0;">${{ github.ref_name }}</td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">提交</td><td style="padding: 8px 0;"><code>${{ github.sha }}</code></td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">提交信息</td><td style="padding: 8px 0;">${{ github.event.head_commit.message }}</td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">触发时间</td><td style="padding: 8px 0;">${{ github.event.head_commit.timestamp }}</td></tr>
+                <tr><td style="padding: 8px 0; color: #909399;">触发者</td><td style="padding: 8px 0;">${{ github.actor }}</td></tr>
+              </table>
+              <div style="margin-top: 16px;">
+                <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="display: inline-block; padding: 8px 20px; background: #409eff; color: #fff; text-decoration: none; border-radius: 4px;">查看详情</a>
+                <a href="https://wangyupo.github.io/v3s-admin/" style="display: inline-block; padding: 8px 20px; background: #67c23a; color: #fff; text-decoration: none; border-radius: 4px; margin-left: 8px;">访问站点</a>
+              </div>
+            </div>
