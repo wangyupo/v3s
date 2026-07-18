@@ -12,7 +12,7 @@
     "id": "1",
     "parentId": "0",
     "url": "",
-    "title": "嵌套路由",
+    "title": "菜单示例",
     "icon": "icon-caidan",
     "menuType": 0
   },
@@ -26,14 +26,14 @@
   {
     "id": "0-1-1",
     "parentId": "0-1",
-    "url": "/example/menu1/menu1-1",
+    "url": "/menu/nested",
     "title": "路由菜单1-1",
     "menuType": 0
   },
   {
     "id": "0-3",
     "parentId": "1",
-    "url": "/example/menu2",
+    "url": "/menu/normal",
     "title": "路由菜单2",
     "menuType": 0
   },
@@ -47,66 +47,66 @@
     "menuType": 0
   },
   {
+    "id": "3-0",
+    "parentId": "3",
+    "url": "/component/search",
+    "title": "搜索组件",
+    "menuType": 0
+  },
+  {
     "id": "3-1",
     "parentId": "3",
-    "url": "/example/dialog",
+    "url": "/component/dialog",
     "title": "弹窗",
     "menuType": 0
   },
   {
     "id": "3-2",
     "parentId": "3",
-    "url": "/example/table",
+    "url": "/component/table",
     "title": "table",
     "menuType": 0
   },
   {
     "id": "3-3",
     "parentId": "3",
-    "url": "/example/tableFullPage",
+    "url": "/component/table-full",
     "title": "table高度撑满",
     "menuType": 0
   },
   {
     "id": "3-4",
     "parentId": "3",
-    "url": "/example/numCountUp",
+    "url": "/component/digtal",
     "title": "数字滚动",
     "menuType": 0
   },
   {
     "id": "3-5",
     "parentId": "3",
-    "url": "/example/tree",
+    "url": "/component/tree",
     "title": "树形筛选器",
     "menuType": 0
   },
   {
     "id": "3-6",
     "parentId": "3",
-    "url": "/example/seamlessScroll",
+    "url": "/component/seamless",
     "title": "无缝滚动",
     "menuType": 0
   },
   {
     "id": "3-7",
     "parentId": "3",
-    "url": "/example/echarts",
+    "url": "/component/echarts",
     "title": "echarts",
-    "menuType": 0
-  },
-  {
-    "id": "3-8",
-    "parentId": "3",
-    "url": "/example/dateRange",
-    "title": "时间范围选择",
     "menuType": 0
   },
   {
     "id": "3-9",
     "parentId": "3",
-    "url": "/example/imageSelect",
-    "title": "图片展示",
+    "url": "/component/digital-input",
+    "title": "数字输入框",
     "menuType": 0
   },
 
@@ -121,42 +121,42 @@
   {
     "id": "4-1",
     "parentId": "4",
-    "url": "/examplePage/fullScreenShowPage",
+    "url": "/page/full-screen",
     "title": "全屏展示页",
     "menuType": 0
   },
   {
     "id": "4-2",
     "parentId": "4",
-    "url": "/examplePage/transparentBackground",
+    "url": "/page/transparent",
     "title": "透明背景页",
     "menuType": 0
   },
   {
     "id": "4-3",
     "parentId": "4",
-    "url": "/examplePage/pageMultilevel",
+    "url": "/page/multi-level",
     "title": "多级页面",
     "menuType": 0
   },
   {
     "id": "4-3-1",
     "parentId": "4-3",
-    "url": "/examplePage/pageMultilevel/child",
+    "url": "/page/multi-level/child",
     "title": "子页面",
     "menuType": 1
   },
   {
     "id": "4-4",
     "parentId": "4",
-    "url": "/examplePage/pageAlias",
+    "url": "/page/alias",
     "title": "动态设置面包屑",
     "menuType": 0
   },
   {
     "id": "4-4-1",
     "parentId": "4-4",
-    "url": "/examplePage/pageAlias/operate",
+    "url": "/page/alias/operate",
     "title": "添加页面",
     "menuType": 1
   }

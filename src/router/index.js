@@ -14,7 +14,7 @@ const notFound = () => import("@/views/404.vue"); // 404页
 /* 页面路由 START */
 const largeScreen = () => import("@/views/largeScreen.vue");
 const home = () => import("@/views/home.vue"); // 首页
-import routeExample from "./routeExample"; // 示例页面路由（拆分示例）
+import route from "./route"; // 示例页面路由（拆分示例）
 /* 页面路由 END */
 
 const router = createRouter({
@@ -43,7 +43,7 @@ const router = createRouter({
       children: [
         /* 页面路由 START */
         { path: "/home", name: "home", component: home },
-        ...routeExample,
+        ...route,
         /* 页面路由 END */
 
         {

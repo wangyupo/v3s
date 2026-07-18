@@ -33,22 +33,18 @@ const searchInfo = ref([
   {
     type: "input",
     label: "姓名",
-    placeholder: "请输入姓名",
     key: "name",
     defaultValue: "",
-    colSpan: 8,
   },
   {
     type: "select",
-    label: "日期",
-    placeholder: "请选择日期",
+    label: "类型",
     key: "select",
     defaultValue: "",
     options: [
       { value: "1", label: "选项一" },
       { value: "2", label: "选项二" },
     ],
-    colSpan: 8,
   },
 ]);
 // 表格配置

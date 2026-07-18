@@ -146,7 +146,10 @@ export const formatPhone = phone => {
  */
 export const formatBank = val => {
   if (!val) return "";
-  return String(val).replace(/\s/g, "").replace(/(.{4})/g, "$1 ").trim();
+  return String(val)
+    .replace(/\s/g, "")
+    .replace(/(.{4})/g, "$1 ")
+    .trim();
 };
 
 /**
@@ -223,7 +226,7 @@ export function typeOf(value) {
  */
 export function uuid() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
   );
 }
 
@@ -258,7 +261,9 @@ export const toFormData = obj => {
  * @returns {string} 对应的 label，未找到返回 "--"
  */
 export const getLabel = (options, value) => {
-  return options.find(i => i.value == value)?.label ?? "--";
+  const obj = options.find(i => i.value == value);
+  if (!obj) return "--";
+  return obj.label;
 };
 
 /**
@@ -299,3 +304,72 @@ export const compareVersions = (v1, v2) => {
   }
   return 0;
 };
+
+/**
+ * 格式化金额，添加千分位符号
+ * @param {*} value 要格式化的值
+ * @returns {*} 格式化后的值，如果不是数字则返回原值
+ */
+export function formatAmount(value) {
+  if (!value) {
+    return value;
+  }
+  // 判断是否为数字，如果不是数字原样返回
+  const num = Number(value);
+  if (isNaN(num)) {
+    return value;
+  } else {
+    // 是数字，继续处理：处理小数，保留原有小数位数
+    const parts = String(value).split(".");
+    const integerPart = parts[0];
+    const decimalPart = parts[1] ? "." + parts[1] : "";
+    // 对整数部分添加千分位
+    const formattedInteger = Number(integerPart).toLocaleString("zh-CN");
+    return formattedInteger + decimalPart;
+  }
+}
+
+/**
+ * 格式化文件名：超长时做“中间省略”，并保留扩展名，方便识别文件类型（如 .pdf / .apk）。
+ * 示例：`verylongfilename2024.pdf` → `verylongfilen…2024.pdf`
+ * @param name 文件名（建议包含扩展名，如 `xxx.pdf`），为空则返回“未命名文件”
+ * @param maxLength 输出整体最大长度（包含扩展名和省略号）
+ * @param tailLength 省略号后保留的 base 尾部长度（不含扩展名）
+ */
+export function formatFileName(
+  name = "",
+  maxLength = 22, // 整体最大长度
+  tailLength = 4, // 省略号后至少保留的字符数（不含扩展名）
+) {
+  if (!name) return "未命名文件";
+
+  const dotIndex = name.lastIndexOf(".");
+
+  // 没有扩展名，直接尾部省略
+  if (dotIndex === -1) {
+    return name.length > maxLength ? name.slice(0, maxLength) + "…" : name;
+  }
+
+  const ext = name.slice(dotIndex); // .pdf
+  const base = name.slice(0, dotIndex); // verylongfilename2024
+
+  // base 太短，不需要省略
+  if (name.length <= maxLength) {
+    return name;
+  }
+
+  // base 中尾部要保留的部分
+  const tail = base.slice(-tailLength);
+
+  // 计算前缀最大可用长度
+  const prefixMaxLength = maxLength - ext.length - tail.length - 1; // 1 是省略号
+
+  // 极端兜底
+  if (prefixMaxLength <= 0) {
+    return "…" + tail + ext;
+  }
+
+  const prefix = base.slice(0, prefixMaxLength);
+
+  return `${prefix}…${tail}${ext}`;
+}

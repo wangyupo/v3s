@@ -29,30 +29,15 @@
 <script setup>
 const props = defineProps({
   // 标题
-  title: {
-    type: String,
-    default: "默认标题",
-  },
+  title: { type: String, default: "默认标题" },
   // 竖线颜色
-  lineColor: {
-    type: String,
-    default: "var(--el-color-primary)",
-  },
+  lineColor: { type: String, default: "var(--el-color-primary)" },
   // 是否媒体响应（通常用在满屏首页业务中，调整小屏幕时文字大小、竖线高度）
-  media: {
-    type: Boolean,
-    default: false,
-  },
+  media: { type: Boolean, default: false },
   // 分割线
-  divider: {
-    type: Boolean,
-    default: false,
-  },
+  divider: { type: Boolean, default: false },
   // 设置取消margin-bottom
-  nomb: {
-    type: Boolean,
-    default: false,
-  },
+  nomb: { type: Boolean, default: false },
 });
 </script>
 

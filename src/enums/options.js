@@ -8,3 +8,8 @@ export const StatusOptions = [
   { label: "启用", value: "on" },
   { label: "禁用", value: "off" },
 ];
+
+export const OrgStatus = [
+  { label: "已上架", value: "1", tagType: "success" },
+  { label: "已下架", value: "0", tagType: "danger" },
+];

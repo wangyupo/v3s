@@ -15,17 +15,14 @@ const router = useRouter();
 
 const toChildPage = () => {
   router.push({
-    path: "/examplePage/pageMultilevel/child",
-    query: {
-      id: "1",
-      type: "2",
-    },
+    path: "/page/multi-level/child",
+    query: { id: "1", type: "2" },
   });
 };
 
 // 传参
 const handleView = row => {
-  toPage("examplePageChild", row);
+  toPage("PageMultiLevelChild", row);
 };
 </script>
 

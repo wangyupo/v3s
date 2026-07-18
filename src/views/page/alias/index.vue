@@ -17,17 +17,19 @@ const router = useRouter();
 
 // 离开页面时设置下级页面别名
 onBeforeRouteLeave((to, from) => {
-  if (to.path === "/examplePage/pageAlias/operate") {
+  if (to.path === "/page/alias/operate") {
     to.meta.alias = to.query.id ? "编辑页面（编辑别名）" : "添加页面（添加别名）";
   }
 });
 
+// 添加
 const handleAdd = () => {
-  router.push({ path: "/examplePage/pageAlias/operate" });
+  router.push({ path: "/page/alias/operate" });
 };
 
+// 编辑
 const handleEdit = () => {
-  router.push({ path: "/examplePage/pageAlias/operate", query: { id: 1 } });
+  router.push({ path: "/page/alias/operate", query: { id: 1 } });
 };
 </script>
 
